@@ -1,3 +1,0 @@
-acme_task_homepage:
-    pattern:  task/zong/{name}
-    defaults: { _controller: AcmeTaskBundle:Default:index }
