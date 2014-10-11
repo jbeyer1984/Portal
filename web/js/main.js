@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
   var $collectionHolder = $('ul.tags');
 
   // add a delete link to all of the existing tag form li elements
-  $collectionHolder.find('li').ea qch(function() {
+  $collectionHolder.find('li').each(function() {
     addTagFormDeleteLink($(this));
   });
 
