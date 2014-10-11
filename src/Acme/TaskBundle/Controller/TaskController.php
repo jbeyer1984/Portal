@@ -19,7 +19,6 @@ class TaskController extends Controller
   public function formAction(Request $request)
   {
     $task = new Task();
-
     // dummy code - this is here just so that the Task has some tags
     // otherwise, this isn't an interesting example
     $tag1 = new Tag();
@@ -33,32 +32,52 @@ class TaskController extends Controller
 //    $form = $this->createForm(new TaskType(), $task);
 
     $em = $this->getDoctrine()->getManager();
-    $tasks = $em->getRepository('AcmeTaskBundle:Task')
-      ->findAllOrderedByDescription();
-
+    $taskRepository = $em->getRepository('AcmeTaskBundle:Task');
+    $tasks = $taskRepository->findAllOrderedByDescription();
+    
     $form = $this->createForm(new TaskType(), $task);
 //    \Doctrine\Common\Util\Debug::dump($tasks);
 //    $arr = $tasks->getTags();
 //    \Doctrine\Common\Util\Debug::dump($arr);
-//    foreach ($tasks as $oneTask) {
-//      \Doctrine\Common\Util\Debug::dump($oneTask->getTags());
-//      
-//    }
 
 //    \Doctrine\Common\Util\Debug::dump($tasks);
 
     $form->handleRequest($request);
-
+    
+    
     if ($form->isValid()) {
-      $formReq = $form->getData();
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($formReq);
-      $em->flush();
+      $reqTask = $form->getData();
+      \Doctrine\Common\Util\Debug::dump($reqTask);
+      $task = $taskRepository->findOneByDescription($reqTask->getDescription());
+      if (!empty($task)) {
+        // update $task
+        $reqTags = $reqTask->getTags(); 
+        foreach($task->getTags() as $key => $tag) {
+          $tag->setName($reqTags[$key]->getName());
+          $em->persist($task);
+          $em->flush();
+        }
+      }
+//      var_dump(empty($task));
+
       // ... maybe do some form processing, like saving the Task and Tag objects
     }
 
+//    $em = $this->getDoctrine()->getManager();
+//    $tasks = $em->getRepository('AcmeTaskBundle:Task');
+    
+//    $tasks->findAllOrderedByDescription();
+
+    $forms = array();
+    foreach ($tasks as $oneTask) {
+      $forms[] = $this->createForm(new TaskType, $oneTask)->createView();
+//      \Doctrine\Common\Util\Debug::dump($oneTask->getTags());
+
+    }
+
     return $this->render('AcmeTaskBundle:Task:new.html.twig', array(
-      'form' => $form->createView(),
+//      'form' => $form->createView(),
+      'forms' => $forms
     ));
   }
 }
