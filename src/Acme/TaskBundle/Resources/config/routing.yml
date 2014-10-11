@@ -5,3 +5,11 @@ acme_task_homepage:
 acme_task_new:
     path:     task/new/{name}
     defaults: { _controller: AcmeTaskBundle:Default:new }
+    
+acme_task_index:
+    path:     task/index/
+    defaults: { _controller: AcmeTaskBundle:Task:index }
+    
+acme_task_form:
+    path:     task/form/
+    defaults: { _controller: AcmeTaskBundle:Task:form }

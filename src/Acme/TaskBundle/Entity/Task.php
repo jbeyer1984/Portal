@@ -1,14 +1,15 @@
 <?php
 
-// Acme/TaskBundle/Entity/Task.php
-
+// src/Acme/TaskBundle/Entity/Task.php
 namespace Acme\TaskBundle\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="task")
+ * @ORM\Entity(repositoryClass="Acme\TaskBundle\Entity\TaskRepository")
  */
 class Task
 {
@@ -20,35 +21,43 @@ class Task
   protected $id;
   
   /**
-   * @Assert\NotBlank()
    * @ORM\Column(type="string", length=100)
    */
-  public $task;
+  protected $description;
 
   /**
-   * @Assert\NotBlank()
-   * @Assert\Type("\DateTime")
-   * @ORM\Column(type="datetime", name="dueDate")
+   * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
    */
-  protected $dueDate;
+  protected $tags;
 
-  public function getTask()
+  public function __construct()
   {
-    return $this->task;
+    $this->tags = new ArrayCollection();
   }
 
-  public function setTask($task)
+  public function addTag(Tag $tag)
   {
-    $this->task = $task;
+    $tag->addTask($this);
+    $this->tags->add($tag);
   }
 
-  public function getDueDate()
+  public function removeTag(Tag $tag)
   {
-    return $this->dueDate;
+    $this->tags->removeElement($tag);
   }
 
-  public function setDueDate(\DateTime $dueDate = null)
+  public function getDescription()
   {
-    $this->dueDate = $dueDate;
+    return $this->description;
+  }
+
+  public function setDescription($description)
+  {
+    $this->description = $description;
+  }
+
+  public function getTags()
+  {
+    return $this->tags;
   }
 }
