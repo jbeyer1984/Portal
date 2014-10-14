@@ -1,0 +1,12 @@
+# Acme/DemoBundle/Resources/config/admin.yml
+services:
+    sonata.admin.post:
+        class: Acme\TaskBundle\Admin\TaskAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Task" }
+        arguments:
+            - ~
+            - Acme\TaskBundle\Entity\Task
+            - ~
+        calls:
+            - [ setTranslationDomain, [AcmeTaskBundle]]

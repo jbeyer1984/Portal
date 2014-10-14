@@ -19,6 +19,7 @@ class TaskController extends Controller
   public function formAction(Request $request)
   {
     $task = new Task();
+    $task->setOrder(0);
     // dummy code - this is here just so that the Task has some tags
     // otherwise, this isn't an interesting example
     $tag1 = new Tag();
@@ -48,9 +49,13 @@ class TaskController extends Controller
     if ($form->isValid()) {
       $reqTask = $form->getData();
       \Doctrine\Common\Util\Debug::dump($reqTask);
-      $task = $taskRepository->findOneByDescription($reqTask->getDescription());
+      $task = $taskRepository->findOneById($reqTask->getId());
       if (!empty($task)) {
+
+        var_dump($reqTask->getOrder());
         // update $task
+        $task->setDescription($reqTask->getDescription());
+        $task->setOrder($reqTask->getOrder());
         $reqTags = $reqTask->getTags(); 
         foreach($task->getTags() as $key => $tag) {
           $tag->setName($reqTags[$key]->getName());
@@ -68,10 +73,10 @@ class TaskController extends Controller
     
 //    $tasks->findAllOrderedByDescription();
 
+//    $forms = array($this->createForm(new TaskType, $task)->createView());
     $forms = array();
     foreach ($tasks as $oneTask) {
       $forms[] = $this->createForm(new TaskType, $oneTask)->createView();
-//      \Doctrine\Common\Util\Debug::dump($oneTask->getTags());
 
     }
 

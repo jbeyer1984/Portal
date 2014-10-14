@@ -16,7 +16,9 @@
 {% for form in forms %}
 {{ form_start(form) }}
     {# render the task's only field: description #}
+    {{ form_row(form.id) }}
     {{ form_row(form.description) }}
+    {{ form_row(form.order) }}
 
 <h3>Tags</h3>
 <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">

@@ -19,6 +19,11 @@ class Task
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   protected $id;
+
+  /**
+   * @ORM\Column(type="integer")
+   */
+  protected $order;
   
   /**
    * @ORM\Column(type="string", length=100)
@@ -33,6 +38,16 @@ class Task
   public function __construct()
   {
     $this->tags = new ArrayCollection();
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  public function setId($id)
+  {
+    $this->id = $id;
   }
 
   public function addTag(Tag $tag)
@@ -54,6 +69,14 @@ class Task
   public function setDescription($description)
   {
     $this->description = $description;
+  }
+  
+  public function getOrder() {
+    return $this->order;
+  }
+
+  public function setOrder($order) {
+    $this->order = $order;
   }
 
   public function getTags()
