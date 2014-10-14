@@ -17,7 +17,15 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "~2.3",
+        "zenstruck/form-bundle": "~1.4",
+        "zendframework/zend-crypt": "~2.0,!=2.1.1",
+        "symfony/framework-bundle": "~2.5",
+        "knplabs/knp-menu-bundle": "dev-master",
+        "sonata-project/jquery-bundle": "dev-master",
+        "sonata-project/block-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
