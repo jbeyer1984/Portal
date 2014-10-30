@@ -1,0 +1,14 @@
+services:
+#    acme_portal.example:
+#        class: Acme\PortalBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+  tag_controller:
+    class: Acme\PortalBundle\Controller\TagController
+#    arguments:
+#      - @doctrine
+    calls:
+      - [ setContainer, [ "@service_container" ]]
+      - [ setFacade, [ "@doctrine" ]]
+
+

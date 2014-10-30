@@ -1,0 +1,21 @@
+{% extends 'AcmePortalBundle:Default:master.html.twig'  %}
+
+{% block body %}
+  <ul class="allAvailableTags">
+  {% for tag in tagList %}
+    <li>{{ tag.name }}</li>
+  {% endfor %}
+  </ul>
+
+  <select id="e1">
+  {% for tag in tagList %}
+    <option value="{{ tag.shortName }}">{{ tag.name }}</option>
+  {% endfor %}
+  </select>
+  
+  <form method="POST" action="{{ path('acme_tag_new') }}" {{ form_enctype(form) }}>
+    {{ form_row(form.name) }}
+    <input type="submit" value="Create" class="btn btn-default pull-right" />
+    {{ form_rest(form) }}
+  </form>
+{% endblock %}

@@ -1,12 +1,32 @@
 # Acme/DemoBundle/Resources/config/admin.yml
 services:
-    sonata.admin.post:
+    sonata.admin.tag:
+                class: Acme\TaskBundle\Admin\TagAdmin
+                tags:
+                    - name: sonata.admin
+                      manager_type: orm
+                      group: "Task"
+                      label: "tag"
+                arguments:
+                    - ~
+                    - Acme\TaskBundle\Entity\Tag
+                    - 'SonataAdminBundle:CRUD'
+                calls:
+                    - [ setTranslationDomain, [AcmeTaskBundle]]
+
+    sonata.admin.task:
         class: Acme\TaskBundle\Admin\TaskAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Task" }
+            - name: sonata.admin
+              manager_type: orm
+              group: "Task"
+              label: "Task"
+              label_catalogue: "AcmeTaskBundle"
         arguments:
             - ~
             - Acme\TaskBundle\Entity\Task
             - ~
+#            - AcmeTaskBundle:Task
         calls:
             - [ setTranslationDomain, [AcmeTaskBundle]]
+            - [addChild, ['@sonata.admin.tag']]

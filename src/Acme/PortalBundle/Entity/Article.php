@@ -1,17 +1,17 @@
 <?php
 
-// src/Acme/TaskBundle/Entity/Task.php
-namespace Acme\TaskBundle\Entity;
+// src/Acme/PortalBundle/Entity/Article.php
+namespace Acme\PortalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="task")
- * @ORM\Entity(repositoryClass="Acme\TaskBundle\Entity\TaskRepository")
+ * @ORM\Table(name="article")
+ * @ORM\Entity(repositoryClass="Acme\PortalBundle\Entity\ArticleRepository")
  */
-class Task
+class Article
 {
   /**
    * @ORM\Column(type="integer")
@@ -24,14 +24,14 @@ class Task
    * @ORM\Column(type="integer")
    */
   protected $pos;
-  
+
   /**
    * @ORM\Column(type="string", length=100, unique=true)
    */
   protected $description;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Tag", mappedBy="tasks", cascade={"persist"})
+   * @ORM\ManyToMany(targetEntity="Tag", mappedBy="articles", cascade={"persist"})
    */
   protected $tags;
 
@@ -52,7 +52,7 @@ class Task
 
   public function addTag(Tag $tag)
   {
-    $tag->addTask($this);
+    $tag->addArticle($this);
     $this->tags->add($tag);
   }
 
@@ -70,7 +70,7 @@ class Task
   {
     $this->description = $description;
   }
-  
+
   public function getPos() {
     return $this->pos;
   }
@@ -86,6 +86,6 @@ class Task
 
   public function __toString()
   {
-    return 'Task';
+    return 'Article';
   }
 }

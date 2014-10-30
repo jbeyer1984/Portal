@@ -1,21 +1,21 @@
 <?php
-// src/Acme/TaskBundle/Admin/TaskAdmin.php
+// src/Acme/PortalBundle/Admin/ArticleAdmin.php
 
-namespace Acme\TaskBundle\Admin;
+namespace Acme\PortalBundle\Admin;
 
-use Acme\TaskBundle\Form\DataTransformer\TagTransformer;
+use Acme\PortalBundle\Form\DataTransformer\TagTransformer;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class TaskAdmin extends Admin
+class ArticleAdmin extends Admin
 {
   // Fields to be shown on create/edit forms
   protected function configureFormFields(FormMapper $formMapper)
   {
     $formMapper
-//      ->add('description', 'entity', array('class' => 'Acme\TaskBundle\Entity\Task'))
+//      ->add('description', 'entity', array('class' => 'Acme\PortalBundle\Entity\Article'))
       ->add('description', 'text')
       ->add(
         $formMapper->create('tags', 'choice', [

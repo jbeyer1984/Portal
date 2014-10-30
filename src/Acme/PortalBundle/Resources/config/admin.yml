@@ -1,0 +1,32 @@
+# Acme/DemoBundle/Resources/config/admin.yml
+services:
+    sonata.admin.tag:
+                class: Acme\PortalBundle\Admin\TagAdmin
+                tags:
+                    - name: sonata.admin
+                      manager_type: orm
+                      group: "Article"
+                      label: "tag"
+                arguments:
+                    - ~
+                    - Acme\PortalBundle\Entity\Tag
+                    - 'SonataAdminBundle:CRUD'
+                calls:
+                    - [ setTranslationDomain, [AcmePortalBundle]]
+
+    sonata.admin.article:
+        class: Acme\PortalBundle\Admin\ArticleAdmin
+        tags:
+            - name: sonata.admin
+              manager_type: orm
+              group: "Article"
+              label: "Article"
+              label_catalogue: "AcmePortalBundle"
+        arguments:
+            - ~
+            - Acme\PortalBundle\Entity\Article
+            - ~
+#            - AcmePortalBundle:Article
+        calls:
+            - [ setTranslationDomain, [AcmePortalBundle]]
+            - [addChild, ['@sonata.admin.tag']]

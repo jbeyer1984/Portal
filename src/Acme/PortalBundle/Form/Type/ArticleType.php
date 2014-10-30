@@ -1,14 +1,14 @@
 <?php
 
-// src/Acme/TaskBundle/Form/Type/TaskType.php
-namespace Acme\TaskBundle\Form\Type;
+// src/Acme/PortalBundle/Form/Type/ArticleType.php
+namespace Acme\PortalBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 
-class TaskType extends AbstractType
+class ArticleType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
@@ -27,12 +27,12 @@ class TaskType extends AbstractType
   public function setDefaultOptions(OptionsResolverInterface $resolver)
   {
     $resolver->setDefaults(array(
-      'data_class' => 'Acme\TaskBundle\Entity\Task',
+      'data_class' => 'Acme\PortalBundle\Entity\Article',
     ));
   }
 
   public function getName()
   {
-    return 'task';
+    return 'article';
   }
 }

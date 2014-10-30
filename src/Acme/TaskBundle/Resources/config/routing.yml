@@ -3,8 +3,12 @@ acme_task_homepage:
     defaults: { _controller: AcmeTaskBundle:Default:index }
     
 acme_task_new:
-    path:     task/new/{name}
+    path:     task/new/
     defaults: { _controller: AcmeTaskBundle:Default:new }
+    
+acme_task_show:
+    path:     task/show/
+    defaults: { _controller: AcmeTaskBundle:Task:show }
     
 acme_task_index:
     path:     task/index/

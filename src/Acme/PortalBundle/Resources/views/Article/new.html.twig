@@ -1,4 +1,4 @@
-{# src/Acme/TaskBundle/Resources/views/Task/new.html.twig #}
+{# src/Acme/PortalBundle/Resources/views/Article/new.html.twig #}
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
@@ -15,8 +15,8 @@
 
 {% for form in forms %}
   {#{{ form_start(form) }}#}
-<form method="POST" action="{{ path('acme_task_form') }}" {{ form_enctype(form) }}>
-    {# render the task's only field: description #}
+<form method="POST" action="{{ path('acme_article_form') }}" {{ form_enctype(form) }}>
+    {# render the article's only field: description #}
   {#{{ form_widget(form) }}#}
     {{ form_row(form.id) }}
     {{ form_row(form.description) }}
@@ -38,9 +38,9 @@
 {# ... #}
 
 {#{% block javascripts %}#}
-{#{% javascripts '@AcmeTaskBundle/Resources/public/js/*' %}#}
-<script type="text/javascript" src="{{ asset('bundles/acmetask/js/lib/jquery.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/acmetask/js/main.js') }}"></script>
+{#{% javascripts '@Acme/PortalBundle/Resources/public/js/*' %}#}
+<script type="text/javascript" src="{{ asset('bundles/acmearticle/js/lib/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/acmearticle/js/main.js') }}"></script>
 {#{% endjavascripts %}#}
 {#{% endblock %}#}
 </body>
