@@ -1,65 +1,76 @@
-(function ($, JQuery, undefined) {
-  var $collectionHolder;
-
-// setup an "add a tag" link
-  var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-  var $newLinkLi = $('<li></li>').append($addTagLink);
-
-  jQuery(document).ready(function () {
-    // Get the ul that holds the collection of tags
-    $collectionHolder = $('ul.tags');
-
-    // add the "add a tag" anchor and li to the tags ul
-    $collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-    console.log("$collectionHolder", $collectionHolder);
-    $collectionHolder.each( function () {
-      var $collectionHolder = $(this);
-      $collectionHolder.find('.add_tag_link').on('click', function (e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-  
-        // add a new tag form (see next code block)
-        addTagForm($collectionHolder, $(this));
+var Collection = {
+  html: {
+    addLink: '<a href="#" class="add_tag_link">Add a tag</a>',
+    removeLink : '<a href="#" class="remove-tag">delete tag</a>',
+    newEntry: ''
+  },
+  obj: {
+    $collectionsUls: {}
+  },
+  init : function () {
+    var self = this;
+    $(document).ready( function () {
+      self.map();
+    })
+  },
+  map : function () {
+    var self = this;
+    this.obj.$collectionsUls = $('ul.tags');
+    this.obj.$collectionsUls.each( function () {
+      var $collectionUl = $(this);
+      var $lis = $(this).find('li');
+      $lis.each(function () {
+        self.addRemoveTagForm($(this));
       });
+      var $lastLi = $lis.last();
+      self.addTagForm($collectionUl, $lastLi);
     });
-  });
+  },
+  addRemoveTagForm : function ($liEntry) {
+    var $removeLink = $(this.html.removeLink);
+    $liEntry.append($removeLink);
 
-  function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">delete this tag</a>');
-    $tagFormLi.append($removeFormA);
-  
-    $removeFormA.on('click', function(e) {
-      // prevent the link from creating a "#" on the URL
+    this.mapRemoveLink($liEntry);
+  },
+  addTagForm : function($collectionUl, $lastLi) {
+    var index = $collectionUl.data('index');
+    $lastLi.append(this.getWrappedLi(this.html.addLink));
+
+    this.mapAddLink($collectionUl, $lastLi);
+  },
+  mapRemoveLink : function ($li) {
+    $li.find('.remove-tag').click( function(e) {
       e.preventDefault();
-  
-      // remove the li for the tag form
-      $tagFormLi.remove();
+      $(this).parent('li').remove();
+      return false;
     });
+  },
+  mapAddLink : function ($collectionUl, $lastLi) {
+    var self = this;
+    $lastLi.find('.add_tag_link').click( function(e) {
+      e.preventDefault();
+      var $newEntry = self.getNewCreatedTag($collectionUl);
+      $(this).before($newEntry);
+      self.addRemoveTagForm($newEntry);
+      self.mapRemoveLink($newEntry);
+    });
+  },
+  getNewCreatedTag : function ($collectionUl) {
+    if ('' == this.html.newEntry) {
+      this.html.newEntry = this.getPrototypeFromUl($collectionUl);
+    }
+    var index = $collectionUl.data('index');
+    this.html.newEntry.replace(/__name__/g, index);
+    $collectionUl.data('index', index + 1);
+    var $newFormLi = this.getWrappedLi($(this.html.newEntry));
+    return $newFormLi;
+  },
+  getPrototypeFromUl : function ($ul) {
+    return $ul.data('prototype');
+  },
+  getWrappedLi : function (aLink) {
+    return $('<li></li>').append(aLink);
   }
+}
 
-  function addTagForm($collectionHolder, $newLinkLi) {
-    // Get the data-prototype explained earlier
-    var prototype = $collectionHolder.data('prototype');
-
-    // get the new index
-    var index = $collectionHolder.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    $collectionHolder.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-
-    addTagFormDeleteLink($newFormLi);
-  }
-}(jQuery, window));
+Collection.init();

@@ -58,8 +58,22 @@ class TagController extends Controller implements FacadeInterface
   
   public function showAction()
   {
-    
-    
+    $tags = $this->facade->getRepository('Tag')->findAllOrderedByName();
+
+    $forms = array();
+    foreach ($tags as $key => $tag) {
+      $forms[] = $this
+        ->createForm(new TagType(), $tag)
+        ->createView();
+    }
+
+    return $this->render(
+      'AcmePortalBundle:Tag:show.html.twig',
+      array(
+        'tags' => $tags,
+        'forms' => $forms
+      )
+    );
   }
   
   public function ajaxAction()
@@ -67,9 +81,44 @@ class TagController extends Controller implements FacadeInterface
     
   }
 
-  public function editAction()
+  public function editAction(Request $request)
   {
+    $tag = $this->getNewTag();
+    $form = $this->createForm(new TagType(), $tag);
+    
+    $tagReq = $form->handleRequest($request)->getData();
+    $tagDb = $this->facade->getRepository('Tag')->findById($tagReq->getId());
+    
+    
+    if ($form->isValid()) {
+      if (sizeof($tagDb) > 0) {
+        $tag = $tagDb[0];
+        $tag->setName($tagReq->getName());
+        $this->facade->getEm()->persist($tag);
+        $this->facade->getEm()->flush();
+      }
+    }
 
+    return $this->redirect(
+      $this->generateUrl(
+        'acme_tag_show'
+      )
+    );
+  }
+  
+  public function deleteAction($id) {
+    $tagDb = $this->facade->getRepository('Tag')->findById($id);
+    if (sizeof($tagDb) > 0) {
+      $tag = $tagDb[0];
+      $this->facade->getEm()->remove($tag);
+      $this->facade->getEm()->flush();
+    }
+
+    return $this->redirect(
+      $this->generateUrl(
+        'acme_tag_show'
+      )
+    );
   }
 
   public function getNewTag()

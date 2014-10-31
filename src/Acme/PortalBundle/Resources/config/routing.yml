@@ -24,6 +24,22 @@ acme_tag_new:
   defaults:
     _controller: tag_controller:newAction
     
+acme_tag_show:
+  path: tag/show/
+  defaults:
+    _controller: tag_controller:showAction
+    
+acme_tag_edit:
+  path: tag/edit/
+  defaults:
+    _controller: tag_controller:editAction
+    
+acme_tag_delete:
+  path: tag/delete/{id}
+  defaults:
+    _controller: tag_controller:deleteAction
+    methods:  [DELETE]
+    
 #acme_tag_new:
 #    path:     tag/new/
 #    defaults: { _controller: AcmePortalBundle:Tag:new }

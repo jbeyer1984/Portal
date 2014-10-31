@@ -11,6 +11,7 @@ class TagType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+    $builder->add('id', 'hidden');
     $builder->add('name', 'text', array(
 //        'constraints' => new UniqueEntity()
       )

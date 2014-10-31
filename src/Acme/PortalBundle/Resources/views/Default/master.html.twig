@@ -5,40 +5,24 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <title>Document</title>
+  <link rel="stylesheet" href="{{ asset('bundles/acmeportal/css/main.css') }}"/>
+  {% block headCss %}
+  {% endblock %}
 </head>
 <body>
 
 
 {% block body %}
-{% for form in forms %}
-  {#{{ form_start(form) }}#}
-  <form method="POST" action="{{ path('acme_article_form') }}" {{ form_enctype(form) }}>
-    {# render the article's only field: description #}
-    {#{{ form_widget(form) }}#}
-    {{ form_row(form.id) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.pos) }}
-    {#{{ form_row(form.tags) }}#}
-
-    <h3>Tags</h3>
-    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">
-      {# iterate over each existing tag and render its only field: name #}
-      {% for tag in form.tags %}
-        <li>{{ form_row(tag.name) }}</li>
-      {% endfor %}
-    </ul>
-    <input type="submit" value="Create" class="btn btn-default pull-right" />
-    {{ form_rest(form) }}
-    {#{{ form_end(form) }}#}
-  </form>
-{% endfor %}
 {% endblock %}
 
 {#{% block javascripts %}#}
 {#{% javascripts '@Acme/PortalBundle/Resources/public/js/*' %}#}
 <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/lib/jquery.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/sonataadminbundle/js/select2.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/acmeportal/js/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/sonatacore/select2/select2.js') }}"></script>
+
+{% block customJavascript %}
+  <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/main.js') }}"></script>
+{% endblock %}
 {#{% endjavascripts %}#}
 {#{% endblock %}#}
 </body>
