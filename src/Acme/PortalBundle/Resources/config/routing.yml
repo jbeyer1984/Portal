@@ -1,49 +1,75 @@
-acme_article_homepage:
-    path:     article/hello/{name}
-    defaults: { _controller: AcmePortalBundle:Default:index }
-    
-acme_article_new:
-    path:     article/new/
-    defaults: { _controller: AcmePortalBundle:Article:new }
-    
-acme_article_show:
-    path:     article/show/
-    defaults: { _controller: AcmePortalBundle:Article:show }
-    
-acme_article_index:
-    path:     article/index/
-    defaults: { _controller: AcmePortalBundle:Article:index }
-    
-acme_article_form:
-    path:     article/form/
-    defaults: { _controller: AcmePortalBundle:Article:form }
-
-
+# ----------- Tag
 acme_tag_new:
   path: tag/new/
   defaults:
-    _controller: tag_controller:newAction
+    _controller: AcmePortalBundle:Tag:new
     
 acme_tag_show:
   path: tag/show/
   defaults:
-    _controller: tag_controller:showAction
+    _controller: AcmePortalBundle:Tag:show
     
 acme_tag_edit:
   path: tag/edit/
   defaults:
-    _controller: tag_controller:editAction
+    _controller: AcmePortalBundle:Tag:edit
     
 acme_tag_delete:
   path: tag/delete/{id}
   defaults:
-    _controller: tag_controller:deleteAction
+    _controller: AcmePortalBundle:Tag:delete
     methods:  [DELETE]
     
 #acme_tag_new:
 #    path:     tag/new/
 #    defaults: { _controller: AcmePortalBundle:Tag:new }
     
-acme_tag_show:
-    path:     tag/show/
-    defaults: { _controller: AcmePortalBundle:Tag:show }
+#acme_tag_show:
+#    path:     tag/show/
+#    defaults: { _controller: AcmePortalBundle:Tag:show }
+
+# ----------- Article
+acme_article_new:
+  path: article/new/
+  defaults:
+    _controller: AcmePortalBundle:Article:new
+    
+acme_article_show:
+  path: article/show/
+  defaults:
+    _controller: AcmePortalBundle:Article:show
+    
+acme_article_edit:
+  path: article/edit/
+  defaults:
+    _controller: AcmePortalBundle:Article:edit
+    methods:  [UPDATE]
+    
+acme_article_delete:
+  path: article/delete/{id}
+  defaults:
+    _controller: AcmePortalBundle:Article:delete
+    methods:  [DELETE]
+    
+# ----------- Client
+acme_client_new:
+  path: client/new/
+  defaults:
+    _controller: AcmePortalBundle:Client:new
+    
+acme_client_show:
+  path: client/show/
+  defaults:
+    _controller: AcmePortalBundle:Client:show
+    
+acme_client_edit:
+  path: client/edit/
+  defaults:
+    _controller: AcmePortalBundle:Client:edit
+    methods:  [UPDATE]
+    
+acme_client_delete:
+  path: client/delete/{id}
+  defaults:
+    _controller: AcmePortalBundle:Client:delete
+    methods:  [DELETE]

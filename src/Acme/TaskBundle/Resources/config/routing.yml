@@ -1,19 +1,19 @@
-acme_task_homepage:
-    path:     task/hello/{name}
-    defaults: { _controller: AcmeTaskBundle:Default:index }
-    
-acme_task_new:
-    path:     task/new/
-    defaults: { _controller: AcmeTaskBundle:Default:new }
-    
-acme_task_show:
-    path:     task/show/
-    defaults: { _controller: AcmeTaskBundle:Task:show }
-    
-acme_task_index:
-    path:     task/index/
-    defaults: { _controller: AcmeTaskBundle:Task:index }
-    
-acme_task_form:
-    path:     task/form/
-    defaults: { _controller: AcmeTaskBundle:Task:form }
+#acme_task_homepage:
+#    path:     task/hello/{name}
+#    defaults: { _controller: AcmeTaskBundle:Default:index }
+#    
+#acme_task_new:
+#    path:     task/new/
+#    defaults: { _controller: AcmeTaskBundle:Default:new }
+#    
+#acme_task_show:
+#    path:     task/show/
+#    defaults: { _controller: AcmeTaskBundle:Task:show }
+#    
+#acme_task_index:
+#    path:     task/index/
+#    defaults: { _controller: AcmeTaskBundle:Task:index }
+#    
+#acme_task_form:
+#    path:     task/form/
+#    defaults: { _controller: AcmeTaskBundle:Task:form }

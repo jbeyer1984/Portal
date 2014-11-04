@@ -29,6 +29,16 @@ class Article
    * @ORM\Column(type="string", length=100, unique=true)
    */
   protected $description;
+  
+  /**
+   * @ORM\ManyToOne(targetEntity="Client", inversedBy="articles", cascade={"persist"})
+   * @ORM\JoinColumn(
+   *     name="client_id",
+   *     referencedColumnName="id",
+   *     nullable=true
+   * )
+   */
+  protected $client;
 
   /**
    * @ORM\ManyToMany(targetEntity="Tag", mappedBy="articles", cascade={"persist"})
@@ -38,16 +48,17 @@ class Article
   public function __construct()
   {
     $this->tags = new ArrayCollection();
+//    $this->client = new ArrayCollection();
+  }
+  
+  public function setClient(Client $client)
+  {
+      $this->client = $client;
   }
 
-  public function getId()
+  public function removeClient()
   {
-    return $this->id;
-  }
-
-  public function setId($id)
-  {
-    $this->id = $id;
+    $this->client = null;
   }
 
   public function addTag(Tag $tag)
@@ -59,6 +70,16 @@ class Article
   public function removeTag(Tag $tag)
   {
     $this->tags->removeElement($tag);
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  public function setId($id)
+  {
+    $this->id = $id;
   }
 
   public function getDescription()
@@ -82,6 +103,14 @@ class Article
   public function getTags()
   {
     return $this->tags;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getClient()
+  {
+    return $this->client;
   }
 
   public function __toString()

@@ -25,9 +25,9 @@
   
   <form method="POST" action="{{ path('acme_tag_new') }}" {{ form_enctype(form) }}>
     {#{{ form_row(form.name) }}#}
-    <input type="hidden" class="tagSelect" value="task, substring"/>
-    {#<input type="submit" value="Create" class="btn btn-default pull-right" />#}
+    {#<input type="hidden" class="tagSelect" value="task, substring"/>#}
     {{ form_rest(form) }}
+    <input type="submit" value="Create" class="btn btn-default pull-right" />
   </form>
 {% endblock %}
 

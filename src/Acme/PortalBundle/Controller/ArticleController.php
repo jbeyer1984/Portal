@@ -5,47 +5,29 @@ namespace Acme\PortalBundle\Controller;
 
 use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Tag;
+//use Doctrine\Common\Collections\ArrayCollection;
+use Acme\PortalBundle\Facade\FacadeInterface;
+use Acme\PortalBundle\Facade\RepositoryFacade;
 use Acme\PortalBundle\Form\Type\ArticleType;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ArticleController extends Controller
+class ArticleController extends Controller implements FacadeInterface
 {
-  protected $repositories = array();
+  /**
+   * @var RepositoryFacade
+   */
+  protected $facade;
 
-  protected $em;
+  public function setFacade(ManagerRegistry $doctrine)
+  {
+    $this->facade = new RepositoryFacade($doctrine, 'AcmePortalBundle');
+  }
 
   public function indexAction()
   {
     return $this->render('AcmePortalBundle:Default:index.html.twig', array('name' => 'test'));
-  }
-
-  /**
-   * @return \Doctrine\Common\Persistence\ObjectManager|object
-   */
-  protected function getEm()
-  {
-    if (isset($this->em)) {
-      return $this->em;
-    }
-    $this->em = $this->getDoctrine()->getManager();
-    return $this->em;
-  }
-
-  /**
-   * @param $identifier
-   * @return EntityRepository
-   */
-  protected function getRepository($identifier)
-  {
-
-    if (isset($this->repositories[$identifier])) {
-      return $this->repositories[$identifier];
-    }
-    $em = $this->getEm();
-    $repository = $em->getRepository('AcmePortalBundle:' . $identifier);
-    $this->repositories[$identifier] = $repository;
-    return $repository;
   }
 
   public function newAction(Request $request) {
@@ -55,43 +37,97 @@ class ArticleController extends Controller
     $form->handleRequest($request);
 
     if ($form->isValid()) {
-      $this->getEm()->persist($form);
+      $article = $form->getData();
+      foreach($article->getTags() as $tag) {
+        $article->addTag($tag);
+//        $article->setClient(null);
+        $this->facade->getEm()->persist($tag);
+      }
+      $this->facade->getEm()->persist($article);
+      $this->facade->getEm()->flush();
     }
+
+    $articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
     
-    $forms = array();
-    $forms[] = $form->createView();
+    $form = $form->createView();
 
     return $this->render('AcmePortalBundle:Article:new.html.twig',
       array(
-        'forms' => $forms
+        'articles' => $articles,
+        'form' => $form
       )
     );
-//    return $this->redirect(
-//      $this->generateUrl(
-//        'acme_article_show',
-//        array(
-//          'forms' => $forms
-//        )
-//      )
-//    );
   }
 
   public function showAction() {
-    $articles = $this->getRepository('Article')->findAllOrderedByDescription();
+    $articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
 
     $article = $this->getNewArticle();
     $form = $this->createForm(new ArticleType(), $article);
 
     $forms = array();
-    foreach ($articles as $oneArticle) {
-      $forms[] = $this->createForm(new ArticleType, $oneArticle)->createView();
-
+    foreach ($articles as $article) {
+      $forms[] = $this->createForm(new ArticleType, $article)->createView();
     }
 //    $forms[] = $form->createView();
 
-    return $this->render('AcmePortalBundle:Article:new.html.twig',
+    return $this->render('AcmePortalBundle:Article:show.html.twig',
       array(
+        'articles' => $articles,
         'forms' => $forms
+      )
+    );
+  }
+
+  public function editAction(Request $request)
+  {
+    $article = $this->getNewArticle();
+    $form = $this->createForm(new ArticleType(), $article);
+
+    $form->handleRequest($request);
+    
+    if ($form->isValid()) {
+      $articleReq = $form->getData();
+      $articleDb = $this->facade->getRepository('Article')->findById($articleReq->getId());
+      if (sizeof($articleDb) > 0) {
+        $article = $articleDb[0];
+        $article->setDescription($articleReq->getDescription());
+        // remove first the tags from array
+        foreach($article->getTags() as $tag) {
+          $tag->getArticles()->removeElement($article);
+          $this->facade->getEm()->persist($tag);
+        }
+        $this->facade->getEm()->persist($article);
+        $tagsReq = $articleReq->getTags();
+        // add tag to array
+        foreach($tagsReq as $tag) {
+          $article->addTag($tag);
+          $this->facade->getEm()->persist($tag);
+        }
+        $this->facade->getEm()->persist($article);
+        $this->facade->getEm()->flush();
+      }
+    }
+
+    return $this->redirect(
+      $this->generateUrl(
+        'acme_article_show'
+      )
+    );
+  }
+
+  public function deleteAction($id)
+  {
+    $articleDb = $this->facade->getRepository('Article')->findById($id);
+    if (sizeof($articleDb) > 0) {
+      $article = $articleDb[0];
+      $this->facade->getEm()->remove($article);
+      $this->facade->getEm()->flush();
+    }
+
+    return $this->redirect(
+      $this->generateUrl(
+        'acme_article_show'
       )
     );
   }
@@ -215,7 +251,7 @@ class ArticleController extends Controller
   /**
    * @return Article
    */
-  public function getNewArticle()
+  protected function getNewArticle()
   {
     $article = new Article();
     $article->setPos(0);

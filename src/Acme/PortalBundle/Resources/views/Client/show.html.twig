@@ -1,0 +1,35 @@
+{% extends 'AcmePortalBundle:Default:master.html.twig'  %}
+
+{% block headCss %}
+  {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
+{% endblock %}
+
+{% block body %}
+  {% for key, form in forms %}
+    {#{{ form_start(form) }}#}
+    <form method="POST" action="{{ path('acme_client_edit') }}" {{ form_enctype(form) }}>
+      {# render the article's only field: description #}
+      {#{{ form_widget(form) }}#}
+      {{ form_row(form.id) }}
+      {{ form_row(form.name) }}<a href="{{ path('acme_client_delete', {'id': clients[key].getId}) }}">Article löschen</a>
+      {{ form_row(form.pos) }}
+      {#{{ form_row(form.tags) }}#}
+
+      <h3>Articles</h3>
+      {#<ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">#}
+      <ul class="articles">
+        {# iterate over each existing tag and render its only field: name #}
+        {% for article in form.articles %}
+          <li>{{ form_row(article) }}</li>
+        {% endfor %}
+      </ul>
+      <input type="submit" value="update" class="btn btn-default pull-right" />
+      {{ form_rest(form) }}
+      {#{{ form_end(form) }}#}
+    </form>
+  {% endfor %}
+{% endblock %}
+
+{% block customJavascript %}
+  <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>
+{% endblock %}

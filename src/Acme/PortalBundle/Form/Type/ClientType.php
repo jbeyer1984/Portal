@@ -9,17 +9,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 
-class ArticleType extends AbstractType
+class ClientType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder->add('id', 'hidden');
-    $builder->add('description');
+    $builder->add('client_id', 'hidden');
+    $builder->add('name');
     $builder->add('pos');
 
-    $builder->add('tags', 'entity', array(
-        'class' => 'AcmePortalBundle:Tag',
-        'property' => 'name',
+    $builder->add('articles', 'entity', array(
+        'class' => 'AcmePortalBundle:Article',
+        'property' => 'description',
         'expanded' => 'true',
         'multiple' => 'true',
 //        'choices' => $group->getUsers()
@@ -30,12 +31,12 @@ class ArticleType extends AbstractType
   public function setDefaultOptions(OptionsResolverInterface $resolver)
   {
     $resolver->setDefaults(array(
-      'data_class' => 'Acme\PortalBundle\Entity\Article',
+      'data_class' => 'Acme\PortalBundle\Entity\Client',
     ));
   }
 
   public function getName()
   {
-    return 'article';
+    return 'client';
   }
 }

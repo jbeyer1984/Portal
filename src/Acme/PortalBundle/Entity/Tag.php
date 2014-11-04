@@ -27,7 +27,7 @@ class Tag
   public $name;
 
   /**
-   * @ORM\ManyToMany(targetEntity="Article", inversedBy="name", cascade={"persist"})
+   * @ORM\ManyToMany(targetEntity="Article", inversedBy="name")
    * @ORM\JoinTable(
    *     name="ArticleTag",
    *     joinColumns={
@@ -84,6 +84,14 @@ class Tag
   public function __toString()
   {
     return 'Article';
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getArticles()
+  {
+    return $this->articles;
   }
 
 }

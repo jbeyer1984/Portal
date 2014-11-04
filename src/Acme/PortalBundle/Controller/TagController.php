@@ -50,7 +50,7 @@ class TagController extends Controller implements FacadeInterface
 
     return $this->render('AcmePortalBundle:Tag:new.html.twig',
       array(
-        'tagList' => $tagList,
+        'tagList' => $tags,
         'form' => $form->createView()
       )
     );
@@ -121,7 +121,7 @@ class TagController extends Controller implements FacadeInterface
     );
   }
 
-  public function getNewTag()
+  protected function getNewTag()
   {
     $tag = new Tag();
     $tag->setName('new');

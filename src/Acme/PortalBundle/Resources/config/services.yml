@@ -5,10 +5,18 @@ services:
 
   tag_controller:
     class: Acme\PortalBundle\Controller\TagController
-#    arguments:
-#      - @doctrine
     calls:
       - [ setContainer, [ "@service_container" ]]
       - [ setFacade, [ "@doctrine" ]]
+      
+  article_controller:
+      class: Acme\PortalBundle\Controller\ArticleController
+      calls:
+        - [ setContainer, [ "@service_container" ]]
+        - [ setFacade, [ "@doctrine" ]]
 
-
+  acme.portal.listener.before_controller:
+    class: Acme\PortalBundle\EventListener\BeforeControllerListener
+    tags:
+        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+    arguments: ['@doctrine']
