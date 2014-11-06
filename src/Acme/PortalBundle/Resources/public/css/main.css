@@ -1,0 +1,15 @@
+.tagWrapper {
+  border: 1px solid blue;
+  width: 500px;
+  margin-bottom: 20px;
+  text-align: left;
+  overflow: hidden;
+}
+.tagWrapper .tag {
+  float: left;
+  margin-right: 5px;
+  background: #d1d1d1;
+}
+.clients .articles {
+  margin-left: 10px;
+}
