@@ -23,7 +23,10 @@ class PortalController extends Controller implements FacadeControllerInterface
   {
     $this->facade = new RepositoryFacade($doctrine, 'AcmePortalBundle');
     $this->portalData = new PortalData();
+    $session = new Session();
+    $session->start();
     $this->portalData->setFacade($this->facade);
+    $this->portalData->setSession($session);
   }
 
   public function showAction()
@@ -47,12 +50,12 @@ class PortalController extends Controller implements FacadeControllerInterface
   public function visitAction($client, $article)
   {
     $this->portalData->visit($client, $article);
-    $articles = $this->portalData->getArticles();
+    $clientsArticlesLeft = $this->portalData->getClientsArticles();
     $clients = $this->facade->getRepository('Client')->findAllOrderedByDescription();
 
     return $this->render('AcmePortalBundle:Portal:visit.html.twig',
       array(
-        'articles' => $articles,
+        'clientsArticlesLeft' => $clientsArticlesLeft,
         'clients' => $clients
       )
     );

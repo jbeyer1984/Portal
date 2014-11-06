@@ -26,6 +26,10 @@ class PortalData implements FacadeUtilityInterface
   /**
    * @var array
    */
+  protected $clientsArticles;
+  /**
+   * @var array
+   */
   protected $visitedArr;
   /**
    * @var array
@@ -61,8 +65,6 @@ class PortalData implements FacadeUtilityInterface
    */
   public function visit($client, $article)
   {
-    $this->fillBlacklist($client, $article);
-
     $sessionArr = $this->session->get('overview');
     if (isset($sessionArr)) {
       $this->visitedArr = $sessionArr;
@@ -75,19 +77,42 @@ class PortalData implements FacadeUtilityInterface
     $articleDb = $this->facade->getRepository('Article')->findByDescription($article);
     if (empty($articleDb)) {
       $this->articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
+      $this->clientsArticles = $this->generateClientsArticles($this->articles);
+      ob_start();
+      \Doctrine\Common\Util\Debug::dump($this->clientsArticles);
+      $print = ob_get_clean();
+      error_log('dump:$$this->clientsArticles = ' . $print, 0, '/tmp/error.log');
+
       // !!!!!!!!! have to implement logging, wrong article !!!!!!!!!!!!
       return;
     } else {
       $articleDb = $articleDb[0];
     }
     $tags = $articleDb->getTags();
-    $this->articles = $this->getMostSignificantArticlesToTags($tags);
-    ob_start();
-    \Doctrine\Common\Util\Debug::dump($this->visitedBlacklist);
-    $print = ob_get_clean();
-    error_log('dump:$VAR$ = ' . $print, 0, '/tmp/error.log');
+    
+    $this->fillBlacklist($client, $article);
+    $this->articles = $this->getMostSignificantArticlesToTags($tags); // create also $this->clientsArticles
 
     $this->filterArticleWithBlacklist();
+    $this->clientsArticles = $this->generateClientsArticles($this->articles);
+  }
+
+  /**
+   * @param array $articles
+   * @return array
+   */
+  public function generateClientsArticles(Array $articles)
+  {
+    $clientsArticles  = array();
+    foreach ($articles as $article) {
+      $client = $article->getClient()->getName();
+      $articleName = $article->getDescription();
+      if (!isset($clientsArticles[$client])) {
+        $clientsArticles[$client] = array();
+      }
+      $clientsArticles[$client][$articleName] = $article;
+    }
+    return $clientsArticles;
   }
 
   public function fillBlacklist($client, $article)
@@ -115,24 +140,13 @@ class PortalData implements FacadeUtilityInterface
     }
 //    $tagNames = array('marketing', 'cms');
 //    $tagNames = array('marketing');
-    $articles = $this->facade->getRepository('Article')->findSignificantArticleToTags($tagNames);
-    $clientArticle  = array();
-    foreach ($articles as $article) {
-      $client = $article->getClient()->getName();
-      $articleName = $article->getDescription();
-      if (!isset($clientArticle[$client])) {
-        $clientArticle[$client] = array();
-        $clientArticle[$client][$articleName] = $article;
-      }
-    }
+    $articlesDb = $this->facade->getRepository('Article')->findSignificantArticleToTags($tagNames);
     
-    return $articles;
+    return $articlesDb;
+//    return $articles;
   }
 
   public function generateVisit($client, $article){
-    $this->visitedArr['lastVisit'] = [];
-    $this->visitedArr['lastVisit'][$client] = [];
-    $this->visitedArr['lastVisit'][$client][$article] = $article;
     $this->visitedArr['visited'] = [];
     $this->visitedArr['visited'][$client] = [];
     $this->visitedArr['visited'][$client][$article] = $article;
@@ -158,8 +172,22 @@ class PortalData implements FacadeUtilityInterface
    */
   public function filterArticleWithBlacklist()
   {
+    $clientsVisited = array_keys($this->visitedArr['visited']);
+    $clientsTagged = array_map(function ($article) {
+      return $article->getClient()->getName();
+    }, $this->articles);
+    $clientsToAdd = array_diff($clientsVisited, $clientsTagged);
+    $clients = $this->facade->getRepositoryFacade()->getRepository('Client')->findByName($clientsToAdd);
+    foreach($clients as $client) {
+      foreach ($client->getArticles() as $article) {
+        $this->articles[] = $article;
+      }
+    }
+
     $this->articles = array_filter($this->articles, function ($article) {
       $clientName = $article->getClient()->getName();
+
+      $clientsTagged[] = $clientName;
       $articleName = $article->getDescription();
 
       if (isset($this->visitedBlacklist[$clientName])
@@ -186,6 +214,22 @@ class PortalData implements FacadeUtilityInterface
   public function setArticles($articles)
   {
     $this->articles = $articles;
+  }
+
+  /**
+   * @return array
+   */
+  public function getClientsArticles()
+  {
+    return $this->clientsArticles;
+  }
+
+  /**
+   * @param array $clientsArticles
+   */
+  public function setClientsArticles($clientsArticles)
+  {
+    $this->clientsArticles = $clientsArticles;
   }
   
   /**

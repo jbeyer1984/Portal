@@ -42,32 +42,23 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData->setSession($this->session);
   }
   
-  public function testVisit()
+  public function testVisitWrongArticleName()
   {
-    $this->portalData->visit('asv', 'stylebook');
-    $this->result = $this->portalData->getVisitedArr();
-//    ob_start();
-//    print_r($this->result);
-//    $print = ob_get_clean();
-//    error_log('dump:$$this->result = ' . $print, 0, '/tmp/error.log');
+    $this->portalData->visit('spiegel', 'change'); // wrong article !!!!!!
 
-    $this->portalData->visit('asv', 'travelbook');
-    $this->result = $this->portalData->getVisitedArr();
-//    ob_start();
-//    print_r($this->result);
-//    $print = ob_get_clean();
-//    error_log('dump:$$this->result = ' . $print, 0, '/tmp/error.log');
-    
-    $this->result = $this->portalData->getArticles();
-    ob_start();
-    \Doctrine\Common\Util\Debug::dump($this->result);
-    $print = ob_get_clean();
-    error_log('dump:$$this->result = ' . $print, 0, '/tmp/error.log');
-
-
-    $this->assertTrue(true);
+    // gebe alle article aus
+    $this->assertTrue(isset($this->result['asv']['stylebook']));
+    $this->assertTrue(isset($this->result['asv']['travelbook']));
+    $this->assertTrue(isset($this->result['tdu']['vermarkter']));
+    $this->assertTrue(isset($this->result['spiegel']['qc']));
   }
 
-
+  public function testVisitAsvThenTdu()
+  {
+    $this->portalData->visit('asv', 'travelbook');
+    $this->portalData->visit('tdu', 'vermarkter');
+    $this->result = $this->portalData->getClientsArticles();
+    $this->assertTrue(isset($this->result['asv']['stylebook']));
+  }
 }
  

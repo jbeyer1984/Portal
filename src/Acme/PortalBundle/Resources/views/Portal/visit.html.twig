@@ -7,8 +7,10 @@
 {% block body %}
   <div class="leftArticles">
     <h3>LeftArticles:</h3><br>
-    {% for article in articles%}
-      <a href="#">{{ article.description }} : {{ article.client.name }}</a><br>
+    {% for clientName, articles in clientsArticlesLeft %}
+      {% for article in articles %}
+        <a href="#">{{ clientName }} : {{ article.description }}</a><br>
+      {% endfor %}
     {% endfor %}
   </div>
   <div class="clients">

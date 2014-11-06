@@ -38,7 +38,7 @@ class LoadPortalData implements FixtureInterface
       $tagsArr['symfony'], $tagsArr['framework'] // extended line
     );
     $vermarkterTags = array(
-      $tagsArr['content'], $tagsArr['cms']
+      $tagsArr['marketing'], $tagsArr['cms']
     );
     $qcTags = array(
       $tagsArr['marketing'], $tagsArr['advertisement'],
