@@ -5,14 +5,14 @@ use Acme\PortalBundle\Entity\Client;
 use Acme\PortalBundle\Entity\Article;
 //use Acme\PortalBundle\Entity\Tag;
 //use Doctrine\Common\Collections\ArrayCollection;
-use Acme\PortalBundle\Facade\FacadeInterface;
+use Acme\PortalBundle\Facade\FacadeControllerInterface;
 use Acme\PortalBundle\Facade\RepositoryFacade;
 use Acme\PortalBundle\Form\Type\ClientType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ClientController extends Controller implements FacadeInterface
+class ClientController extends Controller implements FacadeControllerInterface
 {
   /**
    * @var RepositoryFacade

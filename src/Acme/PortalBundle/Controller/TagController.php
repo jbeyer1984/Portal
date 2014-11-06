@@ -3,14 +3,14 @@
 namespace Acme\PortalBundle\Controller;
 
 use Acme\PortalBundle\Entity\Tag;
-use Acme\PortalBundle\Facade\FacadeInterface;
+use Acme\PortalBundle\Facade\FacadeControllerInterface;
 use Acme\PortalBundle\Facade\RepositoryFacade;
 use Acme\PortalBundle\Form\Type\TagType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class TagController extends Controller implements FacadeInterface
+class TagController extends Controller implements FacadeControllerInterface
 {
   /**
    * @var RepositoryFacade

@@ -2,8 +2,10 @@
 namespace Acme\PortalBundle\Facade;
 
 use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Acme\PortalBundle\Facade\Facade;
 
-class RepositoryFacade
+
+class RepositoryFacade extends Facade
 {
   protected $doctrine;
   protected $em;
@@ -16,6 +18,7 @@ class RepositoryFacade
    */
   public function __construct(ManagerRegistry $doctrine, $bundle)
   {
+    parent::__construct($this);
     $this->doctrine = $doctrine;
     $this->bundle = $bundle;
   }
@@ -36,5 +39,10 @@ class RepositoryFacade
     $repository = $this->getEm()->getRepository($this->bundle . ':' . $identifier);
     $this->repositories[$identifier] = $repository;
     return $repository;
+  }
+
+  public function toString()
+  {
+    return 'RepositoryFacade'; //get_class($this); doesn't work because of whole path
   }
 }

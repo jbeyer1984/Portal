@@ -73,3 +73,14 @@ acme_client_delete:
   defaults:
     _controller: AcmePortalBundle:Client:delete
     methods:  [DELETE]
+    
+# ----------- Portal
+acme_portal_show:
+  path: portal/show/
+  defaults:
+    _controller: AcmePortalBundle:Portal:show
+  
+acme_portal_visit:
+  path: portal/visit/{client}/{article}
+  defaults:
+    _controller: AcmePortalBundle:Portal:visit

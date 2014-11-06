@@ -6,14 +6,14 @@ namespace Acme\PortalBundle\Controller;
 use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Tag;
 //use Doctrine\Common\Collections\ArrayCollection;
-use Acme\PortalBundle\Facade\FacadeInterface;
+use Acme\PortalBundle\Facade\FacadeControllerInterface;
 use Acme\PortalBundle\Facade\RepositoryFacade;
 use Acme\PortalBundle\Form\Type\ArticleType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ArticleController extends Controller implements FacadeInterface
+class ArticleController extends Controller implements FacadeControllerInterface
 {
   /**
    * @var RepositoryFacade

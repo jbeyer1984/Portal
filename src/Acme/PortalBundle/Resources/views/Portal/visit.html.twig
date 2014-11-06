@@ -1,0 +1,29 @@
+{% extends 'AcmePortalBundle:Default:master.html.twig'  %}
+
+{% block headCss %}
+  {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
+{% endblock %}
+
+{% block body %}
+  <div class="leftArticles">
+    <h3>LeftArticles:</h3><br>
+    {% for article in articles%}
+      <a href="#">{{ article.description }} : {{ article.client.name }}</a><br>
+    {% endfor %}
+  </div>
+  <div class="clients">
+    {% for key, client in clients%}
+      <h3>Client: {{ client.name }}</h3>
+      <div class="articles">
+        <h3>Articles:</h3>
+        {% for article in client.articles %}
+          <a href="{{ path('acme_portal_visit', {client: client.name, article: article.description}) }}">{{ article.description }}</a><br>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block customJavascript %}
+  {#<script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>#}
+{% endblock %}

@@ -3,7 +3,7 @@ namespace Acme\PortalBundle\Facade;
 
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 
-interface FacadeInterface
+interface FacadeControllerInterface
 {
   public function setFacade(ManagerRegistry $doctrine);
 }

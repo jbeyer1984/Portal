@@ -4,7 +4,7 @@ namespace Acme\PortalBundle\EventListener;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Acme\PortalBundle\Facade\FacadeInterface;
+use Acme\PortalBundle\Facade\FacadeControllerInterface;
 
 class BeforeControllerListener
 {
@@ -31,7 +31,7 @@ class BeforeControllerListener
       return;
     }
 
-    if ($controllerObject instanceof FacadeInterface) {
+    if ($controllerObject instanceof FacadeControllerInterface) {
       // this method is the one that is part of the interface.
       $controllerObject->setFacade($this->doctrine);
     }
