@@ -1,15 +1,15 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: @AcmeTaskBundle/Resources/config/admin.yml }
+#    - { resource: @AcmeTaskBundle/Resources/config/admin.yml }
 
 framework:
     #esi:             ~
     #translator:      { fallback: "%locale%" }
-    test: ~
-    session:
+#    test: ~
+#    session:
 #        storage_id: session.storage.filesystem
-        storage_id: session.storage.mock_file
+#        storage_id: session.storage.mock_file
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"

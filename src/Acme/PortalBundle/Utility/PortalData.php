@@ -26,10 +26,6 @@ class PortalData implements FacadeUtilityInterface
   /**
    * @var array
    */
-  protected $clientsArticles;
-  /**
-   * @var array
-   */
   protected $visitedArr;
   /**
    * @var array
@@ -65,23 +61,10 @@ class PortalData implements FacadeUtilityInterface
    */
   public function visit($client, $article)
   {
-    $sessionArr = $this->session->get('overview');
-    if (isset($sessionArr)) {
-      $this->visitedArr = $sessionArr;
-      $this->addVisit($client, $article);
-      $this->session->set('overview', $this->getVisitedArr());
-    } else {
-      $this->generateVisit($client, $article);
-      $this->session->set('overview', $this->getVisitedArr());
-    }
+    $this->equipVisitedArr($client, $article);
     $articleDb = $this->facade->getRepository('Article')->findByDescription($article);
     if (empty($articleDb)) {
       $this->articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
-      $this->clientsArticles = $this->generateClientsArticles($this->articles);
-      ob_start();
-      \Doctrine\Common\Util\Debug::dump($this->clientsArticles);
-      $print = ob_get_clean();
-      error_log('dump:$$this->clientsArticles = ' . $print, 0, '/tmp/error.log');
 
       // !!!!!!!!! have to implement logging, wrong article !!!!!!!!!!!!
       return;
@@ -94,25 +77,23 @@ class PortalData implements FacadeUtilityInterface
     $this->articles = $this->getMostSignificantArticlesToTags($tags); // create also $this->clientsArticles
 
     $this->filterArticleWithBlacklist();
-    $this->clientsArticles = $this->generateClientsArticles($this->articles);
   }
 
   /**
-   * @param array $articles
-   * @return array
+   * @param $client
+   * @param $article
    */
-  public function generateClientsArticles(Array $articles)
+  protected function equipVisitedArr($client, $article)
   {
-    $clientsArticles  = array();
-    foreach ($articles as $article) {
-      $client = $article->getClient()->getName();
-      $articleName = $article->getDescription();
-      if (!isset($clientsArticles[$client])) {
-        $clientsArticles[$client] = array();
-      }
-      $clientsArticles[$client][$articleName] = $article;
+    $sessionArr = $this->session->get('overview');
+    if (isset($sessionArr)) {
+      $this->visitedArr = $sessionArr;
+      $this->addVisit($client, $article);
+      $this->session->set('overview', $this->getVisitedArr());
+    } else {
+      $this->generateVisit($client, $article);
+      $this->session->set('overview', $this->getVisitedArr());
     }
-    return $clientsArticles;
   }
 
   public function fillBlacklist($client, $article)

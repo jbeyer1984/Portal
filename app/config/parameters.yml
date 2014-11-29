@@ -3,7 +3,7 @@ parameters:
     database_driver: pdo_mysql
     database_host: localhost
     database_port: null
-    database_name: symfony2
+    database_name: symfony2arbeit
     database_user: root
     database_password: user20
     mailer_transport: smtp

@@ -50,12 +50,12 @@ class PortalController extends Controller implements FacadeControllerInterface
   public function visitAction($client, $article)
   {
     $this->portalData->visit($client, $article);
-    $clientsArticlesLeft = $this->portalData->getClientsArticles();
+    $articlesLeft = $this->portalData->getArticles();
     $clients = $this->facade->getRepository('Client')->findAllOrderedByDescription();
 
     return $this->render('AcmePortalBundle:Portal:visit.html.twig',
       array(
-        'clientsArticlesLeft' => $clientsArticlesLeft,
+        'articlesLeft' => $articlesLeft,
         'clients' => $clients
       )
     );

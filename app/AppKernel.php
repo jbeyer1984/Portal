@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 //            new Acme\StoreBundle\AcmeStoreBundle(),
-            new Acme\TaskBundle\AcmeTaskBundle(),
+//            new Acme\TaskBundle\AcmeTaskBundle(),
             new Acme\PortalBundle\AcmePortalBundle(),
             new \Sonata\CoreBundle\SonataCoreBundle(),
             new \Sonata\BlockBundle\SonataBlockBundle(),

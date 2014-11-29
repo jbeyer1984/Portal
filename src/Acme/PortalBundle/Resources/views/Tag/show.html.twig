@@ -4,20 +4,26 @@
 
 
 {% block body %}
+  <div class="tags">
 {% for key, form in forms %}
   {#{{ form_start(form) }}#}
   <form method="POST" action="{{ path('acme_tag_edit') }}" {{ form_enctype(form) }}>
     {# render the article's only field: description #}
-    {{ form_row(form.id) }}
-    {{ form_row(form.name) }}
-    <a href="{{ path('acme_tag_delete', {'id': tags[key].getId}) }}">Tag löschen</a>
-    <div class="test">
-      
+    <div class="updateAndDelete">
+      {{ form_row(form.id) }}
+      {{ form_row(form.name) }}
+      <div>
+        <a href="{{ path('acme_tag_delete', {'id': tags[key].getId}) }}">Tag löschen</a>
+      </div>
     </div>
-    <input type="submit" value="update" class="btn btn-default pull-right" />
+    </br>
+    <div class="updateSubmit">
+      <input type="submit" value="update" class="btn btn-default pull-right" />
+    </div>
     {{ form_rest(form) }}
   </form>
 {% endfor %}
+  </div>
   <div class="newTag">
     <a href="{{ path('acme_tag_new') }}">neuen Tag erstellen</a> 
   </div>
