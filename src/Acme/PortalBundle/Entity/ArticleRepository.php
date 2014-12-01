@@ -16,7 +16,9 @@ class ArticleRepository extends EntityRepository
   {
     return $this->getEntityManager()
       ->createQuery(
-        'SELECT t FROM AcmePortalBundle:Article t ORDER BY t.pos, t.description ASC'
+        'SELECT t FROM AcmePortalBundle:Article t'
+//        . ' WHERE t.id in (SELECT at.id FROM AcmePortalBundle:Article at)'
+        . ' ORDER BY t.client, t.pos, t.description ASC'
       )
       ->getResult();
   }
@@ -35,10 +37,10 @@ class ArticleRepository extends EntityRepository
     }
     $query->setParameters($parameters);
     $dgl = $query->getQuery()->getSQL();
-    ob_start();
-    \Doctrine\Common\Util\Debug::dump($dgl);
-    $print = ob_get_clean();
-    error_log('dump:$VAR$ = ' . $print, 0, '/tmp/error.log');
+//    ob_start();
+//    \Doctrine\Common\Util\Debug::dump($dgl);
+//    $print = ob_get_clean();
+//    error_log('dump:$VAR$ = ' . $print, 0, '/tmp/error.log');
 
 
     return $query->getQuery()->getResult();

@@ -24,6 +24,10 @@ class PortalData implements FacadeUtilityInterface
    */
   protected $articles;
   /**
+   * @var Array
+   */
+  protected $articlesSorted;
+  /**
    * @var array
    */
   protected $visitedArr;
@@ -37,6 +41,7 @@ class PortalData implements FacadeUtilityInterface
 //    $this->session = new Session();
 //    $this->session->start();
     $this->articles = array();
+    $this->articlesSorted = array();
     $this->visitedArr = array();
     $this->visitedBlacklist = array();
   }
@@ -65,6 +70,7 @@ class PortalData implements FacadeUtilityInterface
     $articleDb = $this->facade->getRepository('Article')->findByDescription($article);
     if (empty($articleDb)) {
       $this->articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
+      $this->storeArticlesSorted($this->articles);
 
       // !!!!!!!!! have to implement logging, wrong article !!!!!!!!!!!!
       return;
@@ -74,9 +80,11 @@ class PortalData implements FacadeUtilityInterface
     $tags = $articleDb->getTags();
     
     $this->fillBlacklist($client, $article);
-    $this->articles = $this->getMostSignificantArticlesToTags($tags); // create also $this->clientsArticles
+    $this->articles = $this->getMostSignificantArticlesToTags($tags);
+    $this->extendAllOfferedArticles(); // function is empty in this class
 
     $this->filterArticleWithBlacklist();
+    $this->storeArticlesSorted($this->articles);
   }
 
   /**
@@ -94,6 +102,23 @@ class PortalData implements FacadeUtilityInterface
       $this->generateVisit($client, $article);
       $this->session->set('overview', $this->getVisitedArr());
     }
+  }
+
+  protected function storeArticlesSorted($articles) {
+    $this->articlesSorted = array();
+    foreach($articles as $article) {
+      $client = $article->getClient()->getName();
+      $clientPos = $article->getClient()->getPos();
+      $articleName = $article->getDescription();
+      if (!isset($this->articlesSorted[$clientPos])) {
+        $this->articlesSorted[$clientPos] = array();
+      }
+      if (!isset($this->articlesSorted[$clientPos][$client])) {
+        $this->articlesSorted[$clientPos][$client] = array();
+      }
+      $this->articlesSorted[$clientPos][$client][$articleName] = $article;
+    }
+    return $this->articlesSorted;
   }
 
   public function fillBlacklist($client, $article)
@@ -157,14 +182,20 @@ class PortalData implements FacadeUtilityInterface
     $clientsTagged = array_map(function ($article) {
       return $article->getClient()->getName();
     }, $this->articles);
-    $clientsToAdd = array_diff($clientsVisited, $clientsTagged);
+    $clientsToAdd = array_merge($clientsVisited, $clientsTagged);
     $clients = $this->facade->getRepositoryFacade()->getRepository('Client')->findByName($clientsToAdd);
     foreach($clients as $client) {
       foreach ($client->getArticles() as $article) {
-        $this->articles[] = $article;
+        if (!in_array($article, $this->articles)) {
+          $this->articles[] = $article;
+        }
       }
     }
 
+//    ob_start();
+//    \Doctrine\Common\Util\Debug::dump($this->articles);
+//    $print = ob_get_clean();
+//    error_log('$$this->articles = ' . $print, 0, '/tmp/error.log');
     $this->articles = array_filter($this->articles, function ($article) {
       $clientName = $article->getClient()->getName();
 
@@ -179,6 +210,14 @@ class PortalData implements FacadeUtilityInterface
       }
       return true;
     });
+//    ob_start();
+//    \Doctrine\Common\Util\Debug::dump($this->articles);
+//    $print = ob_get_clean();
+//    error_log('$$this->articles = ' . $print, 0, '/tmp/error.log');
+  }
+  
+  protected function extendAllOfferedArticles()
+  {
   }
   
   /**
@@ -195,6 +234,22 @@ class PortalData implements FacadeUtilityInterface
   public function setArticles($articles)
   {
     $this->articles = $articles;
+  }
+
+  /**
+   * @return Array
+   */
+  public function getArticlesSorted()
+  {
+    return $this->articlesSorted;
+  }
+
+  /**
+   * @param Array $articlesSorted
+   */
+  public function setArticlesSorted($articlesSorted)
+  {
+    $this->articlesSorted = $articlesSorted;
   }
 
   /**

@@ -92,6 +92,7 @@ class ArticleController extends Controller implements FacadeControllerInterface
       if (sizeof($articleDb) > 0) {
         $article = $articleDb[0];
         $article->setDescription($articleReq->getDescription());
+        $article->setPos($articleReq->getPos());
         // remove first the tags from array
         foreach($article->getTags() as $tag) {
           $tag->getArticles()->removeElement($article);

@@ -25,6 +25,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
   protected $fixtures;
   protected $result;
   protected $facade;
+  protected $clientsArticles;
   /**
    * @var PortalData
    */
@@ -82,7 +83,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * to generate viewable debugging data
+   * to generate viewable debugging data from articles not articlesSorted
    * @param array $articles
    * @return array
    */
@@ -91,11 +92,15 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $clientsArticles  = array();
     foreach ($articles as $article) {
       $client = $article->getClient()->getName();
+      $clientPos = $article->getClient()->getPos();
       $articleName = $article->getDescription();
-      if (!isset($clientsArticles[$client])) {
-        $clientsArticles[$client] = array();
+      if (!isset($clientsArticles[$clientPos])) {
+        $clientsArticles[$clientPos] = array();
       }
-      $clientsArticles[$client][$articleName] = $article;
+      if (!isset($clientsArticles[$clientPos][$client])) {
+        $clientsArticles[$clientPos][$client] = array();
+      }
+      $clientsArticles[$clientPos][$client][$articleName] = $article;
     }
     return $clientsArticles;
   }
@@ -103,21 +108,42 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
   public function testVisitWrongArticleName()
   {
     $this->portalData->visit('spiegel', 'change'); // wrong article !!!!!!
-    $this->result = $this->portalData->getClientsArticles();
+    $this->result = $this->portalData->getArticlesSorted();
 
     // gebe alle article aus
-    $this->assertTrue(isset($this->result['asv']['stylebook']));
-    $this->assertTrue(isset($this->result['asv']['travelbook']));
-    $this->assertTrue(isset($this->result['tdu']['vermarkter']));
-    $this->assertTrue(isset($this->result['spiegel']['qc']));
+    $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
+    $this->assertTrue(isset($this->result[0]['asv']['travelbook']));
+    $this->assertTrue(isset($this->result[1]['tdu']['vermarkter']));
+    $this->assertTrue(isset($this->result[2]['spiegel']['qc']));
   }
 
-  public function testVisitAsvThenTdu()
+  public function testVisitSpiegel()
   {
-    $this->portalData->visit('asv', 'travelbook');
-    $this->portalData->visit('tdu', 'vermarkter');
-    $this->result = $this->portalData->getClientsArticles();
-    $this->assertTrue(isset($this->result['asv']['stylebook']));
+    $this->portalData->visit('spiegel', 'qc');
+    $this->result = $this->portalData->getArticlesSorted();
+    $this->assertTrue(isset($this->result[0]['asv']['travelbook']));
+    $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
+    $this->assertTrue(isset($this->result[1]['tdu']['vermarkter']));
   }
+
+  public function testVisitSpiegelThenVermarkter()
+  {
+    $this->portalData->visit('spiegel', 'qc');
+    $this->portalData->visit('tdu', 'vermarkter');
+    $this->result = $this->portalData->getArticlesSorted();
+    ob_start();
+    \Doctrine\Common\Util\Debug::dump($this->result);
+    $print = ob_get_clean();
+    error_log('$$this->result = ' . $print, 0, '/tmp/error.log');
+    $this->assertTrue(empty($this->result));
+  }
+
+//  public function testVisitAsvThenTdu()
+//  {
+//    $this->portalData->visit('asv', 'travelbook');
+//    $this->portalData->visit('tdu', 'vermarkter');
+//    $this->result = $this->generateClientsArticles($this->portalData->getArticles());
+//    $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
+//  }
 }
  
