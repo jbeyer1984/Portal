@@ -9,7 +9,7 @@
   <div class="articles">
   {% for key, form in forms %}
     {#{{ form_start(form) }}#}
-    <h2>article</h2>
+    <h2>Article</h2>
     <form method="POST" action="{{ path('acme_article_edit') }}" {{ form_enctype(form) }}>
       {# render the article's only field: description #}
       {#{{ form_widget(form) }}#}
