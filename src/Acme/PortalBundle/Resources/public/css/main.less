@@ -1,10 +1,10 @@
-.tagWrapper {
+.tagWrapper, .articleWrapper, .clientWrapper {
   border: 1px solid blue;
   width: 500px;
   margin-bottom: 20px;
   text-align: left;
   overflow: hidden;
-  .tag {
+  .tag, .article, .client {
     float: left;
     margin-right: 5px;
     background: #d1d1d1;
@@ -12,11 +12,21 @@
   }
 }
 
-.tags .updateAndDelete > div {
-  float: left;
+
+.tags, .articles, .clients {
+  .updateAndDelete > div {
+    float: left;
+  }
+  .marginTop {
+    margin-top: 3px;
+  }
 }
-.tags .updateSubmit {
-  margin-top: 3px;
+
+.action {
+  border: 1px dashed black;
+  text-align: center;
+  width: 200px;
+  margin-bottom: 2px;
 }
 
 .clients {

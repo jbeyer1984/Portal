@@ -48,7 +48,6 @@ class Article
   public function __construct()
   {
     $this->tags = new ArrayCollection();
-//    $this->client = new ArrayCollection();
   }
   
   public function setClient(Client $client)

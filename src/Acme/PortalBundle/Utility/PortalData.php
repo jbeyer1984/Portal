@@ -83,7 +83,7 @@ class PortalData implements FacadeUtilityInterface
     $this->articles = $this->getMostSignificantArticlesToTags($tags);
     $this->extendAllOfferedArticles(); // function is empty in this class
 
-    $this->filterArticleWithBlacklist();
+    $this->filterArticlesWithBlacklist();
     $this->storeArticlesSorted($this->articles);
   }
 
@@ -146,7 +146,7 @@ class PortalData implements FacadeUtilityInterface
     }
 //    $tagNames = array('marketing', 'cms');
 //    $tagNames = array('marketing');
-    $articlesDb = $this->facade->getRepository('Article')->findSignificantArticleToTags($tagNames);
+    $articlesDb = $this->facade->getRepository('Article')->findSignificantArticlesToTags($tagNames);
     
     return $articlesDb;
 //    return $articles;
@@ -176,7 +176,7 @@ class PortalData implements FacadeUtilityInterface
   /**
    * @return void
    */
-  public function filterArticleWithBlacklist()
+  public function filterArticlesWithBlacklist()
   {
     $clientsVisited = array_keys($this->visitedArr['visited']);
     $clientsTagged = array_map(function ($article) {

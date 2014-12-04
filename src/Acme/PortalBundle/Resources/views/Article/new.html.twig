@@ -6,6 +6,7 @@
 
 {% block body %}
   {#<ul class="allAvailableTags">#}
+  <div class="action"><p>new Article</p></div>
   <div class="articleWrapper">
     {% for article in articles %}
       <div class="article">{{ article.description }}</div>
@@ -18,7 +19,7 @@
     {#{{ form_row(form.name) }}#}
     {#<input type="hidden" class="tagSelect" value="task, substring"/>#}
     {{ form_rest(form) }}
-    <input type="submit" value="Create" class="btn btn-default pull-right" />
+    <input type="submit" value="create" class="btn btn-default pull-right" />
   </form>
 {% endblock %}
 

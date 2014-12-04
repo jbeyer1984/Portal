@@ -131,19 +131,15 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData->visit('spiegel', 'qc');
     $this->portalData->visit('tdu', 'vermarkter');
     $this->result = $this->portalData->getArticlesSorted();
-    ob_start();
-    \Doctrine\Common\Util\Debug::dump($this->result);
-    $print = ob_get_clean();
-    error_log('$$this->result = ' . $print, 0, '/tmp/error.log');
     $this->assertTrue(empty($this->result));
   }
 
-//  public function testVisitAsvThenTdu()
-//  {
-//    $this->portalData->visit('asv', 'travelbook');
-//    $this->portalData->visit('tdu', 'vermarkter');
-//    $this->result = $this->generateClientsArticles($this->portalData->getArticles());
-//    $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
-//  }
+  public function testVisitAsvThenTdu()
+  {
+    $this->portalData->visit('asv', 'travelbook');
+    $this->portalData->visit('tdu', 'vermarkter');
+    $this->result = $this->generateClientsArticles($this->portalData->getArticles());
+    $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
+  }
 }
  

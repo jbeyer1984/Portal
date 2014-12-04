@@ -5,15 +5,25 @@
 {% endblock %}
 
 {% block body %}
+  <div class="clients">
+    <div class="action"><p>edit Client</p></div>
   {% for key, form in forms %}
+    <h2>Client</h2>
     {#{{ form_start(form) }}#}
     <form method="POST" action="{{ path('acme_client_edit') }}" {{ form_enctype(form) }}>
       {# render the article's only field: description #}
       {#{{ form_widget(form) }}#}
+      <div class="updateAndDelete">
       {{ form_row(form.id) }}
-      {{ form_row(form.name) }}<a href="{{ path('acme_client_delete', {'id': clients[key].getId}) }}">Article löschen</a>
-      {{ form_row(form.pos) }}
-      {#{{ form_row(form.tags) }}#}
+      {{ form_row(form.name) }}
+        <div>
+          <a href="{{  path('acme_client_delete', {'id': clients[key].getId}) }}">delete client</a>
+        </div>
+      </div>
+      </br>
+      <div class="marginTop">
+        {{ form_row(form.pos) }}
+      </div>
 
       <h3>Articles</h3>
       {#<ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">#}
@@ -28,6 +38,7 @@
       {#{{ form_end(form) }}#}
     </form>
   {% endfor %}
+  </div>
 {% endblock %}
 
 {% block customJavascript %}

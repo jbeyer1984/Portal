@@ -4,6 +4,7 @@
 
 
 {% block body %}
+  <div class="action"><p>edit Tag</p></div>
   <div class="tags">
 {% for key, form in forms %}
   {#{{ form_start(form) }}#}
@@ -13,11 +14,11 @@
       {{ form_row(form.id) }}
       {{ form_row(form.name) }}
       <div>
-        <a href="{{ path('acme_tag_delete', {'id': tags[key].getId}) }}">Tag löschen</a>
+        <a href="{{ path('acme_tag_delete', {'id': tags[key].getId}) }}">delete tag</a>
       </div>
     </div>
     </br>
-    <div class="updateSubmit">
+    <div class="marginTop">
       <input type="submit" value="update" class="btn btn-default pull-right" />
     </div>
     {{ form_rest(form) }}

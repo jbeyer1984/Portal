@@ -1,24 +1,40 @@
-.tagWrapper {
+.tagWrapper,
+.articleWrapper,
+.clientWrapper {
   border: 1px solid blue;
   width: 500px;
   margin-bottom: 20px;
   text-align: left;
   overflow: hidden;
 }
-.tagWrapper .tag {
+.tagWrapper .tag,
+.articleWrapper .tag,
+.clientWrapper .tag,
+.tagWrapper .article,
+.articleWrapper .article,
+.clientWrapper .article,
+.tagWrapper .client,
+.articleWrapper .client,
+.clientWrapper .client {
   float: left;
   margin-right: 5px;
   background: #d1d1d1;
 }
-.tags .updateAndDelete > div {
+.tags .updateAndDelete > div,
+.articles .updateAndDelete > div,
+.clients .updateAndDelete > div {
   float: left;
 }
-.tags .updateSubmit {
+.tags .marginTop,
+.articles .marginTop,
+.clients .marginTop {
   margin-top: 3px;
 }
-ul.tags li{
-  float: left;
-  list-style: none;
+.action {
+  border: 1px dashed black;
+  text-align: center;
+  width: 200px;
+  margin-bottom: 2px;
 }
 .clients .articles {
   margin-left: 10px;

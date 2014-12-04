@@ -23,7 +23,7 @@ class ArticleRepository extends EntityRepository
       ->getResult();
   }
 
-  public function findSignificantArticleToTags($tags)
+  public function findSignificantArticlesToTags($tags)
   {
     $query = $this->getEntityManager()->getRepository('AcmePortalBundle:Article')
       ->createQueryBuilder('a')
