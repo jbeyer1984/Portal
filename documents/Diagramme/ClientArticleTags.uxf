@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.baselet.element.old.element.Class</type>
+    <coordinates>
+      <x>50</x>
+      <y>40</y>
+      <w>70</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Kunde</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Class</type>
+    <coordinates>
+      <x>140</x>
+      <y>100</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Artikel</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Class</type>
+    <coordinates>
+      <x>260</x>
+      <y>160</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Tags</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Relation</type>
+    <coordinates>
+      <x>90</x>
+      <y>10</y>
+      <w>146</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0,1
+m2=0..n
+besitzt&gt;</panel_attributes>
+    <additional_attributes>30;50;100;50;100;90</additional_attributes>
+  </element>
+  <element>
+    <type>com.baselet.element.old.element.Relation</type>
+    <coordinates>
+      <x>210</x>
+      <y>70</y>
+      <w>138</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..m
+hat</panel_attributes>
+    <additional_attributes>30;50;100;50;100;90</additional_attributes>
+  </element>
+</diagram>
