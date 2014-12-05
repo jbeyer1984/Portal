@@ -6,7 +6,7 @@
 
 {% block body %}
   {#<ul class="allAvailableTags">#}
-  <div class="action"><p>new Tag</p></div>
+  already existing Tag
   <div class="tagWrapper">
     {% for tag in tagList %}
       <div class="tag">{{ tag.name }}</div>
@@ -23,7 +23,7 @@
   
   
   {#<input class="tag_select" type="hidden" />#}
-  
+  <div class="action"><p>new Tag</p></div>
   <form method="POST" action="{{ path('acme_tag_new') }}" {{ form_enctype(form) }}>
     {#{{ form_row(form.name) }}#}
     {#<input type="hidden" class="tagSelect" value="task, substring"/>#}

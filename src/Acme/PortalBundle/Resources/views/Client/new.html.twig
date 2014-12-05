@@ -6,7 +6,7 @@
 
 {% block body %}
   {#<ul class="allAvailableTags">#}
-  <div class="action"><p>new Client</p></div>
+  already existing Clients
   <div class="clientWrapper">
     {% for client in clients %}
       <div class="client">{{ client.name }}</div>
@@ -15,6 +15,7 @@
 
   {#<input class="tag_select" type="hidden" />#}
 
+  <div class="action"><p>new Client</p></div>
   <form method="POST" action="{{ path('acme_client_new') }}" {{ form_enctype(form) }}>
     {#{{ form_row(form.name) }}#}
     {#<input type="hidden" class="tagSelect" value="task, substring"/>#}

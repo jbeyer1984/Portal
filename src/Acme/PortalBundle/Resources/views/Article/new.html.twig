@@ -6,7 +6,7 @@
 
 {% block body %}
   {#<ul class="allAvailableTags">#}
-  <div class="action"><p>new Article</p></div>
+  already existing Article
   <div class="articleWrapper">
     {% for article in articles %}
       <div class="article">{{ article.description }}</div>
@@ -15,6 +15,7 @@
   
   {#<input class="tag_select" type="hidden" />#}
 
+  <div class="action"><p>new Article</p></div>
   <form method="POST" action="{{ path('acme_article_new') }}" {{ form_enctype(form) }}>
     {#{{ form_row(form.name) }}#}
     {#<input type="hidden" class="tagSelect" value="task, substring"/>#}
