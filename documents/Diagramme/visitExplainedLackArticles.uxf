@@ -7,7 +7,7 @@
       <x>224</x>
       <y>0</y>
       <w>217</w>
-      <h>98</h>
+      <h>105</h>
     </coordinates>
     <panel_attributes>PortalData
 --
@@ -65,7 +65,7 @@
       <x>469</x>
       <y>182</y>
       <w>98</w>
-      <h>49</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>1.
 qc
@@ -112,7 +112,7 @@ qc
       <x>469</x>
       <y>336</y>
       <w>98</w>
-      <h>49</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>1.
 travelbook(asv)
@@ -182,7 +182,7 @@ qc
       <x>469</x>
       <y>259</y>
       <w>98</w>
-      <h>49</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>1.
 qc
@@ -506,7 +506,7 @@ vermarkter(tdu)
       <x>469</x>
       <y>644</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>1.
 travelbook(asv)
@@ -520,7 +520,7 @@ stylebook(asv)</panel_attributes>
       <x>581</x>
       <y>644</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>2.
 
@@ -640,7 +640,7 @@ qc
       <x>581</x>
       <y>539</y>
       <w>98</w>
-      <h>49</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>2.
 vermarkter

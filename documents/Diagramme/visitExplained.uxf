@@ -4,10 +4,10 @@
   <element>
     <type>com.baselet.element.old.element.Class</type>
     <coordinates>
-      <x>238</x>
+      <x>245</x>
       <y>0</y>
       <w>217</w>
-      <h>98</h>
+      <h>105</h>
     </coordinates>
     <panel_attributes>PortalData
 --
@@ -24,7 +24,7 @@
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>35</x>
+      <x>42</x>
       <y>140</y>
       <w>161</w>
       <h>28</h>
@@ -35,7 +35,7 @@
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>182</y>
       <w>126</w>
       <h>28</h>
@@ -46,7 +46,7 @@
   <element>
     <type>com.baselet.element.old.element.Class</type>
     <coordinates>
-      <x>35</x>
+      <x>42</x>
       <y>0</y>
       <w>182</w>
       <h>49</h>
@@ -62,10 +62,10 @@
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>483</x>
+      <x>490</x>
       <y>182</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>1.
 asv
@@ -76,7 +76,7 @@ asv
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>238</x>
+      <x>245</x>
       <y>140</y>
       <w>105</w>
       <h>28</h>
@@ -87,7 +87,7 @@ asv
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>259</y>
       <w>133</w>
       <h>28</h>
@@ -98,7 +98,7 @@ asv
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>357</x>
+      <x>364</x>
       <y>175</y>
       <w>139</w>
       <h>34</h>
@@ -109,10 +109,10 @@ asv
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>483</x>
+      <x>490</x>
       <y>336</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>1.
 travelbook
@@ -124,7 +124,7 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>364</x>
+      <x>371</x>
       <y>252</y>
       <w>132</w>
       <h>34</h>
@@ -135,7 +135,7 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>336</y>
       <w>217</w>
       <h>28</h>
@@ -146,7 +146,7 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>595</x>
+      <x>602</x>
       <y>182</y>
       <w>98</w>
       <h>70</h>
@@ -162,7 +162,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>595</x>
+      <x>602</x>
       <y>259</y>
       <w>98</w>
       <h>70</h>
@@ -178,10 +178,10 @@ spiegel
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>483</x>
+      <x>490</x>
       <y>259</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>1.
 asv
@@ -192,7 +192,7 @@ asv
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>448</x>
+      <x>455</x>
       <y>329</y>
       <w>48</w>
       <h>34</h>
@@ -203,7 +203,7 @@ asv
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>595</x>
+      <x>602</x>
       <y>336</y>
       <w>98</w>
       <h>70</h>
@@ -218,7 +218,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.SendSignal</type>
     <coordinates>
-      <x>483</x>
+      <x>490</x>
       <y>140</y>
       <w>98</w>
       <h>28</h>
@@ -229,7 +229,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.SendSignal</type>
     <coordinates>
-      <x>595</x>
+      <x>602</x>
       <y>140</y>
       <w>77</w>
       <h>28</h>
@@ -240,7 +240,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>413</y>
       <w>119</w>
       <h>28</h>
@@ -251,7 +251,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>455</y>
       <w>175</w>
       <h>28</h>
@@ -262,7 +262,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Node</type>
     <coordinates>
-      <x>707</x>
+      <x>714</x>
       <y>259</y>
       <w>77</w>
       <h>35</h>
@@ -273,7 +273,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Node</type>
     <coordinates>
-      <x>707</x>
+      <x>714</x>
       <y>182</y>
       <w>77</w>
       <h>35</h>
@@ -284,7 +284,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Node</type>
     <coordinates>
-      <x>707</x>
+      <x>714</x>
       <y>336</y>
       <w>91</w>
       <h>35</h>
@@ -295,7 +295,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>420</x>
+      <x>427</x>
       <y>175</y>
       <w>398</w>
       <h>307</h>
@@ -306,7 +306,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>560</x>
+      <x>567</x>
       <y>175</y>
       <w>48</w>
       <h>34</h>
@@ -317,7 +317,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>672</x>
+      <x>679</x>
       <y>175</y>
       <w>48</w>
       <h>34</h>
@@ -328,7 +328,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>672</x>
+      <x>679</x>
       <y>252</y>
       <w>48</w>
       <h>34</h>
@@ -339,7 +339,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>560</x>
+      <x>567</x>
       <y>252</y>
       <w>48</w>
       <h>34</h>
@@ -350,7 +350,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>560</x>
+      <x>567</x>
       <y>532</y>
       <w>48</w>
       <h>34</h>
@@ -361,7 +361,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>672</x>
+      <x>679</x>
       <y>329</y>
       <w>48</w>
       <h>34</h>
@@ -372,7 +372,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>497</y>
       <w>182</w>
       <h>28</h>
@@ -383,7 +383,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>427</x>
+      <x>434</x>
       <y>329</y>
       <w>405</w>
       <h>195</h>
@@ -394,7 +394,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>595</y>
       <w>119</w>
       <h>28</h>
@@ -405,7 +405,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>147</y>
       <w>34</w>
       <h>48</h>
@@ -416,7 +416,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>189</y>
       <w>34</w>
       <h>83</h>
@@ -427,7 +427,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>266</y>
       <w>34</w>
       <h>83</h>
@@ -438,7 +438,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>252</x>
+      <x>259</x>
       <y>343</y>
       <w>34</w>
       <h>83</h>
@@ -449,7 +449,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>420</y>
       <w>34</w>
       <h>48</h>
@@ -460,7 +460,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>462</y>
       <w>34</w>
       <h>48</h>
@@ -471,7 +471,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>546</y>
       <w>34</w>
       <h>62</h>
@@ -482,7 +482,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>364</x>
+      <x>371</x>
       <y>252</y>
       <w>482</w>
       <h>370</h>
@@ -493,7 +493,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>175</x>
+      <x>182</x>
       <y>133</y>
       <w>76</w>
       <h>34</h>
@@ -504,7 +504,7 @@ qc
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>483</x>
+      <x>490</x>
       <y>637</y>
       <w>98</w>
       <h>49</h>
@@ -519,7 +519,7 @@ stylebook(asv)
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>595</x>
+      <x>602</x>
       <y>637</y>
       <w>98</w>
       <h>49</h>
@@ -534,7 +534,7 @@ stylebook(asv)
   <element>
     <type>com.baselet.element.old.element.State</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>539</y>
       <w>175</w>
       <h>28</h>
@@ -546,7 +546,7 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>266</x>
+      <x>273</x>
       <y>504</y>
       <w>34</w>
       <h>48</h>
@@ -557,7 +557,7 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>364</x>
+      <x>371</x>
       <y>588</y>
       <w>132</w>
       <h>76</h>
@@ -568,7 +568,7 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Node</type>
     <coordinates>
-      <x>707</x>
+      <x>714</x>
       <y>637</y>
       <w>105</w>
       <h>35</h>
@@ -579,7 +579,7 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>560</x>
+      <x>567</x>
       <y>630</y>
       <w>48</w>
       <h>34</h>
@@ -590,7 +590,7 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>672</x>
+      <x>679</x>
       <y>630</y>
       <w>48</w>
       <h>34</h>
@@ -601,7 +601,7 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Node</type>
     <coordinates>
-      <x>707</x>
+      <x>714</x>
       <y>539</y>
       <w>105</w>
       <h>35</h>
@@ -612,10 +612,10 @@ and generate this-&gt;articles array</panel_attributes>
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>483</x>
+      <x>490</x>
       <y>539</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>1.
 travelbook
@@ -627,10 +627,10 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.Note</type>
     <coordinates>
-      <x>595</x>
+      <x>602</x>
       <y>539</y>
       <w>98</w>
-      <h>49</h>
+      <h>56</h>
     </coordinates>
     <panel_attributes>2.
 travelbook
@@ -642,7 +642,7 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>560</x>
+      <x>567</x>
       <y>329</y>
       <w>48</w>
       <h>34</h>
@@ -653,7 +653,7 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>672</x>
+      <x>679</x>
       <y>532</y>
       <w>48</w>
       <h>34</h>
@@ -664,7 +664,7 @@ qc(spiegel)
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>420</x>
+      <x>427</x>
       <y>532</y>
       <w>76</w>
       <h>34</h>
