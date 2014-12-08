@@ -110,7 +110,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData->visit('spiegel', 'change'); // wrong article !!!!!!
     $this->result = $this->portalData->getArticlesSorted();
 
-    // gebe alle article aus
+    // show all articles
     $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
     $this->assertTrue(isset($this->result[0]['asv']['travelbook']));
     $this->assertTrue(isset($this->result[1]['tdu']['vermarkter']));
