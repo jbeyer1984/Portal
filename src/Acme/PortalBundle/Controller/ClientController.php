@@ -124,7 +124,7 @@ class ClientController extends Controller implements FacadeControllerInterface
     $clientDb = $this->facade->getRepository('Client')->findById($id);
     if (sizeof($clientDb) > 0) {
       $client = $clientDb[0];
-      foreach($client->getArticles() as $client) {
+      foreach($client->getArticles() as $article) {
         $article->removeClient($client);
         $this->facade->getEm()->persist($article);
       }
