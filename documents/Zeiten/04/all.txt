@@ -1,0 +1,40 @@
+x 07   "SCC-58","My Timers","0,50",""
+x 07   "BSTY-180","My Timers","0,05",""
+x 07   "BTB-780","My Timers","1,67",""
+07   "ausbildung arbeit dokumentation","My Timers","1,19",""
+07   "ausbildung arbeit dokument erstellen","My Timers","2,08",""
+
+x 08   "pr;BTB-853: Positionierung Navigationspfeile Rotation","My Timers","0,71",""
+x 08   "pr;SCC-58: Bedarfsstatus-Tortendiagramm fürs Dashboard","My Timers","1,18",""
+x 08   "tu;BTB-851: Footerbar - Codesnippet hinzufügen","My Timers","0,25",""
+x 08   "pr;SCC-59: Bedarfsstatus-Verlaufsdiagramm fürs Dashboard","My Timers","0,95",""
+
+x 09   "pr;SCC-59: Bedarfsstatus-Verlaufsdiagramm fürs Dashboard","My Timers","7,30",""
+
+x 10   "an;spiegel sortierfunktion","My Timers","6,73",""
+x 10   "pr;SCC-59: Bedarfsstatus-Verlaufsdiagramm fürs Dashboard","My Timers","1,48",""
+x 14   "pr;SCC-59: Bedarfsstatus-Verlaufsdiagramm fürs Dashboard","My Timers","5,26",""
+x 15   "pr;BTB-856: Aufzählungen/Listen in Themenseitentext rechts","My Timers","2,43",""
+15   "argus","My Timers","0,77",""
+
+x 16   "pr;BTB-851: Footerbar - Codesnippet hinzufügen","My Timers","2,27",""
+x 16   "pr;SCC-58: Bedarfsstatus-Tortendiagramm fürs Dashboard","My Timers","0,95",""
+x 16   "pr;BTB-856: Aufzählungen/Listen in Themenseitentext rechts","My Timers","1,20",""
+16   "ausbildung arbeit evaluation","My Timers","1,93",""
+
+17   "ausbildung arbeit dokumentation","My Timers","0,23",""
+17   "ausbildung arbeit evaluation","My Timers","2,60",""
+17   "ausbildung arbeit cache issues","My Timers","0,50",""
+x 17   "an; spiegelqc file upload","My Timers","3,92",""
+
+20   "ausbildung arbeit evaluation","My Timers","2,90",""
+x 20   "an; spiegelqc file upload","My Timers","4,11",""
+
+x 21   "pr;BTB-856: Aufzählungen/Listen in Themenseitentext rechts","My Timers","3,28",""
+x 21   "an; spiegelqc file upload","My Timers","3,86",""
+
+x 22   "pr;BTB-856: Aufzählungen/Listen in Themenseitentext rechts","My Timers","0,35",""
+x 22   "an; spiegelqc cache issue","My Timers","3,77",""
+x 22   "an; spiegelqc file upload","My Timers","4,47",""
+
+x 23   "an; spiegelqc sort issue","My Timers","9,03",""

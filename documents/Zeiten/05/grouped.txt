@@ -1,0 +1,20 @@
+x 10-24  :"an; spiegelqc sort issue","My Timers","2,44",""
+x 10-27  :"an; spiegelqc sort issue","My Timers","2,44",""
+x 10-27  :"an; spiegelqc: online price naming","My Timers","1,14",""
+x 10-28  :"an; spiegelqc login issue","My Timers","2,62",""
+x 10-29  :"an; spiegelqc google analytics","My Timers","1,00",""
+
+10-27  :"ausbildung arbeit evaluation","My Timers","5,01",""
+10-28  :"ausbildung arbeit evaluation","My Timers","3,99",""
+10-29  :"ausbildung arbeit evaluation","My Timers","3,53",""
+10-30  :"ausbildung arbeit evaluation","My Timers","4,19",""
+10-31  :"ausbildung arbeit evaluation","My Timers","5,43",""
+11-03  :"ausbildung arbeit evaluation","My Timers","6,33",""
+11-04  :"ausbildung arbeit evaluation","My Timers","5,18",""
+
+x 10-28  :"an: logos bug","My Timers","2,57",""
+       
+x 10-29  :"pr;BTB-866: Rotating Gallerie","My Timers","4,41",""
+x 10-30  :"pr;BTB-862: HTML/CSS Rotationstabs STYLEBOOK","My Timers","1,19",""
+x 10-31  :"pr;BTB-862: HTML/CSS Rotationstabs STYLEBOOK","My Timers","0,34",""
+11-04  :"pr;BTB-852: Deployment","My Timers","0,33",""
