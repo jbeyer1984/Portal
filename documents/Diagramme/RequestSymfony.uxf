@@ -37,14 +37,14 @@
   <element>
     <type>com.baselet.element.old.element.Relation</type>
     <coordinates>
-      <x>30</x>
+      <x>20</x>
       <y>0</y>
-      <w>160</w>
+      <w>186</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=-&lt;
-&lt; kann</panel_attributes>
-    <additional_attributes>30;90;30;50;140;50;140;90</additional_attributes>
+&lt; can make Request</panel_attributes>
+    <additional_attributes>40;90;40;50;150;50;150;90</additional_attributes>
   </element>
   <element>
     <type>com.baselet.element.old.element.Relation</type>
