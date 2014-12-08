@@ -38,8 +38,6 @@ class PortalData implements FacadeUtilityInterface
   
   public function __construct()
   {
-//    $this->session = new Session();
-//    $this->session->start();
     $this->articles = array();
     $this->articlesSorted = array();
     $this->visitedArr = array();
@@ -191,11 +189,7 @@ class PortalData implements FacadeUtilityInterface
         }
       }
     }
-
-//    ob_start();
-//    \Doctrine\Common\Util\Debug::dump($this->articles);
-//    $print = ob_get_clean();
-//    error_log('$$this->articles = ' . $print, 0, '/tmp/error.log');
+    
     $this->articles = array_filter($this->articles, function ($article) {
       $clientName = $article->getClient()->getName();
 
@@ -210,10 +204,6 @@ class PortalData implements FacadeUtilityInterface
       }
       return true;
     });
-//    ob_start();
-//    \Doctrine\Common\Util\Debug::dump($this->articles);
-//    $print = ob_get_clean();
-//    error_log('$$this->articles = ' . $print, 0, '/tmp/error.log');
   }
   
   protected function extendAllOfferedArticles()
