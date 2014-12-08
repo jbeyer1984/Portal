@@ -119,7 +119,7 @@ class PortalData implements FacadeUtilityInterface
     return $this->articlesSorted;
   }
 
-  public function fillBlacklist($client, $article)
+  protected function fillBlacklist($client, $article)
   {
     $sessionArr = $this->session->get('blacklist');
     if (isset($sessionArr)) {
@@ -136,21 +136,18 @@ class PortalData implements FacadeUtilityInterface
    * @param $tags
    * @return mixed|ArrayCollection
    */
-  public function getMostSignificantArticlesToTags($tags)
+  protected function getMostSignificantArticlesToTags($tags)
   {
     $tagNames = array();
     foreach($tags as $tag) {
       $tagNames[] = $tag->getName();
     }
-//    $tagNames = array('marketing', 'cms');
-//    $tagNames = array('marketing');
     $articlesDb = $this->facade->getRepository('Article')->findSignificantArticlesToTags($tagNames);
     
     return $articlesDb;
-//    return $articles;
   }
 
-  public function generateVisit($client, $article){
+  protected function generateVisit($client, $article){
     $this->visitedArr['visited'] = [];
     $this->visitedArr['visited'][$client] = [];
     $this->visitedArr['visited'][$client][$article] = $article;
@@ -160,7 +157,7 @@ class PortalData implements FacadeUtilityInterface
    * @param $client String
    * @param $article String
    */
-  public function addVisit($client, $article)
+  protected function addVisit($client, $article)
   {
     if (!isset($this->visitedArr['visited'][$client])) {
       $this->visitedArr['visited'][$client] = [];
@@ -174,7 +171,7 @@ class PortalData implements FacadeUtilityInterface
   /**
    * @return void
    */
-  public function filterArticlesWithBlacklist()
+  protected function filterArticlesWithBlacklist()
   {
     $clientsVisited = array_keys($this->visitedArr['visited']);
     $clientsTagged = array_map(function ($article) {

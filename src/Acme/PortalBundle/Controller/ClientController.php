@@ -144,12 +144,6 @@ class ClientController extends Controller implements FacadeControllerInterface
   {
     $client = new Client();
     $client->setPos(0);
-    $article1 = new Article();
-    $article1->setDescription('article1');
-    $client->getArticles()->add($article1);
-    $article2 = new Article();
-    $article2->setDescription('article2');
-    $client->getArticles()->add($article2);
 
     return $client;
   }
