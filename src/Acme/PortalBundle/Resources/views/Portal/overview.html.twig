@@ -1,0 +1,39 @@
+{% extends 'AcmePortalBundle:Default:master.html.twig'  %}
+
+
+{% block headCss %}
+  {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
+{% endblock %}
+
+{% block body %}
+  <div class="overview">
+    <div class="container">
+      <h2>-- manipulate Portal --</h2>
+      <h3>create data</h3>
+      <div class="listing create">
+        <a href="{{  path('acme_client_new') }}">create Client</a><br>
+        <a href="{{  path('acme_article_new') }}">create Article</a><br>
+        <a href="{{  path('acme_tag_new') }}">create Tag</a><br>
+      </div>
+      <h3>manipulate data</h3>
+      <div class="listing manipulate">
+        <a href="{{  path('acme_client_show') }}">show Client</a><br>
+        <a href="{{  path('acme_article_show') }}">show Article</a><br>
+        <a href="{{  path('acme_tag_show') }}">show Tag</a><br>
+      </div>
+    </div>
+    <div class="container">
+      <h2>-- visit Portal --</h2>
+      <h3>view Portal</h3>
+      <div class="listing create">
+        <a href="{{  path('acme_portal_show') }}">view Portal</a><br>
+        {#<a href="{{  path('acme_article_new') }}">create Article</a><br>#}
+        {#<a href="{{  path('acme_tag_new') }}">create Tag</a><br>#}
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block customJavascript %}
+  <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>
+{% endblock %}

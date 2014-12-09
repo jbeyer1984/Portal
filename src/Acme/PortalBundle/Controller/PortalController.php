@@ -47,6 +47,11 @@ class PortalController extends Controller implements FacadeControllerInterface
     );
   }
 
+  public function overviewAction()
+  {
+    return $this->render('AcmePortalBundle:Portal:overview.html.twig');
+  }
+
   public function visitAction($client, $article)
   {
     $this->portalData->visit($client, $article);

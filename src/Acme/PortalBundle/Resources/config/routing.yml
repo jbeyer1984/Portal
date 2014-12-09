@@ -84,3 +84,8 @@ acme_portal_visit:
   path: portal/visit/{client}/{article}
   defaults:
     _controller: AcmePortalBundle:Portal:visit
+    
+acme_portal_overview:
+  path: portal/overview/
+  defaults:
+    _controller: AcmePortalBundle:Portal:overview
