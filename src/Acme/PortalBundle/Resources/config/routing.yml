@@ -58,7 +58,7 @@ acme_client_new:
     _controller: AcmePortalBundle:Client:new
     
 acme_clients_show:
-  path: client/show/
+  path: clients/show/
   defaults:
     _controller: AcmePortalBundle:Client:show
     

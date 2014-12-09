@@ -17,7 +17,7 @@
       {{ form_row(form.id) }}
       {{ form_row(form.name) }}
         <div>
-          <a href="{{  path('acme_client_delete', {'id': clients[key].getId}) }}">delete Client</a>
+          <a class="deleteConfirm" href="{{  path('acme_client_delete', {'id': clients[key].getId}) }}">delete Client</a>
         </div>
       </div>
       </br>

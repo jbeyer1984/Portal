@@ -76,3 +76,7 @@ function addTagFormDeleteLink($tagFormLi) {
     $tagFormLi.remove();
   });
 }
+
+jQuery(document).ready( function () {
+  alert("hey");
+});

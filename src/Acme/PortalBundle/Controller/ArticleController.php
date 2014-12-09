@@ -112,7 +112,7 @@ class ArticleController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_article_show'
+        'acme_articles_show'
       )
     );
   }
@@ -128,7 +128,7 @@ class ArticleController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_article_show'
+        'acme_articles_show'
       )
     );
   }
@@ -243,7 +243,7 @@ class ArticleController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_article_show',
+        'acme_articles_show',
         array()
       )
     );

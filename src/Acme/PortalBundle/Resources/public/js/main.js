@@ -73,4 +73,22 @@ var Collection = {
   }
 }
 
-Collection.init();
+//Collection.init();
+
+
+var DeleteConfirm = {
+  deleteLinks : [],
+  init: function () {
+    var deleteLinks = $('.deleteConfirm');
+    deleteLinks.each( function () {
+      var href = $(this).attr('href');
+      $(this).bind("click", function (e) {
+        e.preventDefault();
+        confirm('do you really want to delete');
+        document.location.href = href;
+      })
+    })
+  }
+}
+
+DeleteConfirm.init();

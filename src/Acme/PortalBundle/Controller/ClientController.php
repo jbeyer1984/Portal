@@ -114,7 +114,7 @@ class ClientController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_client_show'
+        'acme_clients_show'
       )
     );
   }
@@ -134,7 +134,7 @@ class ClientController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_client_show'
+        'acme_clients_show'
       )
     );
   }

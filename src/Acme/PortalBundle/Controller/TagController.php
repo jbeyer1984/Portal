@@ -101,7 +101,7 @@ class TagController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_tag_show'
+        'acme_tags_show'
       )
     );
   }
@@ -116,7 +116,7 @@ class TagController extends Controller implements FacadeControllerInterface
 
     return $this->redirect(
       $this->generateUrl(
-        'acme_tag_show'
+        'acme_tags_show'
       )
     );
   }

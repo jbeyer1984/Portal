@@ -17,7 +17,7 @@
       {{ form_row(form.id) }}
       {{ form_row(form.description) }}
         <div>
-          <a href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">delete Article</a>
+          <a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">delete Article</a>
         </div>
       </div>
       </br>
