@@ -4,8 +4,8 @@ acme_tag_new:
   defaults:
     _controller: AcmePortalBundle:Tag:new
     
-acme_tag_show:
-  path: tag/show/
+acme_tags_show:
+  path: tags/show/
   defaults:
     _controller: AcmePortalBundle:Tag:show
     
@@ -34,8 +34,8 @@ acme_article_new:
   defaults:
     _controller: AcmePortalBundle:Article:new
     
-acme_article_show:
-  path: article/show/
+acme_articles_show:
+  path: articles/show/
   defaults:
     _controller: AcmePortalBundle:Article:show
     
@@ -57,7 +57,7 @@ acme_client_new:
   defaults:
     _controller: AcmePortalBundle:Client:new
     
-acme_client_show:
+acme_clients_show:
   path: client/show/
   defaults:
     _controller: AcmePortalBundle:Client:show
