@@ -84,8 +84,12 @@ var DeleteConfirm = {
       var href = $(this).attr('href');
       $(this).bind("click", function (e) {
         e.preventDefault();
-        confirm('do you really want to delete');
-        document.location.href = href;
+        var remove = function () {
+          return confirm('do you really want to delete')
+        }();
+        if (remove) {
+          document.location.href = href;
+        }
       })
     })
   }

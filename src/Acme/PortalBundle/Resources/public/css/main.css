@@ -1,43 +1,75 @@
-.tagWrapper,
-.articleWrapper,
-.clientWrapper {
+.tagCollection,
+.articleCollection,
+.clientCollection {
   border: 1px solid blue;
   width: 500px;
   margin-bottom: 20px;
   text-align: left;
   overflow: hidden;
 }
-.tagWrapper .tag,
-.articleWrapper .tag,
-.clientWrapper .tag,
-.tagWrapper .article,
-.articleWrapper .article,
-.clientWrapper .article,
-.tagWrapper .client,
-.articleWrapper .client,
-.clientWrapper .client {
+.tagCollection .tag,
+.articleCollection .tag,
+.clientCollection .tag,
+.tagCollection .article,
+.articleCollection .article,
+.clientCollection .article,
+.tagCollection .client,
+.articleCollection .client,
+.clientCollection .client {
   float: left;
   margin-right: 5px;
   background: #d1d1d1;
 }
-.tags .updateAndDelete > div,
-.articles .updateAndDelete > div,
-.clients .updateAndDelete > div {
-  float: left;
+.tags_container .updateAndDelete ul,
+.articles_container .updateAndDelete ul,
+.clients_container .updateAndDelete ul {
+  padding: 0;
 }
-.tags .marginTop,
-.articles .marginTop,
-.clients .marginTop {
-  margin-top: 3px;
+.tags_container .updateAndDelete ul li,
+.articles_container .updateAndDelete ul li,
+.clients_container .updateAndDelete ul li {
+  margin-top: 4px;
+  list-style: none;
+}
+.tags_container .updateAndDelete ul li .deleteConfirm,
+.articles_container .updateAndDelete ul li .deleteConfirm,
+.clients_container .updateAndDelete ul li .deleteConfirm {
+  margin-left: 96px;
+}
+.tags_container .updateAndDelete label,
+.articles_container .updateAndDelete label,
+.clients_container .updateAndDelete label {
+  float: left;
+  width: 5em;
+  margin-right: 1em;
+  text-align: left;
+}
+.tags_container .choice,
+.articles_container .choice,
+.clients_container .choice {
+  padding: 0;
+  list-style: none;
+}
+.tags_container .choice li,
+.articles_container .choice li,
+.clients_container .choice li {
+  margin-left: 11px;
+}
+.tags_container .choice li div,
+.articles_container .choice li div,
+.clients_container .choice li div {
+  display: inline-block;
+}
+.tags_container .choice li input,
+.articles_container .choice li input,
+.clients_container .choice li input {
+  float: left;
 }
 .action {
   border: 1px dashed black;
   text-align: center;
   width: 200px;
   margin-bottom: 2px;
-}
-.clients .articles {
-  margin-left: 10px;
 }
 .articlesLeft {
   color: blue;
@@ -50,4 +82,13 @@
 .overview .container {
   float: left;
   margin-right: 50px;
+}
+.overview .listing {
+  margin-left: 10px;
+}
+.overview .listing a {
+  display: block;
+}
+.left {
+  float: left;
 }

@@ -6,30 +6,26 @@
 
 {% block body %}
   <div class="action"><p>edit Article</p></div>
-  <div class="articles">
+  <div><a href="{{ path('acme_article_new') }}">create new Article</a></div>
+  <div class="articles_container">
   {% for key, form in forms %}
-    {#{{ form_start(form) }}#}
     <h2>Article</h2>
     <form method="POST" action="{{ path('acme_article_edit') }}" {{ form_enctype(form) }}>
-      {# render the article's only field: description #}
-      {#{{ form_widget(form) }}#}
       <div class="updateAndDelete">
-      {{ form_row(form.id) }}
-      {{ form_row(form.description) }}
-        <div>
-          <a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">delete Article</a>
-        </div>
+        {{ form_row(form.id) }}
+        <ul>
+          <li>{{ form_row(form.description) }}</li>
+          <li>{{ form_row(form.pos) }}</li>
+          <li>
+            <a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
+              delete Article
+            </a>
+          </li>
+        </ul>
       </div>
-      </br>
-      <div class="marginTop">
-      {{ form_row(form.pos) }}
-      </div>
-      {#{{ form_row(form.tags) }}#}
-
+      
       <h3>Tags</h3>
-      {#<ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e }}">#}
-      <ul class="tags">
-        {# iterate over each existing tag and render its only field: name #}
+      <ul class="choice">
         {% for tag in form.tags %}
           <li>{{ form_row(tag) }}</li>
         {% endfor %}

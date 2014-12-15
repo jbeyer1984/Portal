@@ -1,4 +1,4 @@
-.tagWrapper, .articleWrapper, .clientWrapper {
+.tagCollection, .articleCollection, .clientCollection {
   border: 1px solid blue;
   width: 500px;
   margin-bottom: 20px;
@@ -8,18 +8,42 @@
     float: left;
     margin-right: 5px;
     background: #d1d1d1;
-//    border: 1px dashed green;
   }
 }
 
-
-.tags, .articles, .clients {
-  .updateAndDelete > div {
-    float: left;
+.tags_container, .articles_container, .clients_container {
+  .updateAndDelete {
+    ul {
+      padding: 0;
+      li {
+        margin-top: 4px;
+        list-style: none;
+        .deleteConfirm {
+          margin-left: 96px;
+        }
+      }
+    }
+    label {
+      float: left;
+      width: 5em;
+      margin-right: 1em;
+      text-align: left;
+    }
   }
-  .marginTop {
-    margin-top: 3px;
+  .choice {
+    padding: 0;
+    list-style: none;
+    li {
+      margin-left: 11px;
+      div {
+        display: inline-block;
+      }
+      input {
+        float: left;
+      }
+    }
   }
+  
 }
 
 .action {
@@ -29,13 +53,13 @@
   margin-bottom: 2px;
 }
 
-.clients {
-//  border: 1px solid blue;
-  .articles {
-//    border: 1px solid green;
-    margin-left: 10px;
-  }
-}
+//.clients {
+//  //  border: 1px solid blue;
+//  .articles {
+//    //    border: 1px solid green;
+//    margin-left: 10px;
+//  }
+//}
 
 .articlesLeft {
   color: blue;
@@ -49,4 +73,14 @@
     float: left;
     margin-right: 50px;
   }
+  .listing {
+    margin-left: 10px;
+    a {
+      display: block;
+    }
+  }
+}
+
+.left {
+  float: left;
 }

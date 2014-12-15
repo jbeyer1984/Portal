@@ -5,23 +5,35 @@
 {% endblock %}
 
 {% block body %}
-  {#<ul class="allAvailableTags">#}
   already existing Article
-  <div class="articleWrapper">
+  <div class="articleCollection">
     {% for article in articles %}
       <div class="article">{{ article.description }}</div>
     {% endfor %}
   </div>
   
-  {#<input class="tag_select" type="hidden" />#}
-
   <div class="action"><p>new Article</p></div>
-  <form method="POST" action="{{ path('acme_article_new') }}" {{ form_enctype(form) }}>
-    {#{{ form_row(form.name) }}#}
-    {#<input type="hidden" class="tagSelect" value="task, substring"/>#}
-    {{ form_rest(form) }}
-    <input type="submit" value="create" class="btn btn-default pull-right" />
-  </form>
+    <div class="articles_container">
+      <form method="POST" action="{{ path('acme_article_new') }}" {{ form_enctype(form) }}>
+        <div class="updateAndDelete">
+          <div class="input">
+            <ul>
+              <li>{{ form_row(form.description) }}</li>
+              <li>{{ form_row(form.pos) }}</li>
+            </ul>
+          </div>
+        </div>
+        <h3>Tags</h3>
+        <ul class="choice">
+          {% for tag in form.tags %}
+            <li>{{ form_row(tag) }}</li>
+          {% endfor %}
+        </ul>
+        {{ form_rest(form) }}
+        <input type="submit" value="create" class="btn btn-default pull-right" />
+      </form>
+    </div>
+  </div>
 {% endblock %}
 
 {% block customJavascript %}

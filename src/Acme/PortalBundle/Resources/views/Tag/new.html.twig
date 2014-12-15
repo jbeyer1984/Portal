@@ -5,31 +5,28 @@
 {% endblock %}
 
 {% block body %}
-  {#<ul class="allAvailableTags">#}
   already existing Tag
-  <div class="tagWrapper">
+  <div class="tagCollection">
     {% for tag in tagList %}
       <div class="tag">{{ tag.name }}</div>
     {% endfor %}
   </div>
-  {#</ul>#}
 
-  {#<select class="tag_select">#}
-    {#<option value=""></option>#}
-  {#{% for tag in tagList %}#}
-    {#<option value="{{ tag.shortName }}">{{ tag.name }}</option>#}
-  {#{% endfor %}#}
-  {#</select>#}
   
-  
-  {#<input class="tag_select" type="hidden" />#}
   <div class="action"><p>new Tag</p></div>
-  <form method="POST" action="{{ path('acme_tag_new') }}" {{ form_enctype(form) }}>
-    {#{{ form_row(form.name) }}#}
-    {#<input type="hidden" class="tagSelect" value="task, substring"/>#}
-    {{ form_rest(form) }}
-    <input type="submit" value="create" class="btn btn-default pull-right" />
-  </form>
+  <div class="tags_container">
+    <form method="POST" action="{{ path('acme_tag_new') }}" {{ form_enctype(form) }}>
+      <div class="updateAndDelete">
+        <div class="input">
+          <ul>
+            <li>{{ form_row(form.name) }}</li>
+          </ul>
+        </div>
+      </div>
+      {{ form_rest(form) }}
+      <input type="submit" value="create" class="btn btn-default pull-right" />
+    </form>
+  </div>
 {% endblock %}
 
 {% block customJavascript %}
