@@ -1,0 +1,36 @@
+Präsentation
+
+Warum das neue Portal
+  altes Portal
+    Baumstruktur
+    mit Navigation linke Seite
+  Gegenüberstellung
+    jetzige Navigation vs gerichtete Baumstruktur
+  neues Portal
+    dynamische Suche, leichte Einpflege
+    Eigenschaften der gerichteten Suche
+      Aufwand bei Einplege
+        Gegenüberstellung eines CMS und die Einpflege von neuen Artikeln(mehr Aufwand)
+      gerichtete Suche ist dynamisch
+        Beispiel einmal durchklicken mit Referenz Tabelle
+        es fallen Artikel in der gerichteten Suche weg
+          Grund sind Tags die beim angeklickten Artikel sich von den zuvor angebotetem Artikel in den Tags unterscheiden.
+      Priorisierung von Projekten
+        erlaubt es eine Reihenfolge von den gezeigten Artikel in Beziehung auf Kunden einzustellen
+        bei einer eingeschränkten Suche durch Tags kann es aber auch passieren, dass dieses Projekt gar nicht angezeigt wird.
+    Ausblick
+      optionale Listen Anzeige
+        besuchte Artikel
+        offerierte nicht besuchte Artikel
+      Filter verändern
+        mit offerierten Artikeln
+      Auswahl von Tags für Kunden um relevante Artikel einzuschränken
+      Erweiterungen im Quellcode
+        Decorator Pattern vs Abstraction
+      Tests
+        PHPUnit Test gestützt mit eigener SQLite Datenbank
+          Session
+          File Datenbank
+          Trennung von Life Datenbank
+        
+  
