@@ -9,7 +9,7 @@ Warum das neue Portal
   neues Portal
     dynamische Suche, leichte Einpflege
     Eigenschaften der gerichteten Suche
-      Aufwand bei Einplege
+      Aufwand bei Einpflege
         Gegenüberstellung eines CMS und die Einpflege von neuen Artikeln(mehr Aufwand)
       gerichtete Suche ist dynamisch
         Beispiel einmal durchklicken mit Referenz Tabelle
@@ -19,6 +19,7 @@ Warum das neue Portal
         erlaubt es eine Reihenfolge von den gezeigten Artikel in Beziehung auf Kunden einzustellen
         bei einer eingeschränkten Suche durch Tags kann es aber auch passieren, dass dieses Projekt gar nicht angezeigt wird.
     Ausblick
+      Einpflege Vergleich von Tags nebeneinander durch Regex
       optionale Listen Anzeige
         besuchte Artikel
         offerierte nicht besuchte Artikel
@@ -28,7 +29,7 @@ Warum das neue Portal
       Erweiterungen im Quellcode
         Decorator Pattern vs Abstraction
       Tests
-        PHPUnit Test gestützt mit eigener SQLite Datenbank
+        PHPUnit Test gestützt mit SQLite Datenbank
           Session
           File Datenbank
           Trennung von Life Datenbank
