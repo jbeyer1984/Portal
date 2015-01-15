@@ -1,0 +1,8 @@
+Überblick
+Gegenüberstellung (altes, neues, vorteile)
+neues Portal (Einpflege/Aufwand, Vergleich CMS, Vergleich neues Portal,
+              Beispiel)
+gerichtete Suche (Verständnis, Verständnis2)
+Tests (Phpunit, Maßnahmen, Vorteil)
+Erweiterungen (Listen etc.. Decorator)
+Ausblick (Regex, Ajax, Select2)
