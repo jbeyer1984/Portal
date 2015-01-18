@@ -7,37 +7,48 @@
 {% block body %}
   <div class="action"><p>edit Article</p></div>
   <div><a href="{{ path('acme_article_new') }}">create new Article</a></div>
+  <div class="regex">
+    <h2>type article to compare</h2>
+    <form action="#">
+      <input type="text"/>
+      <input class="update" type="button" value="update" />
+    </form>
+  </div>
   <div class="articles_container">
   {% for key, form in forms %}
-    <h2>Article</h2>
-    <form method="POST" action="{{ path('acme_article_edit') }}" {{ form_enctype(form) }}>
-      <div class="updateAndDelete">
-        {{ form_row(form.id) }}
-        <ul>
-          <li>{{ form_row(form.description) }}</li>
-          <li>{{ form_row(form.pos) }}</li>
-          <li>
-            <a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
-              delete Article
-            </a>
-          </li>
+    <div class="article">
+      <h2>Article</h2>
+      <form method="POST" action="{{ path('acme_article_edit') }}" {{ form_enctype(form) }}>
+        <div class="updateAndDelete">
+          {{ form_row(form.id) }}
+          <ul>
+            <li>{{ form_row(form.description) }}</li>
+            <li>{{ form_row(form.pos) }}</li>
+            <li>
+              <a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
+                delete Article
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <h3>Tags</h3>
+        <ul class="choice">
+          {% for tag in form.tags %}
+            <li>{{ form_row(tag) }}</li>
+          {% endfor %}
         </ul>
-      </div>
-      
-      <h3>Tags</h3>
-      <ul class="choice">
-        {% for tag in form.tags %}
-          <li>{{ form_row(tag) }}</li>
-        {% endfor %}
-      </ul>
-      <input type="submit" value="update" class="btn btn-default pull-right" />
-      {{ form_rest(form) }}
-      {#{{ form_end(form) }}#}
-    </form>
+        <input type="submit" value="update" class="btn btn-default pull-right" />
+        {{ form_rest(form) }}
+        {#{{ form_end(form) }}#}
+      </form>  
+    </div>
+    
   {% endfor %}
   </div>
 {% endblock %}
 
 {% block customJavascript %}
+  <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/articles.js') }}"></script>
   <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>
 {% endblock %}

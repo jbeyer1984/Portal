@@ -51,10 +51,10 @@ halign=left</panel_attributes>
     <coordinates>
       <x>100</x>
       <y>140</y>
-      <w>280</w>
+      <w>290</w>
       <h>280</h>
     </coordinates>
-    <panel_attributes>Facade
+    <panel_attributes>Interface
 halign=right</panel_attributes>
     <additional_attributes/>
   </element>

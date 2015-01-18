@@ -89,3 +89,8 @@ acme_portal_overview:
   path: portal/overview/
   defaults:
     _controller: AcmePortalBundle:Portal:overview
+
+acme_portal_clear:
+  path: portal/clear/
+  defaults:
+    _controller: AcmePortalBundle:Portal:deleteSession

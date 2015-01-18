@@ -29,9 +29,16 @@
       <h3>view Portal</h3>
       <div class="listing create">
         <a href="{{  path('acme_portal_show') }}">view Portal</a><br>
-        {#<a href="{{  path('acme_article_new') }}">create Article</a><br>#}
-        {#<a href="{{  path('acme_tag_new') }}">create Tag</a><br>#}
       </div>
+    </div>
+    <div class="container">
+      <h2>Session Portal</h2>
+      <hr>
+      <h3>delete</h3>
+      <div class="listing create">
+        <a href="{{  path('acme_portal_clear') }}">clear Session</a><br>
+      </div>
+    </div>
   </div>
 
 {% endblock %}

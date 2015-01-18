@@ -365,28 +365,6 @@
     <additional_attributes>10.0;10.0;60.0;60.0</additional_attributes>
   </element>
   <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>590</x>
-      <y>520</y>
-      <w>40</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>2</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>560</x>
-      <y>450</y>
-      <w>60</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;70.0</additional_attributes>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
       <x>420</x>

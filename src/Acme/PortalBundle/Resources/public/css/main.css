@@ -20,6 +20,11 @@
   margin-right: 5px;
   background: #d1d1d1;
 }
+.tags_container .article,
+.articles_container .article,
+.clients_container .article {
+  margin-right: 15px;
+}
 .tags_container .updateAndDelete ul,
 .articles_container .updateAndDelete ul,
 .clients_container .updateAndDelete ul {

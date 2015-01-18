@@ -70,4 +70,16 @@ class PortalController extends Controller implements FacadeControllerInterface
 //      )
 //    );
   }
+
+  public function deleteSessionAction()
+  {
+    $session = new Session();
+    $session->clear();
+    
+    return $this->redirect(
+      $this->generateUrl(
+        'acme_portal_overview'
+      )
+    );
+  }
 }
