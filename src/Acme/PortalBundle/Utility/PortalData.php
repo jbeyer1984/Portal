@@ -171,7 +171,7 @@ class PortalData implements FacadeUtilityInterface
   /**
    * @return void
    */
-  protected function filterArticlesWithBlacklist()
+  public function filterArticlesWithBlacklist()
   {
     $clientsVisited = array_keys($this->visitedArr['visited']);
     $clientsTagged = array_map(function ($article) {
@@ -183,20 +183,23 @@ class PortalData implements FacadeUtilityInterface
       foreach ($client->getArticles() as $article) {
         if (!in_array($article, $this->articles)) {
           $this->articles[] = $article;
+          print_r("\n".$article->getDescription());
         }
       }
     }
+//    ob_start();
+//    \Doctrine\Common\Util\Debug::dump($this->articles);
+//    $print = ob_get_clean();
+//    print_r($print);
     
     $this->articles = array_filter($this->articles, function ($article) {
       $clientName = $article->getClient()->getName();
 
-      $clientsTagged[] = $clientName;
       $articleName = $article->getDescription();
 
       if (isset($this->visitedBlacklist[$clientName])
         && isset($this->visitedBlacklist[$clientName][$articleName])
       ) {
-        $count = $article->getTags()->count();
         return false;
       }
       return true;

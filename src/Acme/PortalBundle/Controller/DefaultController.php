@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('AcmePortalBundle:Default:index.html.twig', array('name' => $name));
     }
+
+  public function getContainer()
+  {
+    return $this->container;
+  }
 }

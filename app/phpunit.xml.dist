@@ -9,10 +9,16 @@
 >
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/*/*Bundle/Tests</directory>
+            <directory>../src/*/PortalBundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
+
+    <!--<listeners>-->
+        <!--<listener class="\Mockery\Adapter\Phpunit\TestListener"-->
+                  <!--file="Mockery/Adapter/Phpunit/TestListener.php">-->
+        <!--</listener>-->
+    <!--</listeners>-->
 
     <!--
     <php>
