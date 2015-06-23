@@ -10,6 +10,7 @@ namespace Acme\PortalBundle\Utility;
 use Acme\PortalBundle\DataFixtures\ORM\LoadPortalData;
 use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Client;
+use Acme\PortalBundle\Entity\Tag;
 use Acme\PortalBundle\Facade\Facade;
 use Acme\PortalBundle\Facade\RepositoryFacade;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
+use Acme\PortalBundle\Tests\Helper\Db;
 use Mockery;
 
 require_once dirname(__DIR__).'/../../../../app/AppKernel.php';
@@ -51,7 +53,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->fixtures = array(
       new LoadPortalData()
     );
-    $this->purgeDatabase($this->fixtures);
+//    $this->purgeDatabase($this->fixtures);
 //    $this->doctrine = static::$kernel->getContainer()->get('doctrine');
 //    $this->session = static::$kernel->getContainer()->get('session');
 
@@ -93,7 +95,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
    * @param array $articles
    * @return array
    */
-  public function generateClientsArticles(Array $articles)
+  public function generateClientsArticles($articles)
   {
     $clientsArticles  = array();
     foreach ($articles as $article) {
@@ -111,7 +113,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     return $clientsArticles;
   }
   
-  public function getMockedArticle($name, $description)
+  public function getMockedArticle($pos, $description, $tags)
   {
 //    $clientMock = Mockery::mock(new Client,
 //      array(
@@ -123,25 +125,43 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
 //        'getClient' => $clientMock
 //      )
 //    );
-    $articleMock = Mockery::mock('Article');
-    $clientMock = Mockery::mock('Client');
-    $clientMock->shouldReceive(array (
-      'getName' => $name,
-      'getPos' => 0,
-    ));
-    $articleMock->shouldReceive(array (
-      'getClient' => $clientMock,
-      'getDescription' => $description
-    ));
+    $article = Db::createObject('Acme\PortalBundle\Entity\Article', array(
+      'pos' => $pos,
+      'description' => $description,
+      'client' => new Client(),
+    ), array());
+    foreach($tags as $tag) {
+      $article->addTag($tag);
+    }
+    return $article;
     
-    return $articleMock;
+//    $articleMock = Mockery::mock('Article');
+//    $clientMock = Mockery::mock('Client');
+//    $clientMock->shouldReceive(array (
+//      'getName' => $name,
+//      'getPos' => 0,
+//    ));
+//    $articleMock->shouldReceive(array (
+//      'getClient' => $clientMock,
+//      'getDescription' => $description
+//    ));
+//    
+//    return $articleMock;
   }
+  
 
-  public function getMockedClient()
+  public function getMockedClient($pos, $name)
   {
-    
+    $client = Db::createObject('Acme\PortalBundle\Entity\Client', array(
+      'pos' => $pos,
+      'name' => $name,
+    ), array());
+    return $client;
   }
 
+  /**
+   * @return mixed
+   */
   public function getMockedFacade()
   {
 //    $managerRegistry = Mockery::mock(new FakeManagerRegistry());
@@ -154,25 +174,63 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     return $facadeMock;
   }
   
+  public function getMockedTags($arrNames)
+  {
+    $arrayCollection = new ArrayCollection();
+    foreach ($arrNames as $name) {
+      $tags = Db::createObject('Acme\PortalBundle\Entity\Tag', array(
+        'name' => $name
+      ), array());
+      $arrayCollection->add($tags);
+    }
+    return $arrayCollection;
+  }
+  
   public function testMockery()
   {
-    $articles = array();
-    $articles[] = $this->getMockedArticle('asv', 'travelbook');
-    $articles[] = $this->getMockedArticle('tdu', 'vermarkter');
-    $this->portalData->setArticles($articles);
-    $visitedArr = array();
-    $visitedArr['visited'] = array();
-    $visitedArr['visited']['asv'] = array();
-    $visitedArr['visited']['asv']['stylebook'] = 'stylebook';
-    // empty visited Arr
+    // visit stylebook
+    $visitedArr = array(
+      'visited' => array(
+        'asv' => array(
+          'stylebook' => 'stylebook'
+        )
+      )
+    );
     $this->portalData->setVisitedArr($visitedArr);
+    
+    // used Tags that are relevant to other articles, in this case 'symfony'
+    $stylebookTags = $this->getMockedTags(array( // stylebook is tag specifier here
+      'beauty', 'symfony', 'html'
+    ));
+    $travelbookTags = $this->getMockedTags(array( // travelbook appears, because of relation to 'symfony'
+      'symfony', 'framework'
+    ));
+    
+    // build article for client asv
+    $stylebookArticle = $this->getMockedArticle(0, 'stylebook', $stylebookTags);
+    $travelbookArticle = $this->getMockedArticle(1, 'travelbook', $travelbookTags);
+
+    // add articles to client asv 
+    $asvClient = $this->getMockedClient(0, 'asv');
+//    ob_start();
+//    \Doctrine\Common\Util\Debug::dump(get_class($asvClient));
+//    $print = ob_get_clean();
+//    print_r($print);
+    $asvClient->addArticle($travelbookArticle);
+    $asvClient->addArticle($stylebookArticle);
+    
+    // toArray() because working with array in array_map in filterArticlesWithBlacklist()
+    $mostSignificantArticlesToTagsOfStylebook = $asvClient->getArticles()->toArray();
+    
+    $this->portalData->setArticles($mostSignificantArticlesToTagsOfStylebook);
+    
 //    $this->portalData->setFacade($this->getMockedFacade());
     $this->portalData->filterArticlesWithBlacklist();
     $this->result = $this->generateClientsArticles($this->portalData->getArticles());
-//    ob_start();
-//    print_r($this->result);
-//    $print = ob_get_clean();
-//    print_r($print);
+    ob_start();
+    print_r($this->result);
+    $print = ob_get_clean();
+    print_r($print);
   }
   
   public function testVisitWrongArticleName()

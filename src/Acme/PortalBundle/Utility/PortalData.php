@@ -1,13 +1,16 @@
 <?php
 namespace Acme\PortalBundle\Utility;
 
+use Acme\PortalBundle\Facade\Facade;
 use Acme\PortalBundle\Facade\FacadeUtilityInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Acme\PortalBundle\Facade\Facade;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 //use \Acme\PortalBundle\Facade\FacadeInterface;
 //use Acme\PortalBundle\Facade\RepositoryFacade;
 //use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Acme\PortalBundle\Utility\Extractor\ArticlesExtractor;
+use Acme\PortalBundle\Utility\Extractor\ClientsExtractor;
 
 class PortalData implements FacadeUtilityInterface
 {
@@ -143,7 +146,8 @@ class PortalData implements FacadeUtilityInterface
       $tagNames[] = $tag->getName();
     }
     $articlesDb = $this->facade->getRepository('Article')->findSignificantArticlesToTags($tagNames);
-    
+
+
     return $articlesDb;
   }
 
@@ -174,36 +178,13 @@ class PortalData implements FacadeUtilityInterface
   public function filterArticlesWithBlacklist()
   {
     $clientsVisited = array_keys($this->visitedArr['visited']);
-    $clientsTagged = array_map(function ($article) {
-      return $article->getClient()->getName();
-    }, $this->articles);
-    $clientsToAdd = array_merge($clientsVisited, $clientsTagged);
+    $clientsExtractor = new ClientsExtractor();
+    $clientsFromArticles = $clientsExtractor->extractBy($this->articles)->getClients();
+    $clientsToAdd = array_merge($clientsVisited, $clientsFromArticles);
     $clients = $this->facade->getRepositoryFacade()->getRepository('Client')->findByName($clientsToAdd);
-    foreach($clients as $client) {
-      foreach ($client->getArticles() as $article) {
-        if (!in_array($article, $this->articles)) {
-          $this->articles[] = $article;
-          print_r("\n".$article->getDescription());
-        }
-      }
-    }
-//    ob_start();
-//    \Doctrine\Common\Util\Debug::dump($this->articles);
-//    $print = ob_get_clean();
-//    print_r($print);
-    
-    $this->articles = array_filter($this->articles, function ($article) {
-      $clientName = $article->getClient()->getName();
-
-      $articleName = $article->getDescription();
-
-      if (isset($this->visitedBlacklist[$clientName])
-        && isset($this->visitedBlacklist[$clientName][$articleName])
-      ) {
-        return false;
-      }
-      return true;
-    });
+    $articleExtractor = new ArticlesExtractor();
+    $this->articles = $articleExtractor->extractBy($clients)->getArticles();
+    $this->removeArticlesWithBlacklist($this->articles);
   }
   
   protected function extendAllOfferedArticles()
@@ -211,7 +192,7 @@ class PortalData implements FacadeUtilityInterface
   }
   
   /**
-   * @return ArrayCollection
+   * @return Array
    */
   public function getArticles()
   {
@@ -219,7 +200,7 @@ class PortalData implements FacadeUtilityInterface
   }
 
   /**
-   * @param ArrayCollection $articles
+   * @param Array $articles
    */
   public function setArticles($articles)
   {
@@ -288,5 +269,48 @@ class PortalData implements FacadeUtilityInterface
   public function setVisitedArr($visitArr)
   {
     $this->visitedArr = $visitArr;
+  }
+
+  /**
+   * @param array $clientsToAdd
+   */
+  protected function extractArticlesByClients($clients)
+  {
+    foreach ($clients as $client) {
+      foreach ($client->getArticles() as $article) {
+        if (!in_array($article, $this->articles)) {
+          $this->articles[] = $article;
+          print_r("\n" . $article->getDescription());
+        }
+      }
+    }
+  }
+
+  /**
+   * @param array $articles
+   * @return array
+   */
+  protected function getExtractedClientsByArticles($articles)
+  {
+    $clientsTagged = array_map(function ($article) {
+      return $article->getClient()->getName();
+    }, $articles);
+    return $clientsTagged;
+  }
+
+  protected function removeArticlesWithBlacklist($articles)
+  {
+    $articles = array_filter($articles, function ($article) {
+      $clientName = $article->getClient()->getName();
+
+      $articleName = $article->getDescription();
+
+      if (isset($this->visitedBlacklist[$clientName])
+        && isset($this->visitedBlacklist[$clientName][$articleName])
+      ) {
+        return false;
+      }
+      return true;
+    });
   }
 }

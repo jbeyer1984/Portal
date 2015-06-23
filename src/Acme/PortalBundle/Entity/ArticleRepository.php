@@ -3,6 +3,7 @@
 namespace Acme\PortalBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ArticleRepository
