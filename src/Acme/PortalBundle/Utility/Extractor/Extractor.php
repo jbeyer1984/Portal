@@ -4,11 +4,13 @@ namespace Acme\PortalBundle\Utility\Extractor;
 
 use Acme\PortalBundle\Utility\Validator\ValidatorCollection;
 
-abstract class Extractor {
+abstract class Extractor implements ExtractorInterface {
   /**
    * @var ValidatorCollection $validatorCollection
    */
   protected $validatorCollection;
+
+  protected $extractor;
 
   function __construct()
   {
@@ -17,20 +19,12 @@ abstract class Extractor {
 
   /**
    * @param array $extractor
-   * @return boolean
-   */
-  protected function validate()
-  {
-    return $this->validatorCollection->validateAll();
-  }
-
-  /**
-   * @param array $extractor
    * @return $this
    */
   public function extractBy(array $extractor)
   {
-    if (!$this->validate($extractor)) {
+    $this->extractor = $extractor;
+    if (!$this->validate()) {
       //@TODO log nothing to extract
       return $this;
     }
@@ -38,11 +32,20 @@ abstract class Extractor {
     return $this;
   }
 
-  public function callRelatedExtractorMethod($extractor)
+  /**
+   * @return boolean
+   */
+  protected function validate()
+  {
+    return $this->validatorCollection->validateAll();
+  }
+
+  protected function callRelatedExtractorMethod($extractor)
   {
     $reflection = new \ReflectionClass($extractor[0]);
     $func = 'extractBy'.$reflection->getShortName().'s';
-    $this->$func($extractor);
+    call_user_func_array(array($this, $func), array($extractor));
+//    $this->$func($extractor);
   }
 
   /**

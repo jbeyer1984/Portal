@@ -6,7 +6,7 @@ use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Utility\Validator\ValidatorCollection;
 use Acme\PortalBundle\Utility\Validator\ExtractorValidator;
 
-class ClientsExtractor extends Extractor implements ExtractorInterface {
+class ClientsExtractor extends Extractor {
   /**
    * @var Array $clients
    */
@@ -16,9 +16,9 @@ class ClientsExtractor extends Extractor implements ExtractorInterface {
    * @param array $extractor
    * @return boolean
    */
-  protected function validate(array $extractor)
+  protected function validate()
   {
-    $this->addExtractorValidation($extractor);
+    $this->addExtractorValidation($this->extractor);
     return parent::validate();
   }
 

@@ -177,14 +177,17 @@ class PortalData implements FacadeUtilityInterface
    */
   public function filterArticlesWithBlacklist()
   {
+    // get clients visited + clients from (articles relevant with tags)
     $clientsVisited = array_keys($this->visitedArr['visited']);
     $clientsExtractor = new ClientsExtractor();
     $clientsFromArticles = $clientsExtractor->extractBy($this->articles)->getClients();
     $clientsToAdd = array_merge($clientsVisited, $clientsFromArticles);
     $clients = $this->facade->getRepositoryFacade()->getRepository('Client')->findByName($clientsToAdd);
+    // get articles by clients above
     $articleExtractor = new ArticlesExtractor();
     $this->articles = $articleExtractor->extractBy($clients)->getArticles();
-    $this->removeArticlesWithBlacklist($this->articles);
+    // remove articles that are already visited
+    $this->articles = $this->removeArticlesWithBlacklist($this->articles);
   }
   
   protected function extendAllOfferedArticles()
@@ -312,5 +315,6 @@ class PortalData implements FacadeUtilityInterface
       }
       return true;
     });
+    return $articles;
   }
 }

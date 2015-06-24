@@ -9,19 +9,18 @@ use Acme\PortalBundle\Utility\Validator\ExtractorValidator;
 use Acme\PortalBundle\Utility\Validator\ValidatorCollection;
 use Acme\PortalBundle\Entity\Client;
 
-class ArticlesExtractor extends Extractor implements ExtractorInterface {
+class ArticlesExtractor extends Extractor {
   /**
    * @var Array $articles
    */
   protected $articles;
 
   /**
-   * @param array $extractor
    * @return boolean
    */
-  protected function validate(array $extractor)
+  protected function validate()
   {
-    $this->addExtractorValidation($extractor);
+    $this->addExtractorValidation($this->extractor);
     return parent::validate();
   }
 
@@ -44,7 +43,6 @@ class ArticlesExtractor extends Extractor implements ExtractorInterface {
       foreach ($client->getArticles() as $article) {
         if (!in_array($article, $extractor)) {
           $this->articles[] = $article;
-          print_r("\n" . $article->getDescription());
         }
       }
     }
