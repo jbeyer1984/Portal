@@ -177,7 +177,7 @@ class PortalData implements FacadeUtilityInterface
    */
   public function filterArticlesWithBlacklist()
   {
-    // get clients visited + clients from (articles relevant with tags)
+    // get clients visited + clients from (articles relevant with tags), $this-articles already fetched
     $clientsVisited = array_keys($this->visitedArr['visited']);
     $clientsExtractor = new ClientsExtractor();
     $clientsFromArticles = $clientsExtractor->extractBy($this->articles)->getClients();
@@ -272,33 +272,6 @@ class PortalData implements FacadeUtilityInterface
   public function setVisitedArr($visitArr)
   {
     $this->visitedArr = $visitArr;
-  }
-
-  /**
-   * @param array $clientsToAdd
-   */
-  protected function extractArticlesByClients($clients)
-  {
-    foreach ($clients as $client) {
-      foreach ($client->getArticles() as $article) {
-        if (!in_array($article, $this->articles)) {
-          $this->articles[] = $article;
-          print_r("\n" . $article->getDescription());
-        }
-      }
-    }
-  }
-
-  /**
-   * @param array $articles
-   * @return array
-   */
-  protected function getExtractedClientsByArticles($articles)
-  {
-    $clientsTagged = array_map(function ($article) {
-      return $article->getClient()->getName();
-    }, $articles);
-    return $clientsTagged;
   }
 
   protected function removeArticlesWithBlacklist($articles)

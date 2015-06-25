@@ -8,12 +8,14 @@
 
 namespace Acme\PortalBundle\Utility;
 use Acme\PortalBundle\DataFixtures\ORM\LoadPortalData;
-use Acme\PortalBundle\Tests\Utility\PortalMocker;
+use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerEntities;
+use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerClients;
 use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Client;
 use Acme\PortalBundle\Entity\Tag;
 use Acme\PortalBundle\Facade\Facade;
 use Acme\PortalBundle\Facade\RepositoryFacade;
+use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -63,7 +65,7 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData = new PortalData();
     $this->portalData->setFacade($this->facade);
     $this->portalData->setSession($this->session);
-    $this->mo = new PortalMocker();
+    $this->mo = new PortalMockerEntities();
   }
 
   /**
@@ -106,85 +108,58 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
       $clientPos = $article->getClient()->getPos();
       $articleName = $article->getDescription();
       if (!isset($clientsArticles[$clientPos])) {
-        $clientsArticles[$clientPos] = array();
+        $clientsArticles[$client] = array();
+        $clientsArticles[$client]['articles'] = array();
       }
-      if (!isset($clientsArticles[$clientPos][$client])) {
-        $clientsArticles[$clientPos][$client] = array();
-      }
-      $clientsArticles[$clientPos][$client][$articleName] = $articleName;
+      $clientsArticles[$client]['articles'][$articleName] = $articleName;
     }
     return $clientsArticles;
   }
   
-  public function testMockery()
+  public function grepInDepth($str, $arr)
   {
-    // visit stylebook
+    $matches = explode('.', $str);
+    foreach ($matches as $match) {
+      $arr = $arr[$match];
+    }
+    return $arr;
+  }
+  
+  public function testFilterArticlesWithBlacklist()
+  {
+    // visit travelbook
     $visitedArr = array(
       'visited' => array(
         'asv' => array(
-          'stylebook' => 'stylebook'
+          'travelbook' => 'travelbook'
         )
       )
     );
     $this->portalData->setVisitedArr($visitedArr);
+    $this->portalData->setVisitedBlacklist($visitedArr['visited']);
     
-    $mockArray = array(
-      'clients' => array(
-        'asv' => array(
-          'stylebook' => array(
-            'tags' => array('beauty', 'html', 'symfony')      
-          ),
-          'travelbook' => array(
-            'tags' => array()
-          )
-        ),
-        'spqc' => array(
-          'qc' => array(
-            'tags' => array()
-          )
-        )
-      )
+    $portalMockerClients = new PortalMockerClients();
+    $clients = array(
+      $portalMockerClients->getMocked('asv'),
+      $portalMockerClients->getMocked('spiegel')  
     );
     
-    function grepInDepth($str, array $arr) {
-      $matches = explode('.', $str);
-      if (1 == sizeof($matches)) {
-        return $matches[0];
-      }
-      foreach($matches as $match) {
-        array_shift($matches);
-        $str = implode('.', $matches);
-        return grepInDepth($str, $arr[$match]);
-      }
+    $articlesArrays = array_map(function($client) {
+      return $client->getArticles()->toArray();
+    }, $clients);
+    $mergedArticles = array();
+    foreach ($articlesArrays as $articlesArr) {
+      $mergedArticles = array_merge($mergedArticles, $articlesArr);
     }
-    $any = grepInDepth('clients.asv.stylebook.tags', $mockArray);
+    $mostSignificantArticlesToTagsOfTravelbook = $mergedArticles;
     
+    $this->portalData->setArticles($mostSignificantArticlesToTagsOfTravelbook);
     
-    // used Tags that are relevant to other articles, in this case 'symfony'
-    $stylebookTags = $this->mo->getMockedTags(array( // stylebook is tag specifier here
-      'beauty', 'symfony', 'html'
-    ));
-    $travelbookTags = $this->mo->getMockedTags(array( // travelbook appears, because of relation to 'symfony'
-      'symfony', 'framework'
-    ));
-    
-    // build article for client asv
-    $stylebookArticle = $this->mo->getMockedArticle(0, 'stylebook', $stylebookTags);
-    $travelbookArticle = $this->mo->getMockedArticle(1, 'travelbook', $travelbookTags);
-
-    // add articles to client asv 
-    $asvClient = $this->mo->getMockedClient(0, 'asv');
-    $asvClient->addArticle($travelbookArticle);
-    $asvClient->addArticle($stylebookArticle);
-    
-    // toArray() because working with array in array_map in filterArticlesWithBlacklist()
-    $mostSignificantArticlesToTagsOfStylebook = $asvClient->getArticles()->toArray();
-    
-    $this->portalData->setArticles($mostSignificantArticlesToTagsOfStylebook);
-    
-//    $this->portalData->setFacade($this->getMockedFacade());
     $this->portalData->filterArticlesWithBlacklist();
     $this->result = $this->generateClientsArticles($this->portalData->getArticles());
+    $this->assertArrayHasKey('stylebook', $this->grepInDepth('asv.articles', $this->result));
+    $this->assertArrayNotHasKey('travelbook', $this->grepInDepth('asv.articles', $this->result));
+    $this->assertArrayHasKey('qc', $this->grepInDepth('spiegel.articles', $this->result));
   }
   
   public function testVisitWrongArticleName()

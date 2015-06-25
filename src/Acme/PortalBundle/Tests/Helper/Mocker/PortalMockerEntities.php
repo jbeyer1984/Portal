@@ -1,8 +1,8 @@
 <?php
 
-namespace Acme\PortalBundle\Tests\Utility;
+namespace Acme\PortalBundle\Tests\Helper\Mocker;
 
-use Acme\PortalBundle\Tests\Helper\Db;
+use Acme\PortalBundle\Tests\Helper\EntityCreator;
 use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Client;
 use Acme\PortalBundle\Entity\Tag;
@@ -10,10 +10,22 @@ use Acme\PortalBundle\Facade\Facade;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery;
 
-class PortalMocker {
+class PortalMockerEntities {
+
+  /**
+   * @param String[] $clients
+   * @return mixed
+   */
+  public function getMockedClients(array $clients)
+  {
+    foreach ($clients as $client) {
+      
+    }
+  }
+  
   public function getMockedArticle($pos, $description, $tags)
   {
-    $article = Db::createObject('Acme\PortalBundle\Entity\Article', array(
+    $article = EntityCreator::createObject('Acme\PortalBundle\Entity\Article', array(
       'pos' => $pos,
       'description' => $description,
       'client' => new Client(),
@@ -27,7 +39,7 @@ class PortalMocker {
 
   public function getMockedClient($pos, $name)
   {
-    $client = Db::createObject('Acme\PortalBundle\Entity\Client', array(
+    $client = EntityCreator::createObject('Acme\PortalBundle\Entity\Client', array(
       'pos' => $pos,
       'name' => $name,
     ), array());
@@ -53,7 +65,7 @@ class PortalMocker {
   {
     $arrayCollection = new ArrayCollection();
     foreach ($arrNames as $name) {
-      $tags = Db::createObject('Acme\PortalBundle\Entity\Tag', array(
+      $tags = EntityCreator::createObject('Acme\PortalBundle\Entity\Tag', array(
         'name' => $name
       ), array());
       $arrayCollection->add($tags);
