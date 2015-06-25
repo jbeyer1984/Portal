@@ -3,6 +3,7 @@ namespace Acme\PortalBundle\Utility;
 
 use Acme\PortalBundle\Facade\Facade;
 use Acme\PortalBundle\Facade\FacadeUtilityInterface;
+use Acme\PortalBundle\Utility\Extractor\ExtractorFactory;
 use Acme\PortalBundle\Utility\Extractor\Filter\ArticleFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -181,14 +182,13 @@ class PortalData implements FacadeUtilityInterface
   {
     // get clients visited + clients from (articles relevant with tags), $this-articles already fetched
     $clientsVisited = array_keys($this->visitedArr['visited']);
-    $clientsExtractor = new ClientsExtractor();
-    $articleExtractor = new ArticlesExtractor();
-    $clientsFromArticles = $clientsExtractor->extract($this->articles, new ArticleFilter());
+    $extractorFactory = ExtractorFactory::init();
+    $clientsFromArticles = $extractorFactory->extractArticleEntitiesFromClient($this->articles);
     $clientsToAdd = array_merge($clientsVisited, $clientsFromArticles);
     $clients = $this->facade->getRepositoryFacade()->getRepository('Client')->findByName($clientsToAdd);
     // get articles by clients above
     
-    $this->articles = $articleExtractor->extract($clients, new ClientFilter());
+    $this->articles = $extractorFactory->extractClientNamesFromArticles($clients);
     // remove articles that are already visited
     $this->articles = $this->removeArticlesWithBlacklist($this->articles);
   }
