@@ -3,59 +3,26 @@
 namespace Acme\PortalBundle\Utility\Extractor;
 
 use Acme\PortalBundle\Entity\Article;
-use Acme\PortalBundle\Utility\Validator\ValidatorCollection;
-use Acme\PortalBundle\Utility\Validator\ExtractorValidator;
+use Acme\PortalBundle\Utility\Extractor\Filter\FilterInterface;
 
 class ClientsExtractor extends Extractor {
-  /**
-   * @var Array $clients
-   */
-  protected $clients;
 
   /**
-   * @param array $extractor
-   * @return boolean
+   * @param Client[] $toExtract
+   * @param FilterInterface $filter
+   * @return mixed
    */
-  protected function validate()
-  {
-    $this->addExtractorValidation($this->extractor);
-    return parent::validate();
+  public function extract($toExtract, FilterInterface $filter) {
+    return array_map(function($article) {
+      /** @var $article Article */
+//      if ($filter->pass($article)) {
+        return $article->getClient()->getName();
+//      }
+    }, $toExtract);
+//    return array_map(function($client, $filter) {
+//      if ($filter->pass($client)) {
+//        return $client->getClient();
+//      }
+//    }, $toExtract);
   }
-
-  /**
-   * @param array $extractor
-   */
-  protected function addExtractorValidation(array $extractor)
-  {
-    $extractorValidator = new ExtractorValidator($extractor);
-    $this->validatorCollection->add($extractorValidator);
-  }
-
-  /*
-   * @param Article[]
-   */
-  protected function extractByArticles(array $extractor)
-  {
-    /* @var $articles Article[] */
-    $this->clients = array_map(function ($article) {
-      return $article->getClient()->getName();
-    }, $extractor);
-  }
-
-  /**
-   * @return array
-   */
-  public function getClients()
-  {
-    return $this->clients;
-  }
-
-  /**
-   * @param array $clients
-   */
-  public function setClients(array $clients)
-  {
-    $this->clients = $clients;
-  }
-  
 }

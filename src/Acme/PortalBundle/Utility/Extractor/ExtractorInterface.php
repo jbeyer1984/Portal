@@ -2,7 +2,14 @@
 
 namespace Acme\PortalBundle\Utility\Extractor;
 
+use Acme\PortalBundle\Utility\Extractor\Filter\FilterInterface;
+
 interface ExtractorInterface
 {
-  public function extractBy(Array $extractor);
+  /**
+   * @param $toExtract
+   * @param FilterInterface $filter
+   * @return mixed
+   */
+  public function extract($toExtract, FilterInterface $filter);
 }
