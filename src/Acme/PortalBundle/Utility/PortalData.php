@@ -2,7 +2,6 @@
 namespace Acme\PortalBundle\Utility;
 
 use Acme\PortalBundle\Helper\Depot\Depot;
-use Acme\PortalBundle\Helper\Depot\DepotInterface;
 use Acme\PortalBundle\Helper\Depot\DepotUtilityInterface;
 use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Utility\Extractor\ExtractorProxy;

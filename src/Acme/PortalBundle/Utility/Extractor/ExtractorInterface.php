@@ -11,5 +11,5 @@ interface ExtractorInterface
    * @param FilterInterface $filter
    * @return mixed
    */
-  public function extract($toExtract, FilterInterface $filter);
+  public function extract($toExtract, FilterInterface $filter = null);
 }

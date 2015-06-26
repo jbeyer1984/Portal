@@ -4,7 +4,6 @@ namespace Acme\PortalBundle\Utility;
 use Acme\PortalBundle\DataFixtures\ORM\LoadPortalData;
 use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerClients;
-use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerEntities;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -51,7 +50,6 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData = new PortalData();
     $this->portalData->setDepot($this->repository);
     $this->portalData->setSession($this->session);
-    $this->mo = new PortalMockerEntities();
   }
 
   /**
@@ -147,10 +145,10 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData->setArticles($mostSignificantArticlesToTagsOfTravelbook);
     
     $this->portalData->filterArticlesWithBlacklist();
-//    $this->result = $this->generateClientsArticles($this->portalData->getArticles());
-//    $this->assertArrayHasKey('stylebook', $this->grepInDepth('asv.articles', $this->result));
-//    $this->assertArrayNotHasKey('travelbook', $this->grepInDepth('asv.articles', $this->result));
-//    $this->assertArrayHasKey('qc', $this->grepInDepth('spiegel.articles', $this->result));
+    $this->result = $this->generateClientsArticles($this->portalData->getArticles());
+    $this->assertArrayHasKey('stylebook', $this->grepInDepth('asv.articles', $this->result));
+    $this->assertArrayNotHasKey('travelbook', $this->grepInDepth('asv.articles', $this->result));
+    $this->assertArrayHasKey('qc', $this->grepInDepth('spiegel.articles', $this->result));
   }
   
   public function testVisitWrongArticleName()
