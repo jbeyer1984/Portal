@@ -2,15 +2,15 @@
 
 namespace Acme\PortalBundle\Utility\Extractor;
 
-use Acme\PortalBundle\Utility\Extractor\Filter\FilterInterface;
-use Acme\PortalBundle\Utility\Extractor\Filter\ArticleFilter;
-use Acme\PortalBundle\Utility\Extractor\Filter\ClientFilter;
-use Acme\PortalBundle\Utility\Extractor\ArticleExtractor;
-use Acme\PortalBundle\Utility\Extractor\ClientsExtractor;
-
 class ExtractorFactory {
+  /**
+   * @var $instance ExtractorFactory
+   */
   private static $instance;
 
+  /**
+   * @return ExtractorFactory
+   */
   static public function init()
   {
     if (!self::$instance) {
@@ -18,18 +18,20 @@ class ExtractorFactory {
     }
     return self::$instance;
   }
-  
-  public function extractArticleEntitiesFromClient($toExtract)
+
+  /**
+   * @return ArticlesExtractor
+   */
+  public function getArticlesExtractor()
   {
-    $clientsExtractor = new ClientsExtractor();
-    $articles = $clientsExtractor->extract($toExtract, new ArticleFilter());
-    return $articles;
+    return new ArticlesExtractor();
   }
-  
-  public function extractClientNamesFromArticles($toExtract)
+
+  /**
+   * @return ClientsExtractor
+   */
+  public function getClientsExtractor()
   {
-    $articleExtractor = new ArticlesExtractor();
-    $clients = $articleExtractor->extract($toExtract, new ClientFilter());
-    return $clients;
+    return new ClientsExtractor();
   }
 }
