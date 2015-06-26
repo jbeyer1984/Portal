@@ -1,29 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jbeyer
- * Date: 06.11.2014
- * Time: 09:09
- */
 
 namespace Acme\PortalBundle\Utility;
 use Acme\PortalBundle\DataFixtures\ORM\LoadPortalData;
-use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerEntities;
-use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerClients;
-use Acme\PortalBundle\Entity\Article;
-use Acme\PortalBundle\Entity\Client;
-use Acme\PortalBundle\Entity\Tag;
-use Acme\PortalBundle\Facade\Facade;
 use Acme\PortalBundle\Facade\RepositoryFacade;
-use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerFactory;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerClients;
+use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerEntities;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
-use Acme\PortalBundle\Tests\Helper\Db;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Mockery;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 
 require_once dirname(__DIR__).'/../../../../app/AppKernel.php';
 
@@ -190,14 +176,6 @@ class PortalDataTest extends \PHPUnit_Framework_TestCase {
     $this->portalData->visit('tdu', 'vermarkter');
     $this->result = $this->portalData->getArticlesSorted();
     $this->assertTrue(empty($this->result));
-  }
-
-  public function testVisitAsvThenTdu()
-  {
-    $this->portalData->visit('asv', 'travelbook');
-    $this->portalData->visit('tdu', 'vermarkter');
-    $this->result = $this->generateClientsArticles($this->portalData->getArticles());
-    $this->assertTrue(isset($this->result[0]['asv']['stylebook']));
   }
 }
  

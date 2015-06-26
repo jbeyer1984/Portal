@@ -230,14 +230,6 @@ class PortalData implements FacadeUtilityInterface
   }
 
   /**
-   * @return array
-   */
-  public function getClientsArticles()
-  {
-    return $this->clientsArticles;
-  }
-
-  /**
    * @param array $clientsArticles
    */
   public function setClientsArticles($clientsArticles)
