@@ -2,11 +2,8 @@
 
 namespace Acme\PortalBundle\Tests\Helper\Mocker;
 
-use Acme\PortalBundle\Tests\Helper\EntityCreator;
-use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Client;
-use Acme\PortalBundle\Entity\Tag;
-use Acme\PortalBundle\Facade\Facade;
+use Acme\PortalBundle\Tests\Helper\EntityCreator;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery;
 

@@ -1,37 +1,37 @@
 <?php
 namespace Acme\PortalBundle\Controller;
 
-use Acme\PortalBundle\Facade\FacadeControllerInterface;
-use Acme\PortalBundle\Facade\RepositoryFacade;
+use Acme\PortalBundle\Helper\Depot\DepotControllerInterface;
+use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Acme\PortalBundle\Utility\PortalData;
 
-class PortalController extends Controller implements FacadeControllerInterface
+class PortalController extends Controller implements DepotControllerInterface
 {
   /**
-   * @var RepositoryFacade
+   * @var RepositoryDepot
    */
-  protected $facade;
+  protected $repository;
   /**
    * @var PortalData
    */
   protected $portalData;
 
-  public function setFacade(ManagerRegistry $doctrine)
+  public function setDepot(ManagerRegistry $doctrine)
   {
-    $this->facade = new RepositoryFacade($doctrine, 'AcmePortalBundle');
+    $this->repository = new RepositoryDepot($doctrine, 'AcmePortalBundle');
     $this->portalData = new PortalData();
     $session = new Session();
     $session->start();
-    $this->portalData->setFacade($this->facade);
+    $this->portalData->setDepot($this->repository);
     $this->portalData->setSession($session);
   }
 
   public function showAction()
   {
-    $clients = $this->facade->getRepository('Client')->findAllOrderedByDescription();
+    $clients = $this->repository->getEntity('Client')->findAllOrderedByDescription();
 
     $session = new Session();
     $sessionArr = $session->get('overview');
@@ -56,7 +56,7 @@ class PortalController extends Controller implements FacadeControllerInterface
   {
     $this->portalData->visit($client, $article);
     $articlesLeft = $this->portalData->getArticlesSorted();
-    $clients = $this->facade->getRepository('Client')->findAllOrderedByDescription();
+    $clients = $this->repository->getEntity('Client')->findAllOrderedByDescription();
 
     return $this->render('AcmePortalBundle:Portal:visit.html.twig',
       array(

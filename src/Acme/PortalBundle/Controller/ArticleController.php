@@ -5,24 +5,23 @@ namespace Acme\PortalBundle\Controller;
 
 use Acme\PortalBundle\Entity\Article;
 use Acme\PortalBundle\Entity\Tag;
-//use Doctrine\Common\Collections\ArrayCollection;
-use Acme\PortalBundle\Facade\FacadeControllerInterface;
-use Acme\PortalBundle\Facade\RepositoryFacade;
+use Acme\PortalBundle\Helper\Depot\DepotControllerInterface;
+use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Form\Type\ArticleType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ArticleController extends Controller implements FacadeControllerInterface
+class ArticleController extends Controller implements DepotControllerInterface
 {
   /**
-   * @var RepositoryFacade
+   * @var RepositoryDepot
    */
-  protected $facade;
+  protected $repository;
 
-  public function setFacade(ManagerRegistry $doctrine)
+  public function setDepot(ManagerRegistry $doctrine)
   {
-    $this->facade = new RepositoryFacade($doctrine, 'AcmePortalBundle');
+    $this->repository = new RepositoryDepot($doctrine, 'AcmePortalBundle');
   }
 
   public function indexAction()
@@ -41,13 +40,13 @@ class ArticleController extends Controller implements FacadeControllerInterface
       foreach($article->getTags() as $tag) {
         $article->addTag($tag);
 //        $article->setClient(null);
-        $this->facade->getEm()->persist($tag);
+        $this->repository->getEm()->persist($tag);
       }
-      $this->facade->getEm()->persist($article);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->persist($article);
+      $this->repository->getEm()->flush();
     }
 
-    $articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
+    $articles = $this->repository->getEntity('Article')->findAllOrderedByDescription();
     
     $form = $form->createView();
 
@@ -60,7 +59,7 @@ class ArticleController extends Controller implements FacadeControllerInterface
   }
 
   public function showAction() {
-    $articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
+    $articles = $this->repository->getEntity('Article')->findAllOrderedByDescription();
 
     $article = $this->getNewArticle();
     $form = $this->createForm(new ArticleType(), $article);
@@ -88,7 +87,7 @@ class ArticleController extends Controller implements FacadeControllerInterface
     
     if ($form->isValid()) {
       $articleReq = $form->getData();
-      $articleDb = $this->facade->getRepository('Article')->findById($articleReq->getId());
+      $articleDb = $this->repository->getEntity('Article')->findById($articleReq->getId());
       if (sizeof($articleDb) > 0) {
         $article = $articleDb[0];
         $article->setDescription($articleReq->getDescription());
@@ -96,17 +95,17 @@ class ArticleController extends Controller implements FacadeControllerInterface
         // remove first the tags from array
         foreach($article->getTags() as $tag) {
           $tag->getArticles()->removeElement($article);
-          $this->facade->getEm()->persist($tag);
+          $this->repository->getEm()->persist($tag);
         }
-        $this->facade->getEm()->persist($article);
+        $this->repository->getEm()->persist($article);
         $tagsReq = $articleReq->getTags();
         // add tag to array
         foreach($tagsReq as $tag) {
           $article->addTag($tag);
-          $this->facade->getEm()->persist($tag);
+          $this->repository->getEm()->persist($tag);
         }
-        $this->facade->getEm()->persist($article);
-        $this->facade->getEm()->flush();
+        $this->repository->getEm()->persist($article);
+        $this->repository->getEm()->flush();
       }
     }
 
@@ -119,11 +118,11 @@ class ArticleController extends Controller implements FacadeControllerInterface
 
   public function deleteAction($id)
   {
-    $articleDb = $this->facade->getRepository('Article')->findById($id);
+    $articleDb = $this->repository->getEntity('Article')->findById($id);
     if (sizeof($articleDb) > 0) {
       $article = $articleDb[0];
-      $this->facade->getEm()->remove($article);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->remove($article);
+      $this->repository->getEm()->flush();
     }
 
     return $this->redirect(

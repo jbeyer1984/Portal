@@ -1,16 +1,16 @@
 <?php
-namespace Acme\PortalBundle\Facade;
+namespace Acme\PortalBundle\Helper\Depot;
 
-use Acme\PortalBundle\Facade\Facade;
+use Acme\PortalBundle\Helper\Depot\Depot;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-interface FacadeUtilityInterface
+interface DepotUtilityInterface
 {
   /**
-   * @param Facade $facade
+   * @param Depot $depot
    * @return mixed
    */
-  public function setFacade(Facade $facade);
+  public function setDepot(Depot $depot);
 
   /**
    * @param Session $session

@@ -1,11 +1,11 @@
 <?php
-namespace Acme\PortalBundle\Facade;
+namespace Acme\PortalBundle\Helper\Depot;
 
 use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Acme\PortalBundle\Facade\Facade;
+use Acme\PortalBundle\Helper\Depot\Depot;
 
 
-class RepositoryFacade extends Facade
+class RepositoryDepot extends Depot
 {
   protected $doctrine;
   protected $em;
@@ -31,7 +31,7 @@ class RepositoryFacade extends Facade
     return $this->em;
   }
   
-  public function getRepository($identifier)
+  public function getEntity($identifier)
   {
     if (isset($this->repositories[$identifier])) {
       return $this->repositories[$identifier];
@@ -39,10 +39,5 @@ class RepositoryFacade extends Facade
     $repository = $this->getEm()->getRepository($this->bundle . ':' . $identifier);
     $this->repositories[$identifier] = $repository;
     return $repository;
-  }
-
-  public function toString()
-  {
-    return 'RepositoryFacade'; //get_class($this); doesn't work because of whole path
   }
 }

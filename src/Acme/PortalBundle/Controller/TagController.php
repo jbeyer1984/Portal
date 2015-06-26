@@ -3,23 +3,23 @@
 namespace Acme\PortalBundle\Controller;
 
 use Acme\PortalBundle\Entity\Tag;
-use Acme\PortalBundle\Facade\FacadeControllerInterface;
-use Acme\PortalBundle\Facade\RepositoryFacade;
+use Acme\PortalBundle\Helper\Depot\DepotControllerInterface;
+use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Form\Type\TagType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class TagController extends Controller implements FacadeControllerInterface
+class TagController extends Controller implements DepotControllerInterface
 {
   /**
-   * @var RepositoryFacade
+   * @var RepositoryDepot
    */
-  protected $facade;
+  protected $repository;
 
-  public function setFacade(ManagerRegistry $doctrine)
+  public function setDepot(ManagerRegistry $doctrine)
   {
-    $this->facade = new RepositoryFacade($doctrine, 'AcmePortalBundle');
+    $this->repository = new RepositoryDepot($doctrine, 'AcmePortalBundle');
   }
   
   public function indexAction()
@@ -35,10 +35,10 @@ class TagController extends Controller implements FacadeControllerInterface
 
     if ($form->isValid()) {
       $tag = $form->getData();
-      $this->facade->getEm()->persist($tag);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->persist($tag);
+      $this->repository->getEm()->flush();
     }
-    $tags = $this->facade->getRepository('Tag')->findAllOrderedByName();
+    $tags = $this->repository->getEntity('Tag')->findAllOrderedByName();
     $tagList = array();
     $tagNames = array();
     foreach ($tags as $key => $tag) {
@@ -58,7 +58,7 @@ class TagController extends Controller implements FacadeControllerInterface
   
   public function showAction()
   {
-    $tags = $this->facade->getRepository('Tag')->findAllOrderedByName();
+    $tags = $this->repository->getEntity('Tag')->findAllOrderedByName();
 
     $forms = array();
     foreach ($tags as $key => $tag) {
@@ -87,15 +87,15 @@ class TagController extends Controller implements FacadeControllerInterface
     $form = $this->createForm(new TagType(), $tag);
     
     $tagReq = $form->handleRequest($request)->getData();
-    $tagDb = $this->facade->getRepository('Tag')->findById($tagReq->getId());
+    $tagDb = $this->repository->getEntity('Tag')->findById($tagReq->getId());
     
     
     if ($form->isValid()) {
       if (sizeof($tagDb) > 0) {
         $tag = $tagDb[0];
         $tag->setName($tagReq->getName());
-        $this->facade->getEm()->persist($tag);
-        $this->facade->getEm()->flush();
+        $this->repository->getEm()->persist($tag);
+        $this->repository->getEm()->flush();
       }
     }
 
@@ -107,11 +107,11 @@ class TagController extends Controller implements FacadeControllerInterface
   }
   
   public function deleteAction($id) {
-    $tagDb = $this->facade->getRepository('Tag')->findById($id);
+    $tagDb = $this->repository->getEntity('Tag')->findById($id);
     if (sizeof($tagDb) > 0) {
       $tag = $tagDb[0];
-      $this->facade->getEm()->remove($tag);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->remove($tag);
+      $this->repository->getEm()->flush();
     }
 
     return $this->redirect(

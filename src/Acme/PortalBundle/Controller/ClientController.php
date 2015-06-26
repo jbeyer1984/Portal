@@ -3,25 +3,23 @@ namespace Acme\PortalBundle\Controller;
 
 use Acme\PortalBundle\Entity\Client;
 use Acme\PortalBundle\Entity\Article;
-//use Acme\PortalBundle\Entity\Tag;
-//use Doctrine\Common\Collections\ArrayCollection;
-use Acme\PortalBundle\Facade\FacadeControllerInterface;
-use Acme\PortalBundle\Facade\RepositoryFacade;
+use Acme\PortalBundle\Helper\Depot\DepotControllerInterface;
+use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Form\Type\ClientType;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ClientController extends Controller implements FacadeControllerInterface
+class ClientController extends Controller implements DepotControllerInterface
 {
   /**
-   * @var RepositoryFacade
+   * @var RepositoryDepot
    */
-  protected $facade;
+  protected $repository;
 
-  public function setFacade(ManagerRegistry $doctrine)
+  public function setDepot(ManagerRegistry $doctrine)
   {
-    $this->facade = new RepositoryFacade($doctrine, 'AcmePortalBundle');
+    $this->repository = new RepositoryDepot($doctrine, 'AcmePortalBundle');
   }
 
   public function indexAction()
@@ -38,17 +36,17 @@ class ClientController extends Controller implements FacadeControllerInterface
 
     if ($form->isValid()) {
       $client = $form->getData();
-      $this->facade->getEm()->persist($client);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->persist($client);
+      $this->repository->getEm()->flush();
       foreach($client->getArticles() as $article) {
         $client->addArticle($article);
-        $this->facade->getEm()->persist($article);
+        $this->repository->getEm()->persist($article);
       }
-      $this->facade->getEm()->persist($client);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->persist($client);
+      $this->repository->getEm()->flush();
     }
 
-    $clients = $this->facade->getRepository('Client')->findAllOrderedByDescription();
+    $clients = $this->repository->getEntity('Client')->findAllOrderedByDescription();
 
     $form = $form->createView();
 
@@ -62,7 +60,7 @@ class ClientController extends Controller implements FacadeControllerInterface
 
   public function showAction()
   {
-    $clients = $this->facade->getRepository('Client')->findAllOrderedByDescription();
+    $clients = $this->repository->getEntity('Client')->findAllOrderedByDescription();
 
     $client = $this->getNewClient();
     $form = $this->createForm(new ClientType(), $client);
@@ -91,24 +89,24 @@ class ClientController extends Controller implements FacadeControllerInterface
 
     if ($form->isValid()) {
       $clientReq = $form->getData();
-      $clientDb = $this->facade->getRepository('Client')->findById($clientReq->getId());
+      $clientDb = $this->repository->getEntity('Client')->findById($clientReq->getId());
       if (sizeof($clientDb) > 0) {
         $client = $clientDb[0];
         $client->setName($clientReq->getName());
         // remove first the tags from array
         foreach($client->getArticles() as $article) {
           $article->removeClient($client);
-          $this->facade->getEm()->persist($article);
+          $this->repository->getEm()->persist($article);
         }
-        $this->facade->getEm()->persist($client);
+        $this->repository->getEm()->persist($client);
         $articlesReq = $clientReq->getArticles();
         // add article to array
         foreach($articlesReq as $article) {
           $client->addArticle($article);
-          $this->facade->getEm()->persist($article);
+          $this->repository->getEm()->persist($article);
         }
-        $this->facade->getEm()->persist($client);
-        $this->facade->getEm()->flush();
+        $this->repository->getEm()->persist($client);
+        $this->repository->getEm()->flush();
       }
     }
 
@@ -121,15 +119,15 @@ class ClientController extends Controller implements FacadeControllerInterface
 
   public function deleteAction($id)
   {
-    $clientDb = $this->facade->getRepository('Client')->findById($id);
+    $clientDb = $this->repository->getEntity('Client')->findById($id);
     if (sizeof($clientDb) > 0) {
       $client = $clientDb[0];
       foreach($client->getArticles() as $article) {
         $article->removeClient($client);
-        $this->facade->getEm()->persist($article);
+        $this->repository->getEm()->persist($article);
       }
-      $this->facade->getEm()->remove($client);
-      $this->facade->getEm()->flush();
+      $this->repository->getEm()->remove($client);
+      $this->repository->getEm()->flush();
     }
 
     return $this->redirect(

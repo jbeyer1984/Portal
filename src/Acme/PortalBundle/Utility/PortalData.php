@@ -1,26 +1,20 @@
 <?php
 namespace Acme\PortalBundle\Utility;
 
-use Acme\PortalBundle\Facade\Facade;
-use Acme\PortalBundle\Facade\FacadeUtilityInterface;
+use Acme\PortalBundle\Helper\Depot\Depot;
+use Acme\PortalBundle\Helper\Depot\DepotInterface;
+use Acme\PortalBundle\Helper\Depot\DepotUtilityInterface;
+use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Utility\Extractor\ExtractorProxy;
-use Acme\PortalBundle\Utility\Extractor\Filter\ArticleFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-//use \Acme\PortalBundle\Facade\FacadeInterface;
-//use Acme\PortalBundle\Facade\RepositoryFacade;
-//use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Acme\PortalBundle\Utility\Extractor\ArticlesExtractor;
-use Acme\PortalBundle\Utility\Extractor\ClientsExtractor;
-use Acme\PortalBundle\Utility\Extractor\Filter\ClientFilter;
-
-class PortalData implements FacadeUtilityInterface
+class PortalData implements DepotUtilityInterface
 {
   /**
-   * @var Facade
+   * @var RepositoryDepot
    */
-  protected $facade;
+  protected $repository;
   /**
    * @var Session
    */
@@ -51,12 +45,12 @@ class PortalData implements FacadeUtilityInterface
   }
 
   /**
-   * @param Facade $facade
+   * @param Depot $depot
    * @return mixed|void
    */
-  public function setFacade(Facade $facade)
+  public function setDepot(Depot $depot)
   {
-    $this->facade = $facade->getRepositoryFacade();
+    $this->repository = $depot->getRepositoryDepot();
   }
 
   public function setSession(Session $session)
@@ -71,9 +65,9 @@ class PortalData implements FacadeUtilityInterface
   public function visit($client, $article)
   {
     $this->equipVisitedArr($client, $article);
-    $articleDb = $this->facade->getRepository('Article')->findByDescription($article);
+    $articleDb = $this->repository->getEntity('Article')->findByDescription($article);
     if (empty($articleDb)) {
-      $this->articles = $this->facade->getRepository('Article')->findAllOrderedByDescription();
+      $this->articles = $this->repository->getEntity('Article')->findAllOrderedByDescription();
       $this->storeArticlesSorted($this->articles);
 
       // !!!!!!!!! have to implement logging, wrong article !!!!!!!!!!!!
@@ -148,7 +142,7 @@ class PortalData implements FacadeUtilityInterface
     foreach($tags as $tag) {
       $tagNames[] = $tag->getName();
     }
-    $articlesDb = $this->facade->getRepository('Article')->findSignificantArticlesToTags($tagNames);
+    $articlesDb = $this->repository->getEntity('Article')->findSignificantArticlesToTags($tagNames);
 
 
     return $articlesDb;
@@ -185,7 +179,7 @@ class PortalData implements FacadeUtilityInterface
     $extractorProxy = ExtractorProxy::init();
     $clientsFromArticles = $extractorProxy->extractArticleEntitiesFromClient($this->articles);
     $clientsToAdd = array_merge($clientsVisited, $clientsFromArticles);
-    $clients = $this->facade->getRepositoryFacade()->getRepository('Client')->findByName($clientsToAdd);
+    $clients = $this->repository->getEntity('Client')->findByName($clientsToAdd);
     // get articles by clients above
     
     $this->articles = $extractorProxy->extractClientNamesFromArticles($clients);
