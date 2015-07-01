@@ -37,7 +37,7 @@ class ArticleRepository extends EntityRepository
       $parameters[$i-1] = '%' . $tagName . '%';
     }
     $query->setParameters($parameters);
-    $dgl = $query->getQuery()->getSQL();
+//    $dgl = $query->getQuery()->getSQL();
 //    ob_start();
 //    \Doctrine\Common\Util\Debug::dump($dgl);
 //    $print = ob_get_clean();
@@ -45,6 +45,57 @@ class ArticleRepository extends EntityRepository
 
 
     return $query->getQuery()->getResult();
+  }
+
+  public function findSignificantArticlesToTagsIncludeClients($articlesToFilter = array(), $tags = array(), $clients = array())
+  {
+    $query = $this->getEntityManager()->getRepository('AcmePortalBundle:Article')
+      ->createQueryBuilder('a')
+      ->join('a.tags', 't')
+      ->join('a.client', 'c')
+    ;
+
+    $filterArticles = $this->subQueryRow($articlesToFilter, 'a.description NOT LIKE', 'AND');
+    $filterTags = $this->subQueryRow($tags, 't.name LIKE', 'OR');
+    $filterClients = $this->subQueryRow($clients, 'c.name LIKE ', 'OR');
+    $query->andWhere($filterArticles);
+    $query->andWhere($filterTags.' OR '.$filterClients);
+    
+    $dgl = $query->getQuery()->getSQL();
+    
+    $merged = array_merge($articlesToFilter, $tags, $clients);
+    
+    $splits = explode('?', $dgl);
+    $firstSplit = array_shift($splits);
+    foreach($splits as $key => $split) {
+      $splits[$key] = str_replace('%', "'", $merged[$key]).$split;
+    }
+    $wholeDgl = $firstSplit.implode($splits, '');
+    print_r($wholeDgl);
+
+    return $query->getQuery()->getResult();
+  }
+
+  /**
+   * @param $objectsToFilter
+   * @param $queryForeach
+   * @param $queryDelimiter
+   * @return string
+   */
+  protected function subQueryRow($objectsToFilter, $queryForeach, $queryDelimiter)
+  {
+    $isLike = (true == preg_match('/like/i', $queryForeach));
+    $object = array_shift($objectsToFilter);
+    $expression = $queryForeach.$object." ";
+    if ($isLike) {
+      $expression = $queryForeach." '".$object."' ";
+    }
+    $subQueryFilterArticles = $expression;
+    foreach ($objectsToFilter as $object) {
+      $expression = $queryForeach." '".$object."' ";
+      $subQueryFilterArticles .= " ".$queryDelimiter." ".$expression;
+    }
+    return $subQueryFilterArticles;
   }
 }
 

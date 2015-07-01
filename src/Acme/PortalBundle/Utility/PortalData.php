@@ -80,7 +80,7 @@ class PortalData implements DepotUtilityInterface
     $this->articles = $this->getMostSignificantArticlesToTags($tags);
     $this->extendAllOfferedArticles(); // function is empty in this class
 
-    $this->filterArticlesWithBlacklist();
+//    $this->filterArticlesWithBlacklist();
     $this->storeArticlesSorted($this->articles);
   }
 
@@ -113,8 +113,9 @@ class PortalData implements DepotUtilityInterface
       if (!isset($this->articlesSorted[$clientPos][$client])) {
         $this->articlesSorted[$clientPos][$client] = array();
       }
-      $this->articlesSorted[$clientPos][$client][$articleName] = $article;
+      $this->articlesSorted[$clientPos][$client][$articleName] = $article->getDescription();
     }
+
     return $this->articlesSorted;
   }
 
@@ -141,8 +142,25 @@ class PortalData implements DepotUtilityInterface
     foreach($tags as $tag) {
       $tagNames[] = $tag->getName();
     }
-    $articlesDb = $this->repository->getEntity('Article')->findSignificantArticlesToTags($tagNames);
-
+//    $articlesDb = $this->repository->getEntity('Article')->findSignificantArticlesToTags($tagNames);
+    $clientsVisited = array();
+    $articlesToFilter = array();
+    foreach ($this->visitedBlacklist as $client => $articles) {
+      $clientsVisited[] = $client;
+      foreach ($articles as $article => $notUsed) {
+        $articlesToFilter[] = $article;
+      }
+    }
+//    $clientsVisited = array_map( function ($client) {
+//      return $client;
+//    }, $this->visitedBlacklist);
+    print_r($clientsVisited);
+//    $articlesToFilter = array_map( function ($client) {
+//      var_dump(array_keys($client));
+//      return array_keys($client);
+//    }, $clientsVisited);
+    print_r($articlesToFilter);
+    $articlesDb = $this->repository->getEntity('Article')->findSignificantArticlesToTagsIncludeClients($articlesToFilter, $tagNames, $clientsVisited);
 
     return $articlesDb;
   }
