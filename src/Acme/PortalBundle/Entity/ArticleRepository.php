@@ -71,7 +71,7 @@ class ArticleRepository extends EntityRepository
       $splits[$key] = str_replace('%', "'", $merged[$key]).$split;
     }
     $wholeDgl = $firstSplit.implode($splits, '');
-    print_r($wholeDgl);
+//    print_r($wholeDgl);
 
     return $query->getQuery()->getResult();
   }

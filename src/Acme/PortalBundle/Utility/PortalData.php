@@ -151,15 +151,8 @@ class PortalData implements DepotUtilityInterface
         $articlesToFilter[] = $article;
       }
     }
-//    $clientsVisited = array_map( function ($client) {
-//      return $client;
-//    }, $this->visitedBlacklist);
-    print_r($clientsVisited);
-//    $articlesToFilter = array_map( function ($client) {
-//      var_dump(array_keys($client));
-//      return array_keys($client);
-//    }, $clientsVisited);
-    print_r($articlesToFilter);
+//    print_r($clientsVisited);
+//    print_r($articlesToFilter);
     $articlesDb = $this->repository->getEntity('Article')->findSignificantArticlesToTagsIncludeClients($articlesToFilter, $tagNames, $clientsVisited);
 
     return $articlesDb;
