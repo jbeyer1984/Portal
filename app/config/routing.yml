@@ -10,6 +10,10 @@ acme_portal:
     resource: "@AcmePortalBundle/Resources/config/routing.yml"
     prefix:   /
     
+think_mind:
+    resource: "@ThinkMindBundle/Resources/config/routing.yml"
+    prefix: think
+    
 #admin:
 #    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
 #    prefix: /admin

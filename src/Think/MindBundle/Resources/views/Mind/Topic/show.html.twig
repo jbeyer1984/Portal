@@ -1,0 +1,13 @@
+topic show
+{% for key, form in forms %}
+  {{ form_row(form.id) }}
+  <ul>
+    <li>{{ form_row(form.description) }}</li>
+    <li>{{ form_row(form.pos) }}</li>
+    <li>
+      {#<a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">#}
+        {#delete Article#}
+      {#</a>#}
+    </li>
+  </ul>
+{%  endfor %}
