@@ -2,46 +2,50 @@
 {% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
 {% block headCss %}
+  <link rel="stylesheet" href="{{ asset('bundles/acmeportal/css/articles.css') }}"/>
   {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
 {% endblock %}
 
 {% block page %}
   <div class="action"><p>edit Article</p></div>
-  <div><a href="{{ path('acme_article_new') }}">create new Article</a></div>
+  <div class="articleCollection panel push-right">
+    {% for article in articles %}
+      <div class="tag label label-default pull-left">{{ article.description }}</div>
+    {% endfor %}
+  </div>
+  <div class="push-right"><a class="btn btn-default push-left" href="{{ path('acme_article_new') }}">create new Article</a></div>
   <div class="regex">
-    <h2>type article to compare</h2>
+    <h2>type article seperated with | to compare (regex comparing)</h2>
     <div class="span12">
       <form action="#">
         <input class="span8" type="text"/><br>
-        <input class="btn update span4" type="button" value="update" />
+        {#<input class="btn update span4" type="button" value="update" />#}
       </form>
     </div>
   </div>
   <div class="articles_container">
   {% for key, form in forms %}
-    <div class="article">
+    <div class="article push-left">
       <form method="POST" action="{{ path('acme_article_edit') }}" {{ form_enctype(form) }}>
-        <div class="updateAndDelete">
+        <div class="updateAndDelete list-group">
           {{ form_row(form.id) }}
-          <fieldset>
             <legend><h2>Article</h2></legend>
-            <label>{{ form_label(form.description) }}</label>
-            {{ form_widget(form.description) }}
-            <label>{{ form_label(form.pos) }}</label>
-            {{ form_widget(form.pos) }}<br>
-            <a class="deleteConfirm btn" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
+            <div>{{ form_label(form.description) }}</div>
+            {{ form_widget(form.description, {'attr': {'class': 'list-group-item'}}) }}
+            <div>{{ form_label(form.pos) }}</div>
+            {{ form_widget(form.pos, {'attr': {'class': 'list-group-item'}}) }}<br>
+            <a class="deleteConfirm btn btn-default" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
               delete Article
             </a>
-          </fieldset>
         </div>
 
         <h3>Tags</h3>
-        <fieldset>
+        <div class="tagItems list-group-item">
           {% for tag in form.tags %}
             <label>{{ form_label(tag) }}</label>
-            {{ form_widget(tag) }}
+            {{ form_widget(tag, {'attr': {'class': 'list-group-item'}}) }}
           {% endfor %}
-        </fieldset>
+        </div>
         <input type="submit" value="update" class="btn btn-default" />
         {{ form_rest(form) }}
       </form>  

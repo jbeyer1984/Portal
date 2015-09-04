@@ -76,6 +76,9 @@
   width: 200px;
   margin-bottom: 2px;
 }
+.article {
+  float: left;
+}
 .articlesLeft {
   color: blue;
 }

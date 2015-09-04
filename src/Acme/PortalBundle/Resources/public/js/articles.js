@@ -2,7 +2,7 @@ var self;
 
 Articles = {
   regexStr: '',
-  $regexContainer : {},
+  $regex : {},
   articlesStrArr: [],
   $articlesArr: {},
   init : function () {
@@ -13,22 +13,42 @@ Articles = {
   },
   applyHandlers : function () {
     this.applyRegexHandler();
+    this.applyEventHandler();
+  },
+  applyEventHandler : function () {
+    self = this;
+    this.$regex.find('input').first().on('focus', function () {
+      var $regexTextInputField = $(this);
+      console.log("regex input clicked");
+      $(document).keyup(function(e) {
+        console.log("typed letter");
+        self.handleRegex(e);
+        if(e.which == 13) {
+          e.preventDefault();
+          console.log("regex enter confirmed");
+        }
+      });
+    });
   },
   applyRegexHandler : function () {
     this.$articlesArr = $('.article');
-    this.$regexContainer = $('.regex');
+    this.$regex = $('.regex');
     this.$articlesArr.each( function() {
       self.articlesStrArr.push($(this).find('input').eq(1).val());
     });
     console.log('this.articlesStrArr', this.articlesStrArr);
-    $('.regex .update').click( function (e) {
-      self.handleRegex(e);
-    });
+    //$('.regex .update').click( function (e) {
+    //  self.handleRegex(e);
+    //});
   },
   handleRegex : function (e) {
-    this.regexStr = this.$regexContainer.find('input').eq(0).val();
-    if (2 < this.regexStr.length) {
+    this.regexStr = this.$regex.find('input').eq(0).val();
+    if (0 < this.regexStr.length) {
       this.searchWithRegex();  
+    } else {
+      this.$articlesArr
+        .css('display', 'block')
+        .css('float', 'left')
     }
   },
   searchWithRegex : function () {

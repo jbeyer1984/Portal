@@ -1,14 +1,15 @@
-{% extends 'AcmePortalBundle:Default:master.html.twig'  %}
+{#{% extends 'AcmePortalBundle:Default:master.html.twig'  %}#}
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
 {% block headCss %}
   {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
 {% endblock %}
 
-{% block body %}
+{% block page %}
   already existing Articles
-  <div class="articleCollection">
+  <div class="articleCollection panel push-right">
     {% for article in articles %}
-      <div class="article">{{ article.description }}</div>
+      <div class="tag label label-default pull-left">{{ article.description }}</div>
     {% endfor %}
   </div>
   
@@ -17,20 +18,26 @@
       <form method="POST" action="{{ path('acme_article_new') }}" {{ form_enctype(form) }}>
         <div class="updateAndDelete">
           <div class="input">
-            <ul>
-              <li>{{ form_row(form.description) }}</li>
-              <li>{{ form_row(form.pos) }}</li>
-            </ul>
+            <div class="group-item">
+              <div>{{ form_label(form.description) }}</div>
+              {{ form_widget(form.description, {'attr': {'class': 'list-group-item'}}) }}
+            </div>
           </div>
         </div>
         <h3>Tags</h3>
-        <ul class="choice">
-          {% for tag in form.tags %}
-            <li>{{ form_row(tag) }}</li>
-          {% endfor %}
-        </ul>
+        <div class="choice list-group">
+        {% for tag in form.tags %}
+          {{ form_row(tag, {'attr': {'class': 'list-group-item'}}) }}
+        {% endfor %}
+        </div>
+        <div>
+          <div>{{ form_label(form.pos) }}</div>
+          {{ form_widget(form.pos, {'attr': {'class': 'list-group-item'}}) }}
+        </div>
         {{ form_rest(form) }}
-        <input type="submit" value="create" class="btn btn-default pull-right" />
+        <div>
+          <input type="submit" value="create" class="btn btn-default -right" />
+        </div>
       </form>
     </div>
   </div>
