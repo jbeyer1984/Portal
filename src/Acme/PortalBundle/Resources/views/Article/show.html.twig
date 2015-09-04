@@ -1,43 +1,64 @@
-{% extends 'AcmePortalBundle:Default:master.html.twig'  %}
+{#{% extends 'AcmePortalBundle:Default:master.html.twig'  %}#}
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
 {% block headCss %}
   {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
 {% endblock %}
 
-{% block body %}
+{% block page %}
   <div class="action"><p>edit Article</p></div>
   <div><a href="{{ path('acme_article_new') }}">create new Article</a></div>
   <div class="regex">
     <h2>type article to compare</h2>
-    <form action="#">
-      <input type="text"/>
-      <input class="update" type="button" value="update" />
-    </form>
+    <div class="span12">
+      <form action="#">
+        <input class="span8" type="text"/><br>
+        <input class="btn update span4" type="button" value="update" />
+      </form>
+    </div>
   </div>
   <div class="articles_container">
   {% for key, form in forms %}
     <div class="article">
-      <h2>Article</h2>
       <form method="POST" action="{{ path('acme_article_edit') }}" {{ form_enctype(form) }}>
         <div class="updateAndDelete">
           {{ form_row(form.id) }}
-          <ul>
-            <li>{{ form_row(form.description) }}</li>
-            <li>{{ form_row(form.pos) }}</li>
-            <li>
-              <a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
-                delete Article
-              </a>
-            </li>
-          </ul>
+          <fieldset>
+            <legend><h2>Article</h2></legend>
+            <label>{{ form_label(form.description) }}</label>
+            {{ form_widget(form.description) }}
+            <label>{{ form_label(form.pos) }}</label>
+            {{ form_widget(form.pos) }}<br>
+            <a class="deleteConfirm btn" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
+              delete Article
+            </a>
+            {#<span class="help-block">Example block-level help text here.</span>#}
+            {#<label class="checkbox">#}
+              {#<input type="checkbox"> Check me out#}
+            {#</label>#}
+            {#<button type="submit" class="btn">Submit</button>#}
+          </fieldset>
+          {#<ul class="panel panel-default">#}
+            {#<li class="panel-heading">{{ form_row(form.description) }}</li>#}
+            {#<li class="panel-body">{{ form_row(form.pos) }}</li>#}
+            {#<li class="list-group-item">#}
+              {#<a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">#}
+                {#delete Article#}
+              {#</a>#}
+            {#</li>#}
+          {#</ul>#}
         </div>
 
         <h3>Tags</h3>
-        <ul class="choice">
+        <fieldset>
+        {#<ul class="choice">#}
           {% for tag in form.tags %}
-            <li>{{ form_row(tag) }}</li>
+            <label>{{ form_label(tag) }}</label>
+            {{ form_widget(tag) }}
+            {#<li>{{ form_row(tag) }}</li>#}
           {% endfor %}
-        </ul>
+        {#</ul>#}
+        </fieldset>
         <input type="submit" value="update" class="btn btn-default pull-right" />
         {{ form_rest(form) }}
         {#{{ form_end(form) }}#}
@@ -48,7 +69,7 @@
   </div>
 {% endblock %}
 
-{% block customJavascript %}
+{% block javascript  %}
   <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/articles.js') }}"></script>
   <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>
 {% endblock %}
