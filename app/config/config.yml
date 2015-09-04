@@ -4,6 +4,7 @@ imports:
 #    - { resource: @AcmeTaskBundle/Resources/config/admin.yml }
 
 framework:
+    translator: { fallback: en }
     #esi:             ~
     #translator:      { fallback: "%locale%" }
 #    test: ~
@@ -33,6 +34,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - LexikFormFilterBundle:Form:form_div_layout.html.twig
 
 # Assetic Configuration
 assetic:

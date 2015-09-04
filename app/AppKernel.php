@@ -28,6 +28,10 @@ class AppKernel extends Kernel
 //            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
 //            new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Think\MindBundle\ThinkMindBundle(),
+            new Custom\BlockBundle\CustomBlockBundle(),
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+            new JordiLlonch\Bundle\CrudGeneratorBundle\JordiLlonchCrudGeneratorBundle(),
+            new Custom\BBundle\CustomBBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
