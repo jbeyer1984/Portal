@@ -32,36 +32,18 @@
             <a class="deleteConfirm btn" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">
               delete Article
             </a>
-            {#<span class="help-block">Example block-level help text here.</span>#}
-            {#<label class="checkbox">#}
-              {#<input type="checkbox"> Check me out#}
-            {#</label>#}
-            {#<button type="submit" class="btn">Submit</button>#}
           </fieldset>
-          {#<ul class="panel panel-default">#}
-            {#<li class="panel-heading">{{ form_row(form.description) }}</li>#}
-            {#<li class="panel-body">{{ form_row(form.pos) }}</li>#}
-            {#<li class="list-group-item">#}
-              {#<a class="deleteConfirm" href="{{  path('acme_article_delete', {'id': articles[key].getId}) }}">#}
-                {#delete Article#}
-              {#</a>#}
-            {#</li>#}
-          {#</ul>#}
         </div>
 
         <h3>Tags</h3>
         <fieldset>
-        {#<ul class="choice">#}
           {% for tag in form.tags %}
             <label>{{ form_label(tag) }}</label>
             {{ form_widget(tag) }}
-            {#<li>{{ form_row(tag) }}</li>#}
           {% endfor %}
-        {#</ul>#}
         </fieldset>
         <input type="submit" value="update" class="btn btn-default pull-right" />
         {{ form_rest(form) }}
-        {#{{ form_end(form) }}#}
       </form>  
     </div>
     
