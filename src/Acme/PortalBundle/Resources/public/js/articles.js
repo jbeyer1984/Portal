@@ -3,8 +3,10 @@ var self;
 Articles = {
   regexStr: '',
   $regex : {},
+  articles: {},
   articlesStrArr: [],
   $articlesArr: {},
+  selectivityList: {},
   init : function () {
     self = this;
     $(document).ready( function () {
@@ -12,34 +14,73 @@ Articles = {
     });
   },
   applyHandlers : function () {
-    this.applyRegexHandler();
+    this.fillVars();
+    this.initSelectivity();
     this.applyEventHandler();
   },
-  applyEventHandler : function () {
-    self = this;
-    this.$regex.find('input').first().on('focus', function () {
-      var $regexTextInputField = $(this);
-      console.log("regex input clicked");
-      $(document).keyup(function(e) {
-        console.log("typed letter");
-        self.handleRegex(e);
-        if(e.which == 13) {
-          e.preventDefault();
-          console.log("regex enter confirmed");
-        }
-      });
-    });
-  },
-  applyRegexHandler : function () {
+  fillVars : function () {
     this.$articlesArr = $('.article');
+    var len = this.$articlesArr.length;
+    this.$articlesArr.each( function () {
+      var identifier = $(this).find('input').eq(1).val();
+      self.articles[identifier] = $(this);
+    });
     this.$regex = $('.regex');
     this.$articlesArr.each( function() {
       self.articlesStrArr.push($(this).find('input').eq(1).val());
     });
-    console.log('this.articlesStrArr', this.articlesStrArr);
     //$('.regex .update').click( function (e) {
     //  self.handleRegex(e);
     //});
+  },
+  initSelectivity : function () {
+    $('#select_tags').selectivity({
+      items: self.articlesStrArr,
+      tokenSeparators: [' '],
+      multiple: true,
+      placeholder: 'Type to show specific articles only',
+    });
+    $('#select_tags').on('change', function (res) {
+      if (undefined != res.added) {
+        self.selectivityList[res.added.id] = true;
+      } else if (undefined != res.removed) {
+        delete self.selectivityList[res.removed.id];
+      }
+      self.handleSelectivityInput();
+    });
+  },
+  applyEventHandler : function () {
+    self = this;
+    this.$regex.find('.regexInput').first().on('focus', function () {
+      var $regexTextInputField = $(this);
+      $(this).keyup(function(e) {
+        self.handleRegex(e);
+        if(e.which == 13) {
+          e.preventDefault();
+        }
+      });
+    });
+  },
+  handleSelectivityInput : function () {
+    if (1 > Object.keys(this.selectivityList).length) {
+      this.$articlesArr
+        .css('display', 'block')
+        .css('float', 'none')
+      ;
+      return;
+    }
+    this.$articlesArr
+        .css('display', 'none')
+        .css('float', 'none')
+    ;
+    for (var identifier in this.articles) {
+      if (undefined != this.selectivityList[identifier]) {
+        this.articles[identifier]
+          .css('display', 'block')
+          .css('float', 'left')
+        ;
+      }
+    }
   },
   handleRegex : function (e) {
     this.regexStr = this.$regex.find('input').eq(0).val();
@@ -48,12 +89,11 @@ Articles = {
     } else {
       this.$articlesArr
         .css('display', 'block')
-        .css('float', 'left')
+        .css('float', 'none')
     }
   },
   searchWithRegex : function () {
     var counter = 0;
-    console.log('regex', this.regexStr);
     this.$articlesArr
       .css('display', 'none')
       .css('float', 'none')
@@ -65,10 +105,8 @@ Articles = {
         this.showHits(pos);
       }
     }
-    console.log('counter', counter);
   },
   showHits : function (pos) {
-    //console.log('this.$articlesArr.get(pos)', this.$articlesArr.get(pos));
     $(this.$articlesArr.get(pos))
       .css('display', 'block')
       .css('float', 'left')

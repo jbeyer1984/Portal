@@ -2,6 +2,8 @@
 {% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
 {% block headCss %}
+  <link rel="stylesheet" href="{{ asset('bundles/acmeportal/css/selectivity-full.css') }}"/>
+  <link rel="stylesheet" href="{{ asset('bundles/acmeportal/css/font-awesome.css') }}"/>
   <link rel="stylesheet" href="{{ asset('bundles/acmeportal/css/articles.css') }}"/>
   {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/select2/select2.css') }}"/>#}
 {% endblock %}
@@ -18,10 +20,11 @@
     <h2>type article seperated with | to compare (regex comparing)</h2>
     <div class="span12">
       <form action="#">
-        <input class="span8" type="text"/><br>
+        <input class="span8 regexInput" type="text"/><br>
         {#<input class="btn update span4" type="button" value="update" />#}
       </form>
     </div>
+    <span id="select_tags" class="selectivity-input"></span>
   </div>
   <div class="articles_container">
   {% for key, form in forms %}
@@ -56,6 +59,7 @@
 {% endblock %}
 
 {% block javascript  %}
+  <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/lib/selectivity-full.js') }}"></script>
   <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/articles.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>
+  {#<script type="text/javascript" src="{{ asset('bundles/acmeportal/js/select2Manager.js') }}"></script>#}
 {% endblock %}
