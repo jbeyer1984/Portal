@@ -8,7 +8,7 @@ use Exception;
 class ArticleFilter extends Filter
 {
   /**
-   * @param Article $toFilter
+   * @param Article|FilterInterface $toFilter
    * @return bool
    * @throws Exception
    */

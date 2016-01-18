@@ -7,10 +7,10 @@
 {% block body %}
   <div class="articlesLeft">
     <h2>articles left:</h2><br>
-    {% for index, arr in articlesLeft %}
-      {% for  clientName, articles in arr %}
-        {% for articleName, article in articles %}
-          {{ article.client.name }} : {{ article.description }}<br>
+    {% for clients in articlesLeft %}
+      {% for client in clients %}
+        {% for article in client %}
+            {{ article }}<br >  
         {% endfor %}
       {% endfor %}
     {% endfor %}

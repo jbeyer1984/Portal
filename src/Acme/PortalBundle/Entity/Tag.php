@@ -1,9 +1,8 @@
 <?php
 
-// src/Acme/PortalBundle/Entity/Tag.php
 namespace Acme\PortalBundle\Entity;
 
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,10 +36,21 @@ class Tag
    *             nullable=false
    *         )
    *     },
-   *     inverseJoinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id", nullable=false)}
+   *     inverseJoinColumns={
+   *        @ORM\JoinColumn(
+   *             name="article_id", 
+   *             referencedColumnName="id", 
+   *             nullable=false
+   *        )
+   *     }
    * )
    */
   protected $articles;
+
+  public function __construct()
+  { 
+    $this->articles = new ArrayCollection();
+  }
 
   public function addArticle(Article $article)
   {

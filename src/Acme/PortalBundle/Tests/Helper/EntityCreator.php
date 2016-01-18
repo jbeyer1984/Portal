@@ -10,7 +10,7 @@ class EntityCreator
    * @param array $defaultProperties
    * @return mixed
    */
-  public static function createObject($class, array $properties, array $defaultProperties)
+  public static function getCreatedObject($class, array $properties, array $defaultProperties)
   {
     $properties = array_merge($defaultProperties, $properties);
 

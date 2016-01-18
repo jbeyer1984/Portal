@@ -8,7 +8,7 @@ use Exception;
 class ClientFilter extends Filter
 {
   /**
-   * @param Client $toFilter
+   * @param Client|FilterInterface $toFilter
    * @return bool
    * @throws Exception
    */

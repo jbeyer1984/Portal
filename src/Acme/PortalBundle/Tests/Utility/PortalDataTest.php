@@ -1,6 +1,7 @@
 <?php
 
 namespace Acme\PortalBundle\Utility;
+
 use Acme\PortalBundle\DataFixtures\ORM\LoadPortalData;
 use Acme\PortalBundle\Helper\Depot\RepositoryDepot;
 use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerClients;

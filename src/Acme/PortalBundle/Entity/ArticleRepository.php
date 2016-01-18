@@ -3,7 +3,7 @@
 namespace Acme\PortalBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * ArticleRepository
@@ -37,14 +37,37 @@ class ArticleRepository extends EntityRepository
       $parameters[$i-1] = '%' . $tagName . '%';
     }
     $query->setParameters($parameters);
-//    $dgl = $query->getQuery()->getSQL();
-//    ob_start();
-//    \Doctrine\Common\Util\Debug::dump($dgl);
-//    $print = ob_get_clean();
-//    error_log('dump:$VAR$ = ' . $print, 0, '/tmp/error.log');
-
 
     return $query->getQuery()->getResult();
+  }
+
+  public function getNativeArticles()
+  {
+//    $rsm = new ResultSetMapping();
+//    $rsm->addEntityResult(Article::class, 'a');
+    $entityManager = $this->getEntityManager();
+
+    $rsm = new ResultSetMappingBuilder($entityManager);
+    $rsm->addRootEntityFromClassMetadata(Article::class, 'a');
+    
+    $selectClause = $rsm->generateSelectClause(array(
+      'a' => 'a',
+    ));
+    
+    $sqlQuery = '
+      SELECT ' . $selectClause . '
+      FROM article as a
+    ';
+    
+    $query = $this->getEntityManager()->createNativeQuery(
+      $sqlQuery,
+      $rsm
+    );
+//    $query->setParameter('select_clause', $selectClause);
+    
+    $result = $query->getResult();
+    
+    return $result;
   }
 
   public function findSignificantArticlesToTagsIncludeClients($articlesToFilter = array(), $tags = array(), $clients = array())
@@ -71,6 +94,8 @@ class ArticleRepository extends EntityRepository
       $splits[$key] = str_replace('%', "'", $merged[$key]).$split;
     }
     $wholeDgl = $firstSplit.implode($splits, '');
+    $dump = print_r($wholeDgl, true);
+    error_log("\n" . '-$- in ' . __FILE__ . ':' . __LINE__ . ' in ' . __METHOD__ . "\n" . '*** $wholeDgl ***' . "\n = " . $dump);
 //    print_r($wholeDgl);
 
     return $query->getQuery()->getResult();

@@ -9,7 +9,7 @@
 >
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/*/PortalBundle/Tests</directory>
+            <directory>../src/*/PortalBundle/Tests/Utility/Extractor</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>

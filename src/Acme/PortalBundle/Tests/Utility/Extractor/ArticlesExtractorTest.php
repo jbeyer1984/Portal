@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jbeyer
- * Date: 26.06.2015
- * Time: 18:09
- */
 
-namespace Acme\PortalBundle\Tests\Utility\Extractor;
+namespace Acme\PortalBundle\Utility\Extractor;
 
 use Acme\PortalBundle\Tests\Helper\Mocker\PortalMockerClients;
-use Acme\PortalBundle\Utility\Extractor\ArticlesExtractor;
 use Acme\PortalBundle\Utility\Extractor\Filter\ClientFilter;
+use Exception;
 
 class ArticlesExtractorTest extends \PHPUnit_Framework_TestCase {
   public $clients;
@@ -30,7 +24,7 @@ class ArticlesExtractorTest extends \PHPUnit_Framework_TestCase {
     $articlesExtractor = new ArticlesExtractor();
     $articlesExtractor->extract($this->clients, new ClientFilter());
 
-    // setting filter form outside
+    // setting filter from outside
     $articlesExtractor = new ArticlesExtractor();
     $articlesExtractor->setFilter(new ClientFilter());
     $articlesExtractor->extract($this->clients);
